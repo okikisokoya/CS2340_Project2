@@ -21,8 +21,8 @@ from datetime import datetime, timedelta
 
 # setting up constants we need to use
 
-client_ID = '3eada3a2c1bd462c982924660a5d7e84';
-client_secret = '06827ed33b6447fabf2bac7dfbd0bf94';
+client_ID = '3eada3a2c1bd462c982924660a5d7e84'
+client_secret = '06827ed33b6447fabf2bac7dfbd0bf94'
 redirect_URI = 'http://127.0.0.1:8000/'
 
 auth_URL = 'https://accounts.spotify.com/authorize'
@@ -61,19 +61,19 @@ def callback():
   response = requests.post(token_URL, req_body)
   token_info = response.json()
   if 'access_token' in token_info:
-    request.session['acess_token'] = token_info['access_token'] #requests to spotify API
+    request.session['access_token'] = token_info['access_token'] #requests to spotify API
     request.session['refresh_token'] = token_info['refresh_token'] #refresh the access token when it expires
     request.session['expires_at'] = datetime.now().timestamp() + token_info['expires_in']  #only lasts for one day, now you can see when it expires
 
 #checking if access token has expired, if it has, then we need to replace it
 
-    return redirect('/topartists')
+    return redirect('/toptracks')
   else:
     return JsonResponse({"error": "Failed Authorization"})
 
 #route to top artists
 
-def get_topartists():
+def get_toptracks():
   #check for any errors and handle those cases now
   if 'access_token' not in request.session:
     return redirect(gettingLogin(request)) #redirect to the login page- should this be in views??
@@ -82,9 +82,9 @@ def get_topartists():
   headers = {
     'Authorization': f"Bearer{request.session['access_token']}"
   }
-  response = requests.get(api_base_URL + 'me/topartists', headers=headers)
-  topartists = response.json()
-  return JsonResponse(topartists)
+  response = requests.get(api_base_URL + 'me/top/tracks', headers=headers)
+  toptracks = response.json()
+  return JsonResponse(toptracks)
 
 #refreshing the token if its expired
 #app.route equivalent? / refresh-token
@@ -102,9 +102,9 @@ def refresh_token():
     response = requests.post(token_URL, req_body)
     new_token_info = response.json()
 
-    request.session['acess_token'] = new_token_info['access_token']
+    request.session['access_token'] = new_token_info['access_token']
     request.session['expires_at'] = datetime.now().timestamp() + new_token_info['expires_in']
 
-    return redirect('/topartists')
+    return redirect('/toptracks')
 
   #running the app ????
