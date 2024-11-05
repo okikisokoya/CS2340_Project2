@@ -1,0 +1,16 @@
+.card-container {
+  display: flex;
+}
+
+.card {
+  display: flex;
+  margin-right: 10px;
+  min-width: 300px;
+  width: 100%;
+  height: 200px;
+  border-radius: 10px;
+}
+
+.animate {
+  transition: all 0.25s ease;
+}
