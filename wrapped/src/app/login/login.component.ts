@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { FormsModule } from '@angular/forms';  // Import FormsModule here
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';  
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   standalone: true,  // Mark as standalone component
-  imports: [FormsModule]  // Import FormsModule here for ngModel binding
+  imports: [FormsModule, CommonModule]  // Import FormsModule here for ngModel binding
 })
 export class LoginComponent {
   username = '';

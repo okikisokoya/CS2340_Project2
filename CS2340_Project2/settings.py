@@ -40,12 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< Updated upstream
     'spotify_webapp',
-=======
     'corsheaders',
-    'spotify_webapp.apps.SpotifyWebappConfig',
->>>>>>> Stashed changes
 ]
 
 MIDDLEWARE = [

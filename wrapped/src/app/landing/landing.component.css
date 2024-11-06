@@ -1,0 +1,42 @@
+@font-face {
+    font-family: 'Nico-Moji';
+    src: url('/assets/fonts/nicomoji.ttf') format('truetype'); 
+    font-weight: normal;
+    font-style: normal;
+  }
+
+
+.landing-container {
+  text-align: center;
+  padding: 50px;
+}
+
+h1, p {
+  font-family: 'Nico-Moji', sans-serif; /* Apply Nico Mori font */
+  color: #baf062; /* Light yellow color */
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 1.25rem;
+  margin-bottom: 30px;
+}
+
+.login-link {
+  font-size: 1.2rem;
+  color: #ff6347; 
+  text-decoration: none;
+  border: 2px solid #ff6347;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.login-link:hover {
+  background-color: #ff6347;
+  color: white;
+}

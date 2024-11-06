@@ -1,5 +1,6 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';  // For making HTTP requests
 import { FormsModule } from '@angular/forms';  // For ngModel and two-way data binding
 import { routes } from './app.routes';  // Your app's routes
@@ -10,6 +11,7 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(HttpClientModule),  // For HTTP requests
     importProvidersFrom(FormsModule),  // For ngModel two-way binding
     provideRouter(routes),  // Set up routing
+    importProvidersFrom(RouterModule.forRoot(routes)),
     provideClientHydration(),  // Enable hydration for browser rendering
   ]
 };

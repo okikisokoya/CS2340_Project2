@@ -1,8 +1,3 @@
-<<<<<<< Updated upstream
-from django.shortcuts import render
-
-# Create your views here.
-=======
 # spotify_webapp/views.py
 from django.shortcuts import render, redirect
 import urllib
@@ -211,4 +206,3 @@ def profile(request):
 
 def home(request):
     return render(request, 'spotify_webapp/home.html')
->>>>>>> Stashed changes
