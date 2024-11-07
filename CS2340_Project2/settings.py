@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
+import secret
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,7 +24,7 @@ AUTH_USER_MODEL = 'spotify_webapp.User'
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_l-9847!@7xz89v#icyk(p(hj04^a!3=*botr#o@k40mknpo$x'
+SECRET_KEY = globals.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -134,7 +135,7 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Add these Spotify settings
-SPOTIFY_CLIENT_ID = '3eada3a2c1bd462c982924660a5d7e84'
-SPOTIFY_CLIENT_SECRET = '06827ed33b6447fabf2bac7dfbd0bf94'
+SPOTIFY_CLIENT_ID = secret.SPOTIFY_CLIENT_ID
+SPOTIFY_CLIENT_SECRET = secret.SPOTIFY_CLIENT_SECRET
 SPOTIFY_REDIRECT_URI = 'http://127.0.0.1:8000/callback/'
 
