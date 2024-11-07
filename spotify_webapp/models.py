@@ -31,3 +31,39 @@ class SpotifyWrap(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s Wrap - {self.created_at.strftime('%Y-%m-%d')}"
+class Track(models.Model):
+#Basic information
+    album = models.TextField() #album on which track appears
+    artist = models.TextField() #artists who performed on track
+    available_markets = models.JSONField(default=list) #List of countries track can be played
+    uri = models.TextField()
+    disc_number = models.IntegerField()
+    duration_ms = models.IntegerField()
+    explicit = models.BooleanField()
+    external_ids = models.JSONField(default=list)
+    external_urls = models.JSONField(default=list)
+    href = models.TextField()
+    id = models.TextField()
+    is_playable = models.BooleanField()
+    linked_from = models.JSONField(default=list)
+    restrictions = models.JSONField(default=list)
+    name = models.TextField() #name of track
+    popularity = models.IntegerField()
+    preview_url = models.TextField() #can be nullable
+    track_number = models.IntegerField()
+    type = models.TextField()
+    is_local = models.BooleanField()
+#audio feature?
+
+#Artist model (based off of Spotify WebAPI)
+class Artist(models.Model):
+    external_urls = models.TextField()
+    followers = models.IntegerField()
+    genres = models.JSONField(default=list)
+    href = models.TextField()
+    id = models.TextField()
+    images = models.JSONField(default=list)
+    name = models.TextField()
+    popularity = models.IntegerField()
+    type = models.TextField()
+    uri = models.TextField()
