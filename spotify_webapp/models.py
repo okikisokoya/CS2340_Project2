@@ -15,3 +15,19 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
+
+
+#class Track(models.Model):
+class SpotifyWrap(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    top_tracks = models.JSONField(default=dict)
+    top_artists = models.JSONField(default=dict)
+    favorite_genres = models.JSONField(default=dict)
+    total_listening_time = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.user.username}'s Wrap - {self.created_at.strftime('%Y-%m-%d')}"

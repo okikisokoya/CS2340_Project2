@@ -13,7 +13,6 @@ from .models import User
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_protect
-from django.views.decorators.csrf import csrf_exempt
 
 
 def spotify_login_view(request):
@@ -124,33 +123,20 @@ def signup_view(request):
 
     return render(request, 'spotify_webapp/signup.html')
 
-
-@csrf_exempt
 def user_login(request):
     if request.method == 'POST':
-        try:
-            # Parse JSON data from request body
-            data = json.loads(request.body)
-            username = data.get('username')
-            password = data.get('password')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
 
-            user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            messages.success(request, 'Logged in successfully!')
+            return redirect('spotify_webapp:dashboard')
+        else:
+            messages.error(request, 'Invalid username or password')
 
-            if user is not None:
-                login(request, user)
-                # Simple success message without redirecting
-                return JsonResponse({
-                    'message': 'Login successful!',
-                    'username': user.username
-                }, status=200)
-            else:
-                # Return error message for invalid login
-                return JsonResponse({'message': 'Invalid username or password'}, status=400)
-        except json.JSONDecodeError:
-            return JsonResponse({'message': 'Invalid JSON format'}, status=400)
-
-    # Handle non-POST requests
-    return JsonResponse({'message': 'Method not allowed'}, status=405)
+    return render(request, 'spotify_webapp/login.html')
 
 
 @login_required
