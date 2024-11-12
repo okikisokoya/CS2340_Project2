@@ -1,0 +1,63 @@
+/* Background with stars */
+body {
+    background-color: black;
+    /*background-image: url('/path-to-your-stars-background-image.png'); /* if you have a starry background */
+    color: #d4e157; /* text color similar to yellow used in title and button */
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+  }
+  
+  .registration-container {
+    margin-top: 100px;
+  }
+  
+  h1 {
+    font-size: 1.8em;
+    color: #d4e157; /* yellow color */
+    margin-bottom: 20px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  input {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    color: black;
+  }
+  
+  input:nth-child(1) {
+    background-color: #fff9c4; /* light yellow for username input */
+  }
+  
+  input:nth-child(2) {
+    background-color: #80cbc4; /* teal for password input */
+  }
+  
+  input:nth-child(3) {
+    background-color: #a5d6a7; /* light green for confirm password input */
+  }
+  
+  button {
+    margin-top: 20px;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    color: #d4e157;
+    background-color: black;
+    border: 2px solid #d4e157;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #d4e157;
+    color: black;
+  }
+  
