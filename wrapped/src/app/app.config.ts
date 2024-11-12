@@ -1,17 +1,9 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';  // For making HTTP requests
-import { FormsModule } from '@angular/forms';  // For ngModel and two-way data binding
-import { routes } from './app.routes';  // Your app's routes
-import { provideClientHydration } from '@angular/platform-browser';  // For client-side hydration
+
+import { routes } from './app.routes';
+import { provideClientHydration } from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    importProvidersFrom(HttpClientModule),  // For HTTP requests
-    importProvidersFrom(FormsModule),  // For ngModel two-way binding
-    provideRouter(routes),  // Set up routing
-    importProvidersFrom(RouterModule.forRoot(routes)),
-    provideClientHydration(),  // Enable hydration for browser rendering
-  ]
+  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideClientHydration()]
 };
