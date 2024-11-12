@@ -123,7 +123,6 @@ def signup_view(request):
 
     return render(request, 'spotify_webapp/signup.html')
 
-
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
