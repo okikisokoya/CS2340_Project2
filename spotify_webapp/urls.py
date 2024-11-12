@@ -1,7 +1,6 @@
 # spotify_webapp/urls.py
 from django.urls import path
 from spotify_webapp import views  # Changed to absolute import
-from .views import user_login
 
 app_name = 'spotify_webapp'
 
@@ -9,8 +8,6 @@ urlpatterns = [
     #our webapp
 path('', views.home, name='home'),
     path('signup/', views.signup_view, name='signup'),
-    #path('login/', views.user_login, name='login'),
-    path('api/login', user_login, name='user_login'),
     path('login/', views.user_login, name='login'),
     path('logout/', views.user_logout, name='logout'),
     path('profile/', views.profile, name='profile'),
