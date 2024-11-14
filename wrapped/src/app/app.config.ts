@@ -8,9 +8,9 @@ import { provideClientHydration } from '@angular/platform-browser';  // For clie
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideRouter(routes),
     importProvidersFrom(HttpClientModule),  // For HTTP requests
     importProvidersFrom(FormsModule),  // For ngModel two-way binding
-    provideRouter(routes),  // Set up routing
     importProvidersFrom(RouterModule.forRoot(routes)),
     provideClientHydration(),  // Enable hydration for browser rendering
   ]

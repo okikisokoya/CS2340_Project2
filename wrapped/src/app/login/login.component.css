@@ -1,22 +1,138 @@
+@font-face {
+  font-family: 'Nico-Moji';
+  src: url('../assets/fonts/nicomoji.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Star-Jedi-Hollow';
+  src: url('../assets/fonts/Starjhol.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
 .login-container {
-    width: 300px;
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-  }
-  
-  button {
-    width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
+  text-align: center;
+  background-image: url('../assets/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100vw;
+  min-height: 100vh;
+  padding: 40px;
+}
+
+ p {
+  font-family: 'Nico-Moji', sans-serif;
+  color: #F3FF47;
+}
+
+p2 {
+  font-family: 'Nico-Moji', sans-serif;
+  color: white;
+}
+
+h1 {
+  font-family: 'Star-Jedi-Hollow', sans-serif;
+  font-size: 2.5rem;
+  color: #F3FF47;
+  text-shadow: 2px 2px 4px rgba(243, 255, 71, 0.5);  
+}
+
+.form-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  border: 2px solid #F3FF47;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border: 2px solid #F3FF47;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #F3FF47;
+  font-family: 'Nico-Moji', sans-serif;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.input-field::placeholder {
+  color: rgba(243, 255, 71, 0.5);
+}
+
+.input-field:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(243, 255, 71, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.input-label {
+  display: block;
+  text-align: left;
+  margin-bottom: 5px;
+  color: #F3FF47;
+  font-family: 'Nico-Moji', sans-serif;
+}
+
+/* Style for the password field specifically */
+.input-field[type="password"] {
+  border-color: lightgreen;
+}
+
+.input-field[type="password"]:focus {
+  box-shadow: 0 0 10px rgba(144, 238, 144, 0.5);
+}
+
+/* Helper links styling */
+.helper-text {
+  text-align: left;
+  margin-top: 5px;
+  font-size: 0.9rem;
+  color: #F3FF47;
+  cursor: pointer;
+}
+
+/* Submit button styling */
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  background-color: transparent;
+  border: 2px solid #F3FF47;
+  color: #F3FF47;
+  font-family: 'Nico-Moji', sans-serif;
+  font-size: 1.1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #F3FF47;
+  color: black;
+}
