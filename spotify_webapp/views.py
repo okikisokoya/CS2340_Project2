@@ -9,8 +9,9 @@ from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from spotipy import SpotifyOAuth
+from spotipy import SpotifyOAuth, Spotify
 
+from wrapped.src.loginrequest import auth_URL
 from .models import User
 from django.http import JsonResponse
 
@@ -63,34 +64,45 @@ def get_top_tracks(request):
     sp_oauth = SpotifyOAuth(
         client_id= SPOTIFY_CLIENT_ID,
         client_secret= SPOTIFY_CLIENT_SECRET,
-        redirect_uri= settings.SPOTIFY_REDIRECT_URI,
-        scope=settings.SPOTIFY_SCOPES,
+        redirect_uri= "http://127.0.0.1:8000/top-tracks/",
+        scope = 'user-top-read'
+        # scope=settings.SPOTIFY_SCOPES,
     )
-    if request.GET.get("code"):
-        token_info = sp_oauth.get_access_token(request.GET["code"])
-        sp = spotipy.Spotify(auth=token_info['access_token'])
-    topTracks = sp.current_user_top_tracks(limit=5, offset=0,time_range='medium_term')
-    #printing to terminal??
-    top_tracks = []
-    for idx, track in enumerate(topTracks['items']):
+    if not request.GET.get("code"):
+        auth_URL = sp_oauth.get_authorize_url()
+        return redirect(auth_URL)
+    token_info = sp_oauth.get_access_token(request.GET["code"], check_cache=False)
+    sp = spotipy.Spotify(auth=token_info['access_token'])
+    top_tracks_data = sp.current_user_top_tracks(limit=5, offset=0,time_range='medium_term')
+
+    #printing
+    print("\n==User's Top Tracks===")
+    print("--------")
+
+    tracks_list=[];
+    for idx, track in enumerate(top_tracks_data['items'], 1):
         track_name = track['name']
         artist_name = track['artists'][0]['name']
-        top_tracks.append(f"{idx + 1}. {track_name} by {artist_name}")
-        print(f"{idx + 1}. {track_name} by {artist_name}")
+        album_cover_url = track['album']['images'][0]['url']
+        print(f"{idx}.{track_name} by {artist_name}")
 
-    return HttpResponse("<br>".join(top_tracks))
+        tracks_list.append(f"{idx}.{track_name} by {artist_name}")
+    print("--------\n")
 
-        #importing spotipy
-    # if 'access_token' not in request.session:
-    #     return redirect('spotify_webapp:login')
+    return HttpResponse("<br>".join(tracks_list))
+    # if request.GET.get("code"):
+    #     token_info = sp_oauth.get_access_token(request.GET["code"])
+    #     sp = spotipy.Spotify(auth=token_info['access_token'])
+    # topTracks = sp.current_user_top_tracks(limit=5, offset=0,time_range='medium_term')
+    #printing to terminal??
+    # top_tracks = []
+    # for idx, track in enumerate(topTracks['items']):
+    #     track_name = track['name']
+    #     artist_name = track['artists'][0]['name']
+    #     top_tracks.append(f"{idx + 1}. {track_name} by {artist_name}")
+    #     print(f"{idx + 1}. {track_name} by {artist_name}")
     #
-    # headers = {
-    #     'Authorization': f"Bearer {request.session['access_token']}"
-    # }
-    #
-    # response = requests.get('https://api.spotify.com/v1/me/top/tracks', headers=headers)
-    # return JsonResponse(response.json())
-
+    # return HttpResponse("<br>".join(top_tracks))
 
 def refresh_token(request):
     if 'refresh_token' not in request.session:
