@@ -9,7 +9,7 @@ from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import User
+from .models import SpotifyWrap, User
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_protect
@@ -85,6 +85,7 @@ def refresh_token(request):
         return redirect('spotify_webapp:top-tracks')
 
     return JsonResponse({"error": "Failed to refresh token"})
+
 
 def dashboard(request):
     if 'access_token' not in request.session:
@@ -193,3 +194,65 @@ def profile(request):
 
 def home(request):
     return render(request, 'spotify_webapp/home.html')
+
+
+from .game_system import SpotifyGameSystem
+
+
+def test_setup(request):
+    if not request.user.is_authenticated:
+        return redirect('spotify_webapp:login')
+
+    # Show connect Spotify page if not connected
+    if 'access_token' not in request.session:
+        return render(request, 'spotify_webapp/connect_spotify.html')
+
+    if request.method == 'POST':
+        headers = {'Authorization': f"Bearer {request.session['access_token']}"}
+        try:
+            responses = {
+                'top_tracks': requests.get(
+                    'https://api.spotify.com/v1/me/top/tracks?limit=50',
+                    headers=headers
+                ).json(),
+                'top_artists': requests.get(
+                    'https://api.spotify.com/v1/me/top/artists?limit=50',
+                    headers=headers
+                ).json()
+            }
+            wrap = SpotifyWrap.objects.create(
+                user=request.user,
+                top_tracks=responses['top_tracks'],
+                top_artists=responses['top_artists']
+            )
+            return JsonResponse({'status': 'success', 'wrap_id': wrap.id})
+        except Exception as e:
+            return JsonResponse({'error': str(e)})
+
+    return render(request, 'spotify_webapp/test_setup.html')
+
+def game_match(request):
+    if not request.user.is_authenticated:
+        return redirect('spotify_webapp:login')
+
+    try:
+        user_wrap = SpotifyWrap.objects.filter(user=request.user).latest('created_at')
+        opponent_wrap = SpotifyWrap.objects.exclude(user=request.user).order_by('?').first()
+
+        if not opponent_wrap:
+            return JsonResponse({'error': 'No opponent found'})
+
+        game_system = SpotifyGameSystem()
+        results = game_system.compare_players(
+            user_wrap.top_tracks,
+            opponent_wrap.top_tracks
+        )
+
+        return JsonResponse({
+            'results': results,
+            'user_name': request.user.username,
+            'opponent_name': opponent_wrap.user.username
+        })
+
+    except Exception as e:
+        return JsonResponse({'error': str(e)})

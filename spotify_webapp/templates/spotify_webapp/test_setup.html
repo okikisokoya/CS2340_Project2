@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Spotify Game Test Setup</title>
+</head>
+<body>
+    <h1>Test Setup for Spotify Game</h1>
+    <div>
+        <h2>Current User: {{ request.user.username }}</h2>
+        <p>Spotify Connection Status:
+            {% if 'access_token' in request.session %}
+                Connected
+            {% else %}
+                Not Connected
+            {% endif %}
+        </p>
+    </div>
+
+    <div>
+        <h3>Step 1: Connect to Spotify</h3>
+        <a href="{% url 'spotify_webapp:login' %}" class="button">Connect Spotify</a>
+    </div>
+
+    <div>
+        <h3>Step 2: Fetch User Data</h3>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Save Spotify Data</button>
+        </form>
+    </div>
+
+    <div>
+        <h3>Step 3: View Game Match</h3>
+        <a href="{% url 'spotify_webapp:game-match' %}" class="button">Test Game Match</a>
+    </div>
+</body>
+</html>

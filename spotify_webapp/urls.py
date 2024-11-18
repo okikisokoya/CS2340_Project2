@@ -14,9 +14,13 @@ path('', views.home, name='home'),
     path('delete-account/', views.delete_account, name='delete_account'),
 
     #for spotify
-    path('login/', views.spotify_login_view, name='login'),
+    path('spotify-login/', views.spotify_login_view, name='spotify-login'),
     path('callback/', views.callback, name='callback'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('top-tracks/', views.get_top_tracks, name='top-tracks'),
     path('refresh-token/', views.refresh_token, name='refresh-token'),
+
+    #for game
+    path('test-setup/', views.test_setup, name='test-setup'),
+    path('game-match/', views.game_match, name='game-match'),
 ]
