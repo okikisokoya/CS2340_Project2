@@ -117,6 +117,20 @@ def get_top_artists(request):
     token_info = sp_oauth.get_access_token(request.GET["code"], check_cache=False)
     sp = spotipy.Spotify(auth=token_info['access_token'])
     top_artists = sp.current_user_top_artists(limit=5, offset=0,time_range='medium_term')
+    #printing
+    print("\n==User's Top Tracks===")
+    print("--------")
+
+    artists_list=[];
+    for idx, artist in enumerate(top_artists['items'], 1):
+        artist_name = artist['name']
+        # album_cover_url = track['album']['images'][0]['url']
+        print(f"{idx}. {artist_name}")
+
+        artists_list.append(f"{idx}.{artist_name}")
+    print("--------\n")
+
+    return HttpResponse("<br>".join(artists_list))
 
 def refresh_token(request):
     if 'refresh_token' not in request.session:
