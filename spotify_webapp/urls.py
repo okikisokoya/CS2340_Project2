@@ -18,5 +18,6 @@ path('', views.home, name='home'),
     path('callback/', views.callback, name='callback'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('top-tracks/', views.get_top_tracks, name='top-tracks'),
+    path('top-artists/', views.get_top_artists, name='top-artists'),
     path('refresh-token/', views.refresh_token, name='refresh-token'),
 ]

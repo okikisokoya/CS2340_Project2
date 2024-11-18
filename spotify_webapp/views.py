@@ -103,6 +103,20 @@ def get_top_tracks(request):
     #     print(f"{idx + 1}. {track_name} by {artist_name}")
     #
     # return HttpResponse("<br>".join(top_tracks))
+def get_top_artists(request):
+    sp_oauth = SpotifyOAuth(
+        client_id= SPOTIFY_CLIENT_ID,
+        client_secret= SPOTIFY_CLIENT_SECRET,
+        redirect_uri= "http://127.0.0.1:8000/top-artists/",
+        scope = 'user-top-read'
+        # scope=settings.SPOTIFY_SCOPES,
+    )
+    if not request.GET.get("code"):
+        auth_URL = sp_oauth.get_authorize_url()
+        return redirect(auth_URL)
+    token_info = sp_oauth.get_access_token(request.GET["code"], check_cache=False)
+    sp = spotipy.Spotify(auth=token_info['access_token'])
+    top_artists = sp.current_user_top_artists(limit=5, offset=0,time_range='medium_term')
 
 def refresh_token(request):
     if 'refresh_token' not in request.session:
