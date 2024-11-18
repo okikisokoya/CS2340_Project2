@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Game Invitations</h2>
+    
+    <div class="received-invitations mt-4">
+        <h3>Received Challenges</h3>
+        {% if received_invitations %}
+            {% for invitation in received_invitations %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">From: {{ invitation.sender.username }}</h5>
+                        <p class="card-text">Sent: {{ invitation.created_at|date:"M d, Y" }}</p>
+                        <form method="post" action="{% url 'spotify_webapp:handle_invitation' invitation.id %}">
+                            {% csrf_token %}
+                            <button type="submit" name="action" value="accept" class="btn btn-success">Accept</button>
+                            <button type="submit" name="action" value="decline" class="btn btn-danger">Decline</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No pending challenges</p>
+        {% endif %}
+    </div>
+
+    <div class="sent-invitations mt-4">
+        <h3>Sent Challenges</h3>
+        {% if sent_invitations %}
+            {% for invitation in sent_invitations %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">To: {{ invitation.recipient.username }}</h5>
+                        <p class="card-text">Status: {{ invitation.status }}</p>
+                        <p class="card-text">Sent: {{ invitation.created_at|date:"M d, Y" }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No sent challenges</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

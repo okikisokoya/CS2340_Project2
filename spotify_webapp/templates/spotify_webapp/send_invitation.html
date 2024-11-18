@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Challenge a Player</h2>
+    <form method="post" class="mt-4">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="username">Enter Username:</label>
+            <input type="text" name="username" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Send Challenge</button>
+    </form>
+</div>
+{% endblock %}

@@ -31,3 +31,16 @@ class SpotifyWrap(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s Wrap - {self.created_at.strftime('%Y-%m-%d')}"
+
+class GameInvitation(models.Model):
+    sender = models.ForeignKey(User, related_name='sent_invitations', on_delete=models.CASCADE)
+    recipient = models.ForeignKey(User, related_name='received_invitations', on_delete=models.CASCADE)
+    status = models.CharField(max_length=20, choices=[
+        ('pending', 'Pending'),
+        ('accepted', 'Accepted'),
+        ('declined', 'Declined')
+    ], default='pending')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.sender.username} -> {self.recipient.username}"

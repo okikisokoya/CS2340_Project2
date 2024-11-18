@@ -23,4 +23,8 @@ path('', views.home, name='home'),
     #for game
     path('test-setup/', views.test_setup, name='test-setup'),
     path('game-match/', views.game_match, name='game-match'),
+    path('send-invitation/', views.send_invitation, name='send_invitation'),
+    path('invitations/', views.view_invitations, name='view_invitations'),
+    path('handle-invitation/<int:invitation_id>/', views.handle_invitation, name='handle_invitation'),
+    path('game/<int:invitation_id>/', views.game_match, name='game-match'),
 ]

@@ -3,13 +3,13 @@ from django.shortcuts import render, redirect
 import urllib
 import requests
 from django.http import JsonResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from datetime import datetime, timedelta
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import SpotifyWrap, User
+from .models import SpotifyWrap, User, GameInvitation
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_protect
@@ -231,16 +231,65 @@ def test_setup(request):
 
     return render(request, 'spotify_webapp/test_setup.html')
 
-def game_match(request):
-    if not request.user.is_authenticated:
-        return redirect('spotify_webapp:login')
+@login_required
+def send_invitation(request):
+    if request.method == 'POST':
+        recipient_username = request.POST.get('username')
+        try:
+            recipient = User.objects.get(username=recipient_username)
+            invitation = GameInvitation.objects.create(
+                sender=request.user,
+                recipient=recipient
+            )
+            messages.success(request, f'Invitation sent to {recipient.username}')
+            return redirect('spotify_webapp:dashboard')
+        except User.DoesNotExist:
+            messages.error(request, 'User not found')
+            return redirect('spotify_webapp:dashboard')
+    return render(request, 'spotify_webapp/send_invitation.html')
+
+@login_required
+def view_invitations(request):
+    received_invitations = GameInvitation.objects.filter(
+        recipient=request.user,
+        status='pending'
+    )
+    sent_invitations = GameInvitation.objects.filter(
+        sender=request.user
+    )
+    return render(request, 'spotify_webapp/invitations.html', {
+        'received_invitations': received_invitations,
+        'sent_invitations': sent_invitations
+    })
+
+@login_required
+def handle_invitation(request, invitation_id):
+    invitation = get_object_or_404(GameInvitation, id=invitation_id)
+    if invitation.recipient != request.user:
+        messages.error(request, 'Not authorized')
+        return redirect('spotify_webapp:view_invitations')
+
+    action = request.POST.get('action')
+    if action == 'accept':
+        invitation.status = 'accepted'
+        invitation.save()
+        return redirect('spotify_webapp:game-match', invitation_id=invitation_id)
+    elif action == 'decline':
+        invitation.status = 'declined'
+        invitation.save()
+
+    return redirect('spotify_webapp:view_invitations')
+
+@login_required
+def game_match(request, invitation_id):
+    invitation = get_object_or_404(GameInvitation, id=invitation_id)
+    if invitation.status != 'accepted':
+        messages.error(request, 'Invalid game invitation')
+        return redirect('spotify_webapp:dashboard')
 
     try:
-        user_wrap = SpotifyWrap.objects.filter(user=request.user).latest('created_at')
-        opponent_wrap = SpotifyWrap.objects.exclude(user=request.user).order_by('?').first()
-
-        if not opponent_wrap:
-            return JsonResponse({'error': 'No opponent found'})
+        user_wrap = SpotifyWrap.objects.filter(user=invitation.sender).latest('created_at')
+        opponent_wrap = SpotifyWrap.objects.filter(user=invitation.recipient).latest('created_at')
 
         game_system = SpotifyGameSystem()
         results = game_system.compare_players(
@@ -248,11 +297,13 @@ def game_match(request):
             opponent_wrap.top_tracks
         )
 
-        return JsonResponse({
+        context = {
             'results': results,
-            'user_name': request.user.username,
-            'opponent_name': opponent_wrap.user.username
-        })
-
-    except Exception as e:
-        return JsonResponse({'error': str(e)})
+            'user_name': invitation.sender.username,
+            'opponent_name': invitation.recipient.username,
+            'invitation': invitation
+        }
+        return render(request, 'spotify_webapp/game.html', context)
+    except SpotifyWrap.DoesNotExist:
+        messages.error(request, 'Spotify data not found')
+        return redirect('spotify_webapp:dashboard')
