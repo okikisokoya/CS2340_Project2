@@ -1,18 +1,20 @@
-<div class="login-container">
-  <h1>Welcome to Spotify Wars!</h1>
-  <sub>Login to begin the journey!</sub>
-  <div class="input-group">
-      <label class="input-label">Username</label>
-      <input type="text" class="input-field" placeholder="Enter username">
-      <div class="helper-text">Create a new account!</div>
+<body>
+  <div class="login-container">
+    <h1>Welcome to Spotify Wars!</h1>
+    <sub>Login to begin the journey!</sub>
+    <div class="input-group">
+        <label class="input-label">Username</label>
+        <input type="text" class="input-field" placeholder="Enter username">
+        <div class="helper-text">Create a new account!</div>
+    </div>
+
+    <div class="input-group">
+        <label class="input-label">Password</label>
+        <input type="password" class="input-field" placeholder="Enter password">
+      <div class="helper-text"><a class="helper-text" routerLink="/forgotpass">Forgot my password!</a></div>
+    </div>
+
+    <a routerLink="/"><button class="submit-button">Go to hyperdrive!</button></a>
+    <a routerLink="/"><button class="submit-button">Return to landing!</button></a>
   </div>
-  
-  <div class="input-group">
-      <label class="input-label">Password</label>
-      <input type="password" class="input-field" placeholder="Enter password">
-      <div class="helper-text" [routerLink]="['/forgotpass']">Forgot my password!</div>
-  </div>
-  
-  <button class="submit-button" [routerLink]="['/']">Go to hyperdrive!</button>
-  <button class="submit-button" [routerLink]="['/']">Return to landing!</button>
-</div>
+</body>
