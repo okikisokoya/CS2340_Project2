@@ -85,9 +85,14 @@ def get_top_tracks(request):
         artist_name = track['artists'][0]['name']
         album_cover_url = track['album']['images'][0]['url']
         print(f"{idx}.{track_name} by {artist_name}")
+        preview_url = track.get('preview_url')
 
-        tracks_list.append(f"{idx}.{track_name} by {artist_name}")
+        track_info = f"{idx}.{track_name} by {artist_name}"
+        if preview_url:
+            track_info += f'<br><audio controls><source src="{preview_url}" type="audio/mpeg"></audio>'
+        tracks_list.append(track_info)
     print("--------\n")
+
 
     return HttpResponse("<br>".join(tracks_list))
     # if request.GET.get("code"):
@@ -103,6 +108,37 @@ def get_top_tracks(request):
     #     print(f"{idx + 1}. {track_name} by {artist_name}")
     #
     # return HttpResponse("<br>".join(top_tracks))
+
+
+def play_track_preview(request, track_id):
+    if not request.GET.get("code"):
+        return JsonResponse({"error": "Not authenticated"})
+
+    sp_oauth = SpotifyOAuth(
+        client_id=SPOTIFY_CLIENT_ID,
+        client_secret=SPOTIFY_CLIENT_SECRET,
+        redirect_uri="http://127.0.0.1:8000/top-tracks/",
+        scope='user-top-read'
+    )
+
+    token_info = sp_oauth.get_access_token(request.GET["code"], check_cache=False)
+    sp = spotipy.Spotify(auth=token_info['access_token'])
+
+    try:
+        track = sp.track(track_id)
+        preview_url = track['preview_url']
+
+        if not preview_url:
+            return JsonResponse({"error": "No preview available for this track"})
+
+        return JsonResponse({
+            "preview_url": preview_url,
+            "name": track['name'],
+            "artist": track['artists'][0]['name']
+        })
+    except Exception as e:
+        return JsonResponse({"error": str(e)})
+
 def get_top_artists(request):
     sp_oauth = SpotifyOAuth(
         client_id= SPOTIFY_CLIENT_ID,

@@ -6,7 +6,7 @@ app_name = 'spotify_webapp'
 
 urlpatterns = [
     #our webapp
-path('', views.home, name='home'),
+    path('', views.home, name='home'),
     path('signup/', views.signup_view, name='signup'),
     path('login/', views.user_login, name='login'),
     path('logout/', views.user_logout, name='logout'),
@@ -20,4 +20,5 @@ path('', views.home, name='home'),
     path('top-tracks/', views.get_top_tracks, name='top-tracks'),
     path('top-artists/', views.get_top_artists, name='top-artists'),
     path('refresh-token/', views.refresh_token, name='refresh-token'),
+    path('track/<str:track_id>/preview/', views.play_track_preview, name='track-preview'),
 ]
