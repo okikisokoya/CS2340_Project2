@@ -1,0 +1,48 @@
+/* Background with stars */
+body {
+    background-color: black;
+    /*background-image: url('/path-to-your-stars-background-image.png'); /* use a starry background */
+    color: #ffd600; /* Yellow color similar to the title color */
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+  }
+  
+  .settings-container {
+    margin-top: 100px;
+  }
+  
+  h1 {
+    font-size: 2.5em;
+    color: #ffd600; /* Bright yellow */
+    margin-bottom: 40px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px #000000;
+  }
+  
+  button {
+    width: 80%;
+    padding: 15px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    color: black;
+    cursor: pointer;
+  }
+  
+  button:nth-child(2) {
+    background-color: #fff59d; /* Light yellow for email button */
+  }
+  
+  button:nth-child(3) {
+    background-color: #64b5f6; /* Blue for password button */
+  }
+  
+  button:nth-child(4) {
+    background-color: #e57373; /* Red for delete account button */
+  }
+  
+  button:hover {
+    opacity: 0.9;
+  }
+  

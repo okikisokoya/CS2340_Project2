@@ -1,0 +1,57 @@
+.dashboard-container {
+    text-align: center;
+    color: #ffffff;
+    background-color: #000000;
+    padding: 20px;
+    height: 100vh;
+    background-image: url('/assets/star-background.jpg'); /* Replace with your own starry background */
+    background-size: cover;
+  }
+  
+  .title {
+    font-family: 'Star Jedi', sans-serif;
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
+  
+  .button-container {
+    margin: 20px 0;
+  }
+  
+  .action-button {
+    padding: 15px 30px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .blue {
+    background-color: #2196F3;
+  }
+  
+  .red {
+    background-color: #f44336;
+  }
+  
+  .options-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 30px 0;
+  }
+  
+  .options-list li {
+    margin: 10px 0;
+  }
+  
+  .logout {
+    display: block;
+    margin-top: 20px;
+    color: #ffffff;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
