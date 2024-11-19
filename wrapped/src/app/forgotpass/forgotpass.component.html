@@ -1,10 +1,11 @@
-<div class="forgotpass-container">
-    <h1>Welcome to Spotify Wars!</h1>
-    <p>Change my password!</p>
+<body>
+  <div class="forgotpass-container">
+      <h1>Welcome to Spotify Wars!</h1>
+      <p>Change my password!</p>
     <div class="input-group">
         <input type="text" class="input-field" placeholder="Enter username">
     </div>
-    
+
     <div class="input-group">
         <input type="password" class="input-field" placeholder="Enter new password">
     </div>
@@ -12,6 +13,7 @@
     <div class="input-group">
         <input type="password" class="input-field" placeholder="Confirm new password">
     </div>
-    
-    <button class="submit-button" [routerLink]="['/login']"> Return to login! </button>
+
+    <a routerLink="/login"><button class="submit-button"> Return to login! </button></a>
   </div>
+</body>
