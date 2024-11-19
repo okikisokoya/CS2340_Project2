@@ -56,3 +56,24 @@ p {
   background-color: #ff6347;
   color: white;
 }
+
+
+.submit-button {
+  width: 50%;
+  padding: 12px;
+  margin-top: 20px;
+  background-color: transparent;
+  border: 10px bold #FF6F61; 
+  color: #FF6F61; 
+  font-family: 'Nico-Moji', sans-serif; 
+  font-size: 1.0rem;
+  border-color:#FF6F61;
+  border-radius: 5px; 
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease; 
+}
+
+.submit-button:hover {
+  background-color: #FF6F61; 
+  color: white;
+}

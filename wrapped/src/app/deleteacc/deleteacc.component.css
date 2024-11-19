@@ -37,7 +37,8 @@
   
    p {
     font-family: 'Nico-Moji', sans-serif;
-    color: #F3FF47;
+    color: white;
+    font-size:2rem;
   }
   
   p2 {
@@ -108,7 +109,7 @@
   
   /* Submit button styling */
   .submit-button {
-    width: 100%;
+    width: 40%;
     padding: 12px;
     margin-top: 20px;
     background-color: transparent;

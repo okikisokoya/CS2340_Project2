@@ -40,9 +40,11 @@
     color: #F3FF47;
   }
   
-  p2 {
+  sub {
     font-family: 'Nico-Moji', sans-serif;
     color: white;
+    font-weight: bolder;
+    font-size: 1.5rem;
   }
   
   h1 {
@@ -108,7 +110,7 @@
   
   /* Submit button styling */
   .submit-button {
-    width: 100%;
+    width: 60%;
     padding: 12px;
     margin-top: 20px;
     background-color: transparent;
