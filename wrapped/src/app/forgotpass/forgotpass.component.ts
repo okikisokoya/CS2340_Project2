@@ -7,7 +7,9 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-forgotpass',
   standalone: true,
-  imports: [],
+  imports: [CommonModule,
+    FormsModule,
+    RouterLink],
   templateUrl: './forgotpass.component.html',
   styleUrl: './forgotpass.component.css'
 })

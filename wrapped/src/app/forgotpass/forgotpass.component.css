@@ -107,22 +107,22 @@
   }
   
   /* Submit button styling */
-  .submit-button {
-    width: 100%;
-    padding: 12px;
-    margin-top: 20px;
-    background-color: transparent;
-    border: 2px solid #F3FF47;
-    color: #F3FF47;
-    font-family: 'Nico-Moji', sans-serif;
-    font-size: 1.1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .submit-button:hover {
-    background-color: #F3FF47;
-    color: black;
-  }
+.submit-button {
+  width: 50%;
+  padding: 12px;
+  margin-top: 20px;
+  background-color: transparent;
+  border: 2px solid #F3FF47;
+  color: #F3FF47;
+  font-family: 'Nico-Moji', sans-serif;
+  font-size: 1.1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #F3FF47;
+  color: black;
+}
   
