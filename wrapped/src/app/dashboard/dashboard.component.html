@@ -1,0 +1,17 @@
+<div class="dashboard-container">
+    <h1 class="title">Spotify Wars</h1>
+    <p>Welcome, {{ username }} to your battlefield!</p>
+  
+    <div class="button-container">
+      <button class="action-button blue" (click)="generateWrapped()">Generate a new Wrapped to help Robby out!</button>
+      <button class="action-button red" (click)="callAlly()">Call an Ally for a Wrapped!</button>
+    </div>
+  
+    <ul class="options-list">
+      <li><a routerLink="/past-wraps">See past wraps</a></li>
+      <li><a routerLink="/user-settings">User settings</a></li>
+      <li><a (click)="deleteAccount()">Delete Account</a></li>
+    </ul>
+  
+    <a class="logout" (click)="logout()">logout</a>
+  </div>
