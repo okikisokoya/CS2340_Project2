@@ -1,10 +1,24 @@
-<div class="general-container">
-    <h1>Create an account to see where Robby goes!</h1>
-    <form>
-      <p>placeholder="enter username" </p> 
-      <input type="password" placeholder="enter password" />
-      <input type="password" placeholder="confirm password" />
-      <button type="submit">Board my spaceship!</button>
-    </form>
-  </div>
+  <body>
+    <div class="registration-container">
+      <h1>Create an account to see where Robby goes!</h1>
+      <sub>Register to begin the journey!</sub>
+      <div class="input-group">
+          <label class="input-label">Username</label>
+          <input type="text" class="input-field" placeholder="Enter username">
+      </div>
+  
+      <div class="input-group">
+          <label class="input-label">Password</label>
+          <input type="password" class="input-field" placeholder="Enter password">
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Confirm Password</label>
+        <input type="password" class="input-field" placeholder="Confirm password">
+    </div>
+  
+      <a routerLink="/"><button class="submit-button">Board my spaceship!</button></a>
+      <a routerLink="/"><button class="submit-button">Return to landing!</button></a>
+    </div>
+  </body>
   
