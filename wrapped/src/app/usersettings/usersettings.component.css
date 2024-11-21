@@ -1,48 +1,182 @@
-/* Background with stars */
-body {
-    background-color: black;
-    /*background-image: url('/path-to-your-stars-background-image.png'); /* use a starry background */
-    color: #ffd600; /* Yellow color similar to the title color */
-    font-family: 'Roboto', sans-serif;
-    text-align: center;
+@font-face {
+    font-family: 'Nico-Moji';
+    src: url('../assets/fonts/nicomoji.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Star-Jedi-Hollow';
+    src: url('../assets/fonts/Starjhol.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
   }
   
   .settings-container {
-    margin-top: 100px;
+    text-align: center;
+    background-image: url('../assets/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    min-height: 100vh;
+    padding: 40px;
+  }
+  
+   p {
+    font-family: 'Nico-Moji', sans-serif;
+    color: #F3FF47;
+  }
+  
+  sub {
+    font-family: 'Nico-Moji', sans-serif;
+    color: white;
+    font-weight: bolder;
+    font-size: 1.5rem;
   }
   
   h1 {
-    font-size: 2.5em;
-    color: #ffd600; /* Bright yellow */
-    margin-bottom: 40px;
-    font-weight: bold;
-    text-shadow: 2px 2px 4px #000000;
+    font-family: 'Star-Jedi-Hollow', sans-serif;
+    font-size: 4rem;
+    color: #F3FF47;
+    text-shadow: 2px 2px 4px rgba(243, 255, 71, 0.5);  
   }
   
-  button {
-    width: 80%;
-    padding: 15px;
-    margin: 10px 0;
-    border: none;
+  
+  .input-group {
+    margin-bottom: 20px;
+  }
+  
+  .input-field {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 2px solid #F3FF47;
     border-radius: 5px;
-    font-size: 1.2em;
-    color: black;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #F3FF47;
+    font-family: 'Nico-Moji', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+  
+  .input-field::placeholder {
+    color: rgba(243, 255, 71, 0.5);
+  }
+  
+  .input-field:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(243, 255, 71, 0.5);
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .input-label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    color: #F3FF47;
+    font-family: 'Nico-Moji', sans-serif;
+  }
+  
+  /* Style for the password field specifically */
+  .input-field[type="password"] {
+    border-color: lightgreen;
+  }
+  
+  .input-field[type="password"]:focus {
+    box-shadow: 0 0 10px rgba(144, 238, 144, 0.5);
+  }
+  
+  /* Helper links styling */
+  .helper-text {
+    text-align: left;
+    margin-top: 5px;
+    font-size: 0.9rem;
+    color: #F3FF47;
     cursor: pointer;
   }
-  
-  button:nth-child(2) {
-    background-color: #fff59d; /* Light yellow for email button */
+
+  /* General Button Styling */
+  .menu-button {
+    font-family: 'Nico-Moji', sans-serif;
+    font-size: 1.6rem;
+    padding: 15px 30px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    margin: 10px 0;
+    transition: transform 0.3s, box-shadow 0.3s ease;
   }
   
-  button:nth-child(3) {
-    background-color: #64b5f6; /* Blue for password button */
+  /* Blue Button Style */
+  .blue-button {
+    background-color: #3F92FF; /* Blue background */
+    color: black; /* Black text */
   }
   
-  button:nth-child(4) {
-    background-color: #e57373; /* Red for delete account button */
+  .blue-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px white;
   }
   
-  button:hover {
-    opacity: 0.9;
+  /* Red Button Style */
+  .red-button {
+    background-color: #FF3B3B; /* Red background */
+    color: black; /* Black text */
+  }
+  
+  .red-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px white;
+  }
+
+  /* Yellow Button Style */
+  .yellow-button {
+    background-color: yellow; /* Yellow background */
+    color: black; /* Black text */
+  }
+  
+  .yellow-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px white;
+  }
+  
+  /* Center-aligning buttons */
+  .menu-button {
+    display: block;
+    margin: 20px auto;
+  }
+  
+  
+  /* Submit button styling */
+  .submit-button {
+    width: 60%;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: transparent;
+    border: 2px solid #F3FF47;
+    color: #F3FF47;
+    font-family: 'Nico-Moji', sans-serif;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #F3FF47;
+    color: black;
   }
   
