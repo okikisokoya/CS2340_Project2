@@ -1,36 +1,183 @@
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+@font-face {
+    font-family: 'Nico-Moji';
+    src: url('../assets/fonts/nicomoji.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Star-Jedi-Hollow';
+    src: url('../assets/fonts/Starjhol.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
     height: 100vh;
-    background: black url('/assets/star-background.jpg') repeat center center;
-    color: yellow;
-    font-family: 'Star Jedi', sans-serif; /* Make sure this font is imported */
+    width: 100vw;
+    overflow: hidden;
   }
   
-  .title {
-    font-size: 4rem;
-    margin-bottom: 1rem;
+  .loggedout-container {
+    text-align: center;
+    background-image: url('../assets/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    min-height: 100vh;
+    padding: 40px;
   }
   
-  .subtitle {
+   p {
+    font-family: 'Nico-Moji', sans-serif;
+    color: #F3FF47;
+    font-size: 2.3rem;
+  }
+  
+  sub {
+    font-family: 'Nico-Moji', sans-serif;
+    color: white;
+    font-weight: bolder;
     font-size: 1.5rem;
-    margin-bottom: 2rem;
   }
   
-  .login-button {
-    background-color: yellow;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1.2rem;
-    cursor: pointer;
+  h1 {
+    font-family: 'Star-Jedi-Hollow', sans-serif;
+    font-size: 4rem;
+    color: #F3FF47;
+    text-shadow: 2px 2px 4px rgba(243, 255, 71, 0.5);  
+  }
+  
+  
+  .input-group {
+    margin-bottom: 20px;
+  }
+  
+  .input-field {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 2px solid #F3FF47;
     border-radius: 5px;
-    color: black;
-    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #F3FF47;
+    font-family: 'Nico-Moji', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
   }
   
-  .login-button:hover {
-    background-color: #f5d100;
+  .input-field::placeholder {
+    color: rgba(243, 255, 71, 0.5);
+  }
+  
+  .input-field:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(243, 255, 71, 0.5);
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .input-label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    color: #F3FF47;
+    font-family: 'Nico-Moji', sans-serif;
+  }
+  
+  /* Style for the password field specifically */
+  .input-field[type="password"] {
+    border-color: lightgreen;
+  }
+  
+  .input-field[type="password"]:focus {
+    box-shadow: 0 0 10px rgba(144, 238, 144, 0.5);
+  }
+  
+  /* Helper links styling */
+  .helper-text {
+    text-align: left;
+    margin-top: 5px;
+    font-size: 0.9rem;
+    color: #F3FF47;
+    cursor: pointer;
+  }
+
+  /* General Button Styling */
+  .menu-button {
+    font-family: 'Nico-Moji', sans-serif;
+    font-size: 1.3rem;
+    padding: 12px 24px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    margin: 10px 0;
+    transition: transform 0.3s, box-shadow 0.3s ease;
+  }
+  
+  /* Blue Button Style */
+  .blue-button {
+    background-color: #3F92FF; /* Blue background */
+    color: black; /* Black text */
+  }
+  
+  .blue-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px white;
+  }
+  
+  /* Red Button Style */
+  .red-button {
+    background-color: #FF3B3B; /* Red background */
+    color: black; /* Black text */
+  }
+  
+  .red-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px white;
+  }
+
+  /* Yellow Button Style */
+  .yellow-button {
+    background-color: yellow; /* Yellow background */
+    color: black; /* Black text */
+  }
+  
+  .yellow-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px white;
+  }
+  
+  /* Center-aligning buttons */
+  .menu-button {
+    display: block;
+    margin: 20px auto;
+  }
+  
+  
+  /* Submit button styling */
+  .submit-button {
+    width: 60%;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: transparent;
+    border: 2px solid #F3FF47;
+    color: #F3FF47;
+    font-family: 'Nico-Moji', sans-serif;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #F3FF47;
+    color: black;
   }
   
