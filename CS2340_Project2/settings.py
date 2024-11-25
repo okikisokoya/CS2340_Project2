@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'spotify_webapp.apps.SpotifyWebappConfig',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +55,18 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:4200',
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:4200',
+]
+
+APPEND_SLASH = False
 
 ROOT_URLCONF = 'CS2340_Project2.urls'
 
