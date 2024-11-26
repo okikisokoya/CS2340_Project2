@@ -18,7 +18,7 @@ from django.http import JsonResponse
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from django.views.decorators.http import require_http_methods
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_protect, csrf_exempt
 
 from CS2340_Project2.secret import SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET
 
@@ -226,7 +226,7 @@ def signup_view(request):
 
     return render(request, 'spotify_webapp/signup.html')
 
-
+@csrf_exempt #add this so you don't need to mess with cookies
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
