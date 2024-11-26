@@ -17,6 +17,15 @@ import { TopSongsComponent } from './top-songs/top-songs.component';
 import { ListeningTimeComponent } from './listening-time/listening-time.component';
 import { ListeningmoodComponent } from './listeningmood/listeningmood.component';
 import { MostsurprisingComponent } from './mostsurprising/mostsurprising.component';
+import { DuointroComponent } from './duointro/duointro.component';
+import { DuotopgenresComponent } from './duotopgenres/duotopgenres.component';
+import { DuominigameComponent } from './duominigame/duominigame.component';
+import { DuotopartistsComponent } from './duotopartists/duotopartists.component';
+import { DuotopsongsComponent } from './duotopsongs/duotopsongs.component';
+import { DuototalpointsComponent } from './duototalpoints/duototalpoints.component';
+import { JediComponent } from './jedi/jedi.component';
+import { SithComponent } from './sith/sith.component';
+import { NeutralComponent } from './neutral/neutral.component';
 
 
 
@@ -39,5 +48,14 @@ export const routes: Routes = [
   { path: 'listeningtime', component: ListeningTimeComponent }, 
   { path: 'listeningmood', component: ListeningmoodComponent }, 
   { path: 'mostsurprising', component: MostsurprisingComponent },
+  { path: 'duointro', component: DuointroComponent },
+  { path: 'duotopgenres', component: DuotopgenresComponent },
+  { path: 'duominigame', component: DuominigameComponent },
+  { path: 'duotopartists', component: DuotopartistsComponent },
+  { path: 'duotopsongs', component: DuotopsongsComponent },
+  { path: 'duototalpoints', component: DuototalpointsComponent },
+  { path: 'jedi', component: JediComponent },
+  { path: 'sith', component: SithComponent },
+  { path: 'neutral', component: NeutralComponent }
   
 ];
