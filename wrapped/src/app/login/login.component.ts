@@ -8,8 +8,8 @@ import { RouterLink } from '@angular/router';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  standalone: true,  // Mark as standalone component
-  imports: [FormsModule, CommonModule, RouterLink], // Import FormsModule here for ngModel binding
+  standalone: true,  
+  imports: [FormsModule, CommonModule, RouterLink], 
 })
 export class LoginComponent {
   username = '';

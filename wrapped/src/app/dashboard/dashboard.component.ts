@@ -1,21 +1,16 @@
-// import { Component } from '@angular/core';
 
-// @Component({
-//   selector: 'app-dashboard',
-//   standalone: true,
-//   imports: [],
-//   templateUrl: './dashboard.component.html',
-//   styleUrl: './dashboard.component.css'
-// })
-// export class DashboardComponent {
-
-// }
 import { Component } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';  
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
+  standalone: true,
+  imports: [CommonModule, FormsModule, RouterLink],
 })
 export class DashboardComponent {
   username: string = '<user>'; // Replace or set dynamically based on logged-in user

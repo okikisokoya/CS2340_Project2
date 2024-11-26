@@ -19,9 +19,9 @@
 body {
   margin: 0;
   padding: 0;
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
+  height: auto;
+  width: auto;
+  overflow: auto;
 }
 
 .registration-container {
@@ -31,9 +31,10 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   width: 100vw;
-  min-height: 100vh;
-  padding: 40px;
+  min-height: 100vh; /* Keep this to fill the viewport */
 }
+
+
 
  p {
   font-family: 'Nico-Moji', sans-serif;
@@ -126,4 +127,14 @@ h1 {
 .submit-button:hover {
   background-color: #F3FF47;
   color: black;
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 2rem; /* Slightly smaller heading on small screens */
+  }
+
+  .submit-button {
+    width: 90%; 
+  }
 }

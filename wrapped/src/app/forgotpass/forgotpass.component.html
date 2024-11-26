@@ -1,19 +1,75 @@
 <body>
   <div class="forgotpass-container">
-      <h1>Welcome to Spotify Wars!</h1>
-      <p>Change my password!</p>
+    <h1>Welcome to Spotify Wars!</h1>
+    <p>Change my password!</p>
+
     <div class="input-group">
-        <input type="text" class="input-field" placeholder="Enter username">
+      <input type="text" class="input-field" placeholder="Enter username" id="username">
     </div>
 
     <div class="input-group">
-        <input type="password" class="input-field" placeholder="Enter new password">
+      <input 
+        type="password" 
+        class="input-field" 
+        placeholder="Enter new password" 
+        id="newPassword"
+        oninput="validatePassword()"
+      >
     </div>
 
     <div class="input-group">
-        <input type="password" class="input-field" placeholder="Confirm new password">
+      <input 
+        type="password" 
+        class="input-field" 
+        placeholder="Confirm new password" 
+        id="confirmPassword"
+        oninput="validatePassword()"
+      >
     </div>
 
-    <a routerLink="/login"><button class="submit-button"> Return to login! </button></a>
+    <p id="error-message" style="color: red;"></p>
+
+    <button 
+      class="submit-button" 
+      onclick="submitPasswordChange()" 
+      id="submit-button" 
+      disabled
+    >
+      Submit
+    </button>
+
+    <a routerLink="/login">
+      <button class="submit-button">Return to login!</button>
+    </a>
   </div>
+
+  <script>
+    function validatePassword() {
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const errorMessage = document.getElementById('error-message');
+      const submitButton = document.getElementById('submit-button');
+
+      if (newPassword.length < 10) {
+        errorMessage.textContent = 'Password must be at least 10 characters long.';
+        submitButton.disabled = true;
+      } else if (newPassword !== confirmPassword) {
+        errorMessage.textContent = 'Passwords do not match.';
+        submitButton.disabled = true;
+      } else {
+        errorMessage.textContent = '';
+        submitButton.disabled = false;
+      }
+    }
+
+    function submitPasswordChange() {
+      const username = document.getElementById('username').value;
+      const newPassword = document.getElementById('newPassword').value;
+
+      if (username && newPassword) {
+        alert('Password successfully changed!');
+        // Add additional logic to send data to the backend if needed.
+      }
+    }
+  </script>
 </body>

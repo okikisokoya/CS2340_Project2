@@ -4,14 +4,18 @@
     <button (click)="changePassword()">Change my password</button>
     <button (click)="deleteAccount()">Delete my account</button>
   </div>  -->
-  
+  <body>
   <div class="settings-container">
-    <h1>SP0TiFY  WARS</h1>
-    <div class="actions">
+    <h1>SP0TIFY  WARS</h1>
+    <div class="input-group">
+      
        <!-- Buttons -->
-    <button class="menu-button yellow-button">Change my e-mail address</button>
-    <button class="menu-button blue-button">Change my password</button>
-    <button class="menu-button red-button">Delete my account</button>
+       <a routerLink="/forgotpass"><button class="menu-button blue-button" >Change my password </button></a>
+       <a routerLink="/deleteacc"><button class="menu-button red-button" >Delete my account </button></a>
 
-    <div class="logout"><p><a class="helper-text" routerLink="/logout">LOGOUT</a></p></div>
+    <div class="logout"><a class="helper-text" routerLink="/loggedout">LOGOUT</a></div>
+    <div class="logout"><a class="helper-text" routerLink="/dashboard">RETURN TO MY DASH</a></div>
   </div> 
+  </div>
+  </body>
+
