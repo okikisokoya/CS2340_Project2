@@ -19,8 +19,8 @@
 body {
   margin: 0;
   padding: 0;
-  height: auto;
-  width: auto;
+  width: 100vw;
+  height: 100vh;
   overflow: auto;
 }
 
@@ -31,7 +31,8 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   width: 100vw;
-  min-height: 100vh; /* Keep this to fill the viewport */
+  min-height: 100vh; 
+  overflow: auto;
 }
 
 
