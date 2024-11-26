@@ -8,13 +8,13 @@ urlpatterns = [
     #our webapp
     path('', views.home, name='home'),
     path('signup/', views.signup_view, name='signup'),
-    path('login/', views.user_login, name='login'),
+    path('api/login/', views.user_login, name='login'),
     path('logout/', views.user_logout, name='logout'),
     path('profile/', views.profile, name='profile'),
     path('delete-account/', views.delete_account, name='delete_account'),
 
     #for spotify
-    path('login/', views.spotify_login_view, name='login'),
+    path('api/spotifyLogin/', views.spotify_login_view, name='login'),
     path('callback/', views.callback, name='callback'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('top-tracks/', views.get_top_tracks, name='top-tracks'),
