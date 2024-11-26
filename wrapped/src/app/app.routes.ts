@@ -17,7 +17,6 @@ import { TopSongsComponent } from './top-songs/top-songs.component';
 import { ListeningTimeComponent } from './listening-time/listening-time.component';
 import { ListeningmoodComponent } from './listeningmood/listeningmood.component';
 import { MostsurprisingComponent } from './mostsurprising/mostsurprising.component';
-import { OutroComponent } from './outro/outro.component';
 
 
 
@@ -40,6 +39,5 @@ export const routes: Routes = [
   { path: 'listeningtime', component: ListeningTimeComponent }, 
   { path: 'listeningmood', component: ListeningmoodComponent }, 
   { path: 'mostsurprising', component: MostsurprisingComponent },
-  { path: 'outro', component: OutroComponent },
   
 ];
