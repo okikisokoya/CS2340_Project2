@@ -19,9 +19,8 @@
   body {
     margin: 0;
     padding: 0;
-    height: 100vh;
     width: 100vw;
-    overflow: hidden;
+    overflow: auto; /* Allow scrolling if content exceeds the viewport */
   }
   
   .forgotpass-container {
@@ -31,8 +30,8 @@
     background-position: center;
     background-repeat: no-repeat;
     width: 100vw;
-    min-height: 100vh;
-    padding: 40px;
+    padding: 20px;
+    min-height: 100vh; 
   }
   
    p {

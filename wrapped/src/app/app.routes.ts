@@ -10,6 +10,14 @@ import { LoggedOutComponent } from './logged-out/logged-out.component';
 import { AccdeletedComponent } from './accdeleted/accdeleted.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { UsersettingsComponent } from './usersettings/usersettings.component';
+import { IntroComponent } from './intro/intro.component';
+import { TopgenresComponent } from './topgenres/topgenres.component';
+import { TopArtistsComponent } from './top-artists/top-artists.component';
+import { TopSongsComponent } from './top-songs/top-songs.component';
+import { ListeningTimeComponent } from './listening-time/listening-time.component';
+import { ListeningmoodComponent } from './listeningmood/listeningmood.component';
+import { MostsurprisingComponent } from './mostsurprising/mostsurprising.component';
+
 
 
 export const routes: Routes = [
@@ -24,4 +32,12 @@ export const routes: Routes = [
   { path: 'accdeleted', component: AccdeletedComponent },
   { path: 'registration', component: RegistrationComponent },
   { path: 'settings', component: UsersettingsComponent },
+  { path: 'intro', component: IntroComponent },
+  { path: 'topgenres', component: TopgenresComponent }, 
+  { path: 'topartists', component: TopArtistsComponent }, 
+  { path: 'topsongs', component: TopSongsComponent }, 
+  { path: 'listeningtime', component: ListeningTimeComponent }, 
+  { path: 'listeningmood', component: ListeningmoodComponent }, 
+  { path: 'mostsurprising', component: MostsurprisingComponent },
+  
 ];

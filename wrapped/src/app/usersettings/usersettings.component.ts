@@ -11,11 +11,17 @@
 
 // }
 import { Component } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';  
 
 @Component({
   selector: 'app-usersettings',
   templateUrl: './usersettings.component.html',
   styleUrls: ['./usersettings.component.css'],
+  standalone: true,
+  imports: [CommonModule, FormsModule, RouterLink],
 })
 export class UsersettingsComponent {
   changeEmail() {
