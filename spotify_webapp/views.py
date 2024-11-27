@@ -79,7 +79,8 @@ def get_top_tracks(request):
     #printing
     print("\n==User's Top Tracks===")
     print("--------")
-
+    #deleting the existing top tracks in case things need to start over
+    TopTrack.objects.filter(user = request.user).delete()
     tracks_list=[];
     for idx, track in enumerate(top_tracks_data['items'], 1):
         album_cover_url = track['images'][0]['url'] if track['images'] else None
@@ -167,7 +168,7 @@ def get_top_artists(request):
     #printing
     print("\n==User's Top Tracks===")
     print("--------")
-
+    TopArtist.objects.filter(user = request.user).delete()
     artists_list=[];
     for idx, artist in enumerate(top_artists['items'], 1):
         artist_image_url = artist['images'][0]['url'] if artist['images'] else None
