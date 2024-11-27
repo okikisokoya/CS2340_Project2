@@ -13,7 +13,7 @@ from django.contrib import messages
 from spotipy import SpotifyOAuth, Spotify
 
 from wrapped.src.loginrequest import auth_URL
-from .models import User, Authors
+from .models import User, Authors, Feedback
 from django.http import JsonResponse
 
 import spotipy
@@ -301,3 +301,13 @@ def home(request):
 def authors(request):
     authors = Authors.objects.all().order_by('last_name')
     return render(request, '/meet_the_authors.html', {'authors': authors})
+
+def submit_feedback(request):
+    if request.method == 'POST':
+        Feedback.objects.create(
+            name = request.POST.get('name'),
+            email = request.POST.get('email'),
+            feedback = request.POST.get('feedback'),
+        )
+        return redirect('spotify_webapp:home')
+    return render(request, 'feedback_form.html')
