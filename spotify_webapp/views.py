@@ -13,7 +13,7 @@ from django.contrib import messages
 from spotipy import SpotifyOAuth, Spotify
 
 from wrapped.src.loginrequest import auth_URL
-from .models import User, Authors, Feedback
+from .models import User, Authors, Feedback, TopArtist, TopTrack
 from django.http import JsonResponse
 
 import spotipy
@@ -82,6 +82,16 @@ def get_top_tracks(request):
 
     tracks_list=[];
     for idx, track in enumerate(top_tracks_data['items'], 1):
+        album_cover_url = track['images'][0]['url'] if track['images'] else None
+        top_track = TopTrack.objects.create(
+            user = request.user,
+            track_id = track['id'],
+            name = track['name'],
+            artist = track['artists'][0]['name'],
+            popularity = track['popularity'],
+            album_image_url = album_cover_url,
+
+        )
         track_name = track['name']
         artist_name = track['artists'][0]['name']
         album_cover_url = track['album']['images'][0]['url']
@@ -160,6 +170,16 @@ def get_top_artists(request):
 
     artists_list=[];
     for idx, artist in enumerate(top_artists['items'], 1):
+        artist_image_url = artist['images'][0]['url'] if artist['images'] else None
+
+        # creating and saving the top artists_list
+        top_artist = TopArtist.objects.create(
+            user = request.user,
+            artist_id = artist['id'],
+            name = artist['name'],
+            popularity = artist['popularity'],
+            artist_image_url = artist_image_url,
+        )
         artist_name = artist['name']
         # album_cover_url = track['album']['images'][0]['url']
         print(f"{idx}. {artist_name}")
