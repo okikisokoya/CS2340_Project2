@@ -31,3 +31,14 @@ class SpotifyWrap(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s Wrap - {self.created_at.strftime('%Y-%m-%d')}"
+
+class Authors(models.Model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    major = models.CharField(max_length=50)
+    favorite_char = models.CharField(max_length=50)
+    bio = models.TextField(blank = True, null = True)
+    email = models.EmailField(blank = True, null = True)
+    profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"

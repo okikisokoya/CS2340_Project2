@@ -21,4 +21,5 @@ urlpatterns = [
     path('top-artists/', views.get_top_artists, name='top-artists'),
     path('refresh-token/', views.refresh_token, name='refresh-token'),
     path('track/<str:track_id>/preview/', views.play_track_preview, name='track-preview'),
+    path('meet-the-jedis/', views.authors, name = 'meet-the-jedis'),
 ]

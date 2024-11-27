@@ -1,4 +1,5 @@
 # spotify_webapp/views.py
+from django.db.models.fields import return_None
 from django.shortcuts import render, redirect
 import urllib
 import requests
@@ -12,7 +13,7 @@ from django.contrib import messages
 from spotipy import SpotifyOAuth, Spotify
 
 from wrapped.src.loginrequest import auth_URL
-from .models import User
+from .models import User, Authors
 from django.http import JsonResponse
 
 import spotipy
@@ -296,3 +297,7 @@ def profile(request):
 
 def home(request):
     return render(request, 'spotify_webapp/home.html')
+
+def authors(request):
+    authors = Authors.objects.all().order_by('last_name')
+    return render(request, '/meet_the_authors.html', {'authors': authors})
