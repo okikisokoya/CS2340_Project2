@@ -54,6 +54,7 @@
     color: #F3FF47;
     text-shadow: 2px 2px 4px rgba(243, 255, 71, 0.5);  
   }
+
   h2 {
     font-family: 'Nico-Moji', sans-serif;
     color: white;
@@ -133,6 +134,35 @@
     color: black;
   }
   
+
+.top-list {
+  list-style: none; 
+  padding: 0;
+  margin: 20px auto;
+  width: 80%; 
+  text-align: center;
+}
+
+
+.top-item {
+  font-family: 'Nico-Moji', sans-serif; 
+  font-size: 1.5rem; 
+  color: #F3FF47; 
+  margin: 10px 0; 
+  padding: 10px; 
+  background-color: rgba(0, 0, 0, 0.7); 
+  border: 2px solid #F3FF47; 
+  border-radius: 8px; 
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); 
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+
+.top-item:hover {
+  background-color: rgba(243, 255, 71, 0.9); 
+  transform: scale(1.05); 
+  cursor: pointer; 
+}
   /* Next button */
   .button-container {
     display: flex;

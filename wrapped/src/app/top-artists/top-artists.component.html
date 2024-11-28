@@ -1,18 +1,16 @@
+
+
 <div class="general-container">
     <h1>Spotify Wars</h1>
-    <h2>Your top artists are:</h2>
-
-    <!-- <h2>Top Artists</h2>
-        <ul>
-        <li *ngFor="let item of items">
-            {{ item }}
+    <sub>Your Top Artists!</sub>
+    <ul class="top-artists-list">
+        <li class="top-artist-item" *ngFor="let artist of topArtists">
+          {{ artist.name }}
         </li>
-        </ul>
-    <p *ngIf="items.length === 0">No items to display.</p> -->
-    
-    <div class="button-container">
-        <button class="next-button">
-          <div class="triangle"></div>
-        </button>
-      </div>
-  </div>
+      </ul>
+    <p *ngIf="items.length === 0">No items to display.</p>
+
+    <a routerLink="/topsongs">  <div class="button-container"><button class="next-button"><div class="triangle">Go to top songs!
+      </div></button></div> </a>
+ </div>
+
