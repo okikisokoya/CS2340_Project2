@@ -85,7 +85,9 @@ def get_top_tracks(request):
     TopTrack.objects.filter(user = request.user).delete()
     tracks_list=[];
     for idx, track in enumerate(top_tracks_data['items'], 1):
-        album_cover_url = track['images'][0]['url'] if track['images'] else None
+        album_cover_url = None
+        if track['album'].get('images'):
+            album_cover_url = track['album']['images'][0]['url']
         top_track = TopTrack.objects.create(
             user = request.user,
             track_id = track['id'],
@@ -93,7 +95,6 @@ def get_top_tracks(request):
             artist = track['artists'][0]['name'],
             popularity = track['popularity'],
             album_image_url = album_cover_url,
-
         )
         track_name = track['name']
         artist_name = track['artists'][0]['name']
@@ -105,24 +106,19 @@ def get_top_tracks(request):
         if preview_url:
             track_info += f'<br><audio controls><source src="{preview_url}" type="audio/mpeg"></audio>'
         tracks_list.append(track_info)
+        dbtrack_info = {
+            'id': track['id'],
+            'name': track['name'],
+            'artist': track['artists'][0]['name'],
+            'popularity': track['popularity'],
+            'album_image_url': album_cover_url,
+        }
+        tracks_list.append(dbtrack_info)
     print("--------\n")
-
-
-    return HttpResponse("<br>".join(tracks_list))
-    # if request.GET.get("code"):
-    #     token_info = sp_oauth.get_access_token(request.GET["code"])
-    #     sp = spotipy.Spotify(auth=token_info['access_token'])
-    # topTracks = sp.current_user_top_tracks(limit=5, offset=0,time_range='medium_term')
-    #printing to terminal??
-    # top_tracks = []
-    # for idx, track in enumerate(topTracks['items']):
-    #     track_name = track['name']
-    #     artist_name = track['artists'][0]['name']
-    #     top_tracks.append(f"{idx + 1}. {track_name} by {artist_name}")
-    #     print(f"{idx + 1}. {track_name} by {artist_name}")
-    #
-    # return HttpResponse("<br>".join(top_tracks))
-
+    return JsonResponse({
+        'total-tracks': len(tracks_list),
+        'tracks': tracks_list,
+    })
 
 def play_track_preview(request, track_id):
     if not request.GET.get("code"):
