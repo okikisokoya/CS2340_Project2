@@ -24,7 +24,7 @@
     overflow: auto;
   }
   
-  .forgotpass-container {
+  .general-container {
     text-align: center;
     background-image: url('../assets/background.jpg');
     background-size: cover;
@@ -111,12 +111,12 @@
   
   /* Submit button styling */
   .submit-button {
-    width: 50%;
+    width: 30%;
     padding: 12px;
     margin-top: 20px;
-    background-color: transparent;
+    background-color: #F3FF47;
     border: 2px solid #F3FF47;
-    color: #F3FF47;
+    color: black;
     font-family: 'Nico-Moji', sans-serif;
     font-size: 1.1rem;
     border-radius: 5px;
@@ -125,17 +125,17 @@
   }
   
   .submit-button:hover {
-    background-color: #F3FF47;
-    color: black;
+    background-color: transparent;
+    color: #F3FF47;
   }
 
   .battle-button {
     width: 50%;
     padding: 12px;
     margin-top: 20px;
-    background-color: transparent;
+    background-color: #47ffe3;
     border: 2px solid #47ffe3;
-    color: #47ffe3;
+    color: black;
     font-family: 'Nico-Moji', sans-serif;
     font-size: 1.1rem;
     border-radius: 5px;
@@ -144,7 +144,7 @@
   }
   
   .battle-button:hover {
-    background-color: #47ffe3;
-    color: black;
+    background-color: transparent;
+    color: #47ffe3;
   }
   

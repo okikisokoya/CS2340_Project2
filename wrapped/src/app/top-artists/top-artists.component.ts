@@ -3,6 +3,7 @@ import { SpotifyService } from '../services/spotify.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+
 @Component({
   selector: 'app-top-artists',
   standalone: true,

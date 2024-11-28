@@ -31,3 +31,39 @@ class SpotifyWrap(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s Wrap - {self.created_at.strftime('%Y-%m-%d')}"
+
+class Authors(models.Model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    major = models.CharField(max_length=50)
+    favorite_char = models.CharField(max_length=50)
+    bio = models.TextField(blank = True, null = True)
+    email = models.EmailField(blank = True, null = True)
+    profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
+
+class Feedback(models.Model):
+    name = models.CharField(max_length=50)
+    email = models.EmailField(blank = True, null = True)
+    feedback = models.TextField(blank = True, null = True)
+    submitted_date = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return f"{self.name} - {self.submitted_date}"
+
+class TopTrack(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    track_id = models.CharField(max_length=100)
+    name = models.CharField(max_length=255)
+    artist = models.CharField(max_length=255)
+    popularity = models.IntegerField()
+    album_image_url = models.URLField(blank = True, null = True)
+
+class TopArtist(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    artist_id = models.CharField(max_length=100)
+    name = models.CharField(max_length=255)
+    popularity = models.IntegerField()
+    artist_image_url = models.URLField(blank = True, null = True)
+
+

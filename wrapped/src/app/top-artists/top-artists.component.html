@@ -1,4 +1,5 @@
 
+
 <div class="general-container">
     <h1>Spotify Wars</h1>
     <sub>Your Top Artists!</sub>
@@ -7,7 +8,9 @@
           {{ artist.name }}
         </li>
       </ul>
+    <p *ngIf="items.length === 0">No items to display.</p>
 
-
-    <a routerLink="/topsongs"> <button class="submit-button">Go to top songs!</button> </a>
+    <a routerLink="/topsongs">  <div class="button-container"><button class="next-button"><div class="triangle">Go to top songs!
+      </div></button></div> </a>
  </div>
+

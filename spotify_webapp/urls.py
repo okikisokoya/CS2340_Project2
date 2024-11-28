@@ -17,13 +17,13 @@ urlpatterns = [
     path('api/delete-account/', views.delete_account, name='delete_account'),
 
     #for spotify
-    path('api/api/spotifyLogin/', views.spotify_login_view, name='login'),
-    path('api/callback/', views.callback, name='callback'),
-    path('api/dashboard/', views.dashboard, name='dashboard'),
-    path('api/top-tracks/', views.get_top_tracks, name='top-tracks'),
-    path('api/top-artists/', views.get_top_artists, name='top-artists'),
-    path('api/refresh-token/', views.refresh_token, name='refresh-token'),
-    path('api/track/<str:track_id>/preview/', views.play_track_preview, name='track-preview'),
-
+    path('api/spotifyLogin/', views.spotify_login_view, name='login'),
+    path('callback/', views.callback, name='callback'),
+    path('dashboard/', views.dashboard, name='dashboard'),
+    path('top-tracks/', views.get_top_tracks, name='top-tracks'),
+    path('top-artists/', views.get_top_artists, name='top-artists'),
+    path('refresh-token/', views.refresh_token, name='refresh-token'),
+    path('track/<str:track_id>/preview/', views.play_track_preview, name='track-preview'),
+    path('meet-the-jedis/', views.authors, name = 'meet-the-jedis'),
 
 ]

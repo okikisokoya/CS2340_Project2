@@ -21,7 +21,7 @@
     padding: 0;
     height: 100vh;
     width: 100vw;
-    overflow: hidden;
+    overflow: auto;
   }
   
   .general-container {
@@ -33,6 +33,7 @@
     width: 100vw;
     min-height: 100vh;
     padding: 40px;
+    overflow: auto;
   }
   
    p {
@@ -53,7 +54,11 @@
     color: #F3FF47;
     text-shadow: 2px 2px 4px rgba(243, 255, 71, 0.5);  
   }
-  
+  h2 {
+    font-family: 'Nico-Moji', sans-serif;
+    color: white;
+    font-size: 2rem;
+  }
   
   .input-group {
     margin-bottom: 20px;
@@ -110,7 +115,7 @@
   
   /* Submit button styling */
   .submit-button {
-    width: 60%;
+    width: 30%;
     padding: 12px;
     margin-top: 20px;
     background-color: yellow;
@@ -126,5 +131,46 @@
   .submit-button:hover {
     background-color: #F3FF47;
     color: black;
+  }
+  
+  /* Next button */
+  .button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full screen height */
+  }
+  
+  /* Circle Button */
+  .next-button {
+    width: 100px;
+    height: 100px;
+    border: none;
+    border-radius: 50%; /* Makes it a circle */
+    background-color: #fb56da; /* Button background color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Optional shadow */
+  }
+  
+  .next-button:active {
+    transform: scale(0.95); /* Button click effect */
+  }
+  
+  /* Triangle Inside Button */
+  .triangle {
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 36px solid white; /* Triangle color */
+    transform: rotate(-90deg);
+    margin-left: 6px;
+  }
+  .next-button:hover {
+    background-color: #F3FF47;
+
   }
   

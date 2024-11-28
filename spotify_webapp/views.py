@@ -1,4 +1,7 @@
 # spotify_webapp/views.py
+import json
+
+from django.db.models.fields import return_None
 from django.shortcuts import render, redirect
 import urllib
 import requests
@@ -12,7 +15,7 @@ from django.contrib import messages
 from spotipy import SpotifyOAuth, Spotify
 
 from wrapped.src.loginrequest import auth_URL
-from .models import User
+from .models import User, Authors, Feedback, TopArtist, TopTrack
 from django.http import JsonResponse
 
 import spotipy
@@ -78,9 +81,21 @@ def get_top_tracks(request):
     #printing
     print("\n==User's Top Tracks===")
     print("--------")
-
+    #deleting the existing top tracks in case things need to start over
+    TopTrack.objects.filter(user = request.user).delete()
     tracks_list=[];
     for idx, track in enumerate(top_tracks_data['items'], 1):
+        album_cover_url = None
+        if track['album'].get('images'):
+            album_cover_url = track['album']['images'][0]['url']
+        top_track = TopTrack.objects.create(
+            user = request.user,
+            track_id = track['id'],
+            name = track['name'],
+            artist = track['artists'][0]['name'],
+            popularity = track['popularity'],
+            album_image_url = album_cover_url,
+        )
         track_name = track['name']
         artist_name = track['artists'][0]['name']
         album_cover_url = track['album']['images'][0]['url']
@@ -91,24 +106,19 @@ def get_top_tracks(request):
         if preview_url:
             track_info += f'<br><audio controls><source src="{preview_url}" type="audio/mpeg"></audio>'
         tracks_list.append(track_info)
+        dbtrack_info = {
+            'id': track['id'],
+            'name': track['name'],
+            'artist': track['artists'][0]['name'],
+            'popularity': track['popularity'],
+            'album_image_url': album_cover_url,
+        }
+        tracks_list.append(dbtrack_info)
     print("--------\n")
-
-
-    return HttpResponse("<br>".join(tracks_list))
-    # if request.GET.get("code"):
-    #     token_info = sp_oauth.get_access_token(request.GET["code"])
-    #     sp = spotipy.Spotify(auth=token_info['access_token'])
-    # topTracks = sp.current_user_top_tracks(limit=5, offset=0,time_range='medium_term')
-    #printing to terminal??
-    # top_tracks = []
-    # for idx, track in enumerate(topTracks['items']):
-    #     track_name = track['name']
-    #     artist_name = track['artists'][0]['name']
-    #     top_tracks.append(f"{idx + 1}. {track_name} by {artist_name}")
-    #     print(f"{idx + 1}. {track_name} by {artist_name}")
-    #
-    # return HttpResponse("<br>".join(top_tracks))
-
+    return JsonResponse({
+        'total-tracks': len(tracks_list),
+        'tracks': tracks_list,
+    })
 
 def play_track_preview(request, track_id):
     if not request.GET.get("code"):
@@ -156,9 +166,19 @@ def get_top_artists(request):
     #printing
     print("\n==User's Top Tracks===")
     print("--------")
-
+    TopArtist.objects.filter(user = request.user).delete()
     artists_list=[];
     for idx, artist in enumerate(top_artists['items'], 1):
+        artist_image_url = artist['images'][0]['url'] if artist['images'] else None
+
+        # creating and saving the top artists_list
+        top_artist = TopArtist.objects.create(
+            user = request.user,
+            artist_id = artist['id'],
+            name = artist['name'],
+            popularity = artist['popularity'],
+            artist_image_url = artist_image_url,
+        )
         artist_name = artist['name']
         # album_cover_url = track['album']['images'][0]['url']
         print(f"{idx}. {artist_name}")
@@ -232,8 +252,9 @@ def signup_view(request):
 @csrf_exempt #add this so you don't need to mess with cookies
 def user_login(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        data = json.loads(request.body)
+        username = data.get('username')
+        password = data.get('password')
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
@@ -299,3 +320,17 @@ def profile(request):
 
 def home(request):
     return render(request, 'spotify_webapp/home.html')
+
+def authors(request):
+    authors = Authors.objects.all().order_by('last_name')
+    return render(request, '/meet_the_authors.html', {'authors': authors})
+
+def submit_feedback(request):
+    if request.method == 'POST':
+        Feedback.objects.create(
+            name = request.POST.get('name'),
+            email = request.POST.get('email'),
+            feedback = request.POST.get('feedback'),
+        )
+        return redirect('spotify_webapp:home')
+    return render(request, 'feedback_form.html')
