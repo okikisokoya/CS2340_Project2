@@ -1,4 +1,5 @@
 # spotify_webapp/views.py
+from django.db.models.fields import return_None
 from django.shortcuts import render, redirect
 import urllib
 import requests
@@ -12,7 +13,7 @@ from django.contrib import messages
 from spotipy import SpotifyOAuth, Spotify
 
 from wrapped.src.loginrequest import auth_URL
-from .models import User
+from .models import User, Authors, Feedback, TopArtist, TopTrack
 from django.http import JsonResponse
 
 import spotipy
@@ -78,9 +79,20 @@ def get_top_tracks(request):
     #printing
     print("\n==User's Top Tracks===")
     print("--------")
-
+    #deleting the existing top tracks in case things need to start over
+    TopTrack.objects.filter(user = request.user).delete()
     tracks_list=[];
     for idx, track in enumerate(top_tracks_data['items'], 1):
+        album_cover_url = track['images'][0]['url'] if track['images'] else None
+        top_track = TopTrack.objects.create(
+            user = request.user,
+            track_id = track['id'],
+            name = track['name'],
+            artist = track['artists'][0]['name'],
+            popularity = track['popularity'],
+            album_image_url = album_cover_url,
+
+        )
         track_name = track['name']
         artist_name = track['artists'][0]['name']
         album_cover_url = track['album']['images'][0]['url']
@@ -156,9 +168,19 @@ def get_top_artists(request):
     #printing
     print("\n==User's Top Tracks===")
     print("--------")
-
+    TopArtist.objects.filter(user = request.user).delete()
     artists_list=[];
     for idx, artist in enumerate(top_artists['items'], 1):
+        artist_image_url = artist['images'][0]['url'] if artist['images'] else None
+
+        # creating and saving the top artists_list
+        top_artist = TopArtist.objects.create(
+            user = request.user,
+            artist_id = artist['id'],
+            name = artist['name'],
+            popularity = artist['popularity'],
+            artist_image_url = artist_image_url,
+        )
         artist_name = artist['name']
         # album_cover_url = track['album']['images'][0]['url']
         print(f"{idx}. {artist_name}")
@@ -296,3 +318,17 @@ def profile(request):
 
 def home(request):
     return render(request, 'spotify_webapp/home.html')
+
+def authors(request):
+    authors = Authors.objects.all().order_by('last_name')
+    return render(request, '/meet_the_authors.html', {'authors': authors})
+
+def submit_feedback(request):
+    if request.method == 'POST':
+        Feedback.objects.create(
+            name = request.POST.get('name'),
+            email = request.POST.get('email'),
+            feedback = request.POST.get('feedback'),
+        )
+        return redirect('spotify_webapp:home')
+    return render(request, 'feedback_form.html')
