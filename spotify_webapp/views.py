@@ -166,7 +166,10 @@ def get_top_artists(request):
         artists_list.append(f"{idx}.{artist_name}")
     print("--------\n")
 
-    return HttpResponse("<br>".join(artists_list))
+    #HI SORRY THIS IS OLIVIA, modified this to return json
+    #so angular can digest
+    return JsonResponse({"top_artists": artists_list})
+    #return HttpResponse("<br>".join(artists_list))
 
 def refresh_token(request):
     if 'refresh_token' not in request.session:
