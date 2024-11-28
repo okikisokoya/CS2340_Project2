@@ -26,6 +26,7 @@ import { DuototalpointsComponent } from './duototalpoints/duototalpoints.compone
 import { JediComponent } from './jedi/jedi.component';
 import { SithComponent } from './sith/sith.component';
 import { NeutralComponent } from './neutral/neutral.component';
+import { AuthorsComponent } from './authors/authors.component';
 
 
 
@@ -56,6 +57,7 @@ export const routes: Routes = [
   { path: 'duototalpoints', component: DuototalpointsComponent },
   { path: 'jedi', component: JediComponent },
   { path: 'sith', component: SithComponent },
-  { path: 'neutral', component: NeutralComponent }
+  { path: 'neutral', component: NeutralComponent },
+  {path: "authors", component: AuthorsComponent}
   
 ];
