@@ -1,6 +1,6 @@
 # spotify_webapp/views.py
 import json
-
+from django.views.decorators.csrf import csrf_exempt
 from django.db.models.fields import return_None
 from django.shortcuts import render, redirect
 import urllib
@@ -62,7 +62,7 @@ def callback(request):
 
     return JsonResponse({"error": "Failed Authorization"})
 
-
+@csrf_exempt
 def get_top_tracks(request):
     sp_oauth = SpotifyOAuth(
         client_id= SPOTIFY_CLIENT_ID,
@@ -148,7 +148,7 @@ def play_track_preview(request, track_id):
         })
     except Exception as e:
         return JsonResponse({"error": str(e)})
-
+@csrf_exempt
 def get_top_artists(request):
     sp_oauth = SpotifyOAuth(
         client_id= SPOTIFY_CLIENT_ID,
