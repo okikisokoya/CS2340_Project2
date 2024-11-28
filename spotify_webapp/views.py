@@ -1,4 +1,6 @@
 # spotify_webapp/views.py
+import json
+
 from django.db.models.fields import return_None
 from django.shortcuts import render, redirect
 import urllib
@@ -251,8 +253,9 @@ def signup_view(request):
 @csrf_exempt #add this so you don't need to mess with cookies
 def user_login(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        data = json.loads(request.body)
+        username = data.get('username')
+        password = data.get('password')
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
