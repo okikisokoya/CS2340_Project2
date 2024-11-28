@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
   private loginUrl = 'http://localhost:8080/api/login/';  // Django login API URL
+  backendUrl: any;
 
   constructor(private http: HttpClient) {}
 
