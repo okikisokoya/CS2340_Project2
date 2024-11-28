@@ -1,1 +1,13 @@
-<p>top-artists works!</p>
+
+<div class="general-container">
+    <h1>Spotify Wars</h1>
+    <sub>Your Top Artists!</sub>
+    <ul class="top-artists-list">
+        <li class="top-artist-item" *ngFor="let artist of topArtists">
+          {{ artist.name }}
+        </li>
+      </ul>
+
+
+    <a routerLink="/topsongs"> <button class="submit-button">Go to top songs!</button> </a>
+ </div>

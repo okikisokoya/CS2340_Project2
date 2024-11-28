@@ -90,16 +90,7 @@
     color: #F3FF47;
     font-family: 'Nico-Moji', sans-serif;
   }
-  
-  /* Style for the password field specifically */
-  .input-field[type="password"] {
-    border-color: lightgreen;
-  }
-  
-  .input-field[type="password"]:focus {
-    box-shadow: 0 0 10px rgba(144, 238, 144, 0.5);
-  }
-  
+
   /* Helper links styling */
   .helper-text {
     text-align: left;
@@ -129,3 +120,32 @@
     color: black;
   }
   
+
+.top-list {
+  list-style: none; 
+  padding: 0;
+  margin: 20px auto;
+  width: 80%; 
+  text-align: center;
+}
+
+
+.top-item {
+  font-family: 'Nico-Moji', sans-serif; 
+  font-size: 1.5rem; 
+  color: #F3FF47; 
+  margin: 10px 0; 
+  padding: 10px; 
+  background-color: rgba(0, 0, 0, 0.7); 
+  border: 2px solid #F3FF47; 
+  border-radius: 8px; 
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); 
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+
+.top-item:hover {
+  background-color: rgba(243, 255, 71, 0.9); 
+  transform: scale(1.05); 
+  cursor: pointer; 
+}
