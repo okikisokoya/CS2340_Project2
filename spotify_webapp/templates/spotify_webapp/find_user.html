@@ -1,5 +1,10 @@
-<form method="post">
-    {% csrf_token %}
-    <input type="text" name="username" placeholder="Enter username to compare with">
-    <button type="submit">Compare</button>
-</form>
+<!-- spotify_webapp/templates/spotify_webapp/find_user.html -->
+<!DOCTYPE html>
+<html>
+    <h2>Find User to Compare</h2>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="Enter username to compare with">
+        <button type="submit">Compare</button>
+    </form>
+</html>

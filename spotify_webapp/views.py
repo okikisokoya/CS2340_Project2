@@ -390,26 +390,32 @@ def test_game_stats(request):
 
 
 # views.py
+# views.py
 @login_required
 def find_user_to_compare(request):
+    print("\n=== Finding User to Compare ===")
     if request.method == 'POST':
         username = request.POST.get('username')
+        print(f"Looking for user: {username}")
         try:
             other_user = User.objects.get(username=username)
+            print(f"Found user: {other_user.username}")
 
-            if not TopTrack.objects.filter(user=other_user).exists():
-                print(f"User {username} found but has no Spotify data")
-                return JsonResponse({
-                    'error': f"{username} needs to connect their Spotify account first"
-                })
+            # Check for Spotify data
+            tracks = TopTrack.objects.filter(user=other_user)
+            if not tracks.exists():
+                messages.error(request, f"{username} needs to connect Spotify first")
+                return render(request, 'spotify_webapp/find_user.html')
 
-            return redirect('spotify_webapp:compare-with-user', user_id=other_user.id)  # Changed name here
+            print(f"Found {len(tracks)} tracks for comparison")
+            return redirect('spotify_webapp:compare-with-user', user_id=other_user.id)
 
         except User.DoesNotExist:
-            print(f"User {username} not found")
-            return JsonResponse({
-                'error': f"User {username} not found. Please check the username and try again."
-            })
+            print(f"User not found: {username}")
+            messages.error(request, f"User {username} not found")
+            return render(request, 'spotify_webapp/find_user.html')
+
+    return render(request, 'spotify_webapp/find_user.html')
 
 @login_required
 def compare_with_user(request, user_id):
