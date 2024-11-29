@@ -25,10 +25,8 @@ export class LoginComponent implements OnInit {
   login() {
     console.log('calling onLogin()');
     this.authService.login(this.username, this.password).subscribe(
-      response => {
-        console.log('Login successful', response);
-        // Redirect to Spotify login endpoint in Django
-        window.location.href = `${this.authService.backendUrl}/api/api/spotifyLogin/`;
+      (response) => {
+        window.location.href = response.auth_url; // Redirect to Spotify authorization
       },
       error => {
         this.errorMessage = error.error.message || 'Login failed. Please try again.';

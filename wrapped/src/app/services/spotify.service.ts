@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class SpotifyService {
-  private baseUrl = 'http://127.0.0.1:8000'; // Replace with your Django backend URL
+  private baseUrl = 'http://127.0.0.1:8080'; // Replace with your Django backend URL
 
   constructor(private http: HttpClient) {}
 
@@ -16,7 +16,7 @@ export class SpotifyService {
   }
 
   getTopArtists(): Observable<any> {
-    const url = `${this.baseUrl}/api/top-artists/`;
+    const url = `${this.baseUrl}/top-artists/`;
     return this.http.get(url);
   }
 }

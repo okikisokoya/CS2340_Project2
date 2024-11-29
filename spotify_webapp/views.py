@@ -35,7 +35,7 @@ def spotify_login_view(request):
         'show_dialog': True
     }
     auth_url = f"https://accounts.spotify.com/authorize?{urllib.parse.urlencode(params)}"
-    return redirect(auth_url)
+    return JsonResponse({'auth_url': auth_url})
 
 
 def callback(request):
