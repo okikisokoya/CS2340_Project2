@@ -153,35 +153,48 @@ def play_track_preview(request, track_id):
         })
     except Exception as e:
         return JsonResponse({"error": str(e)})
-
-
 @csrf_exempt
 def get_top_artists(request):
     sp_oauth = SpotifyOAuth(
-        client_id=SPOTIFY_CLIENT_ID,
-        client_secret=SPOTIFY_CLIENT_SECRET,
-        redirect_uri="http://127.0.0.1:8000/top-artists/",
-        scope='user-top-read'
+        client_id= SPOTIFY_CLIENT_ID,
+        client_secret= SPOTIFY_CLIENT_SECRET,
+        redirect_uri= "http://127.0.0.1:8000/top-artists/",
+        scope = 'user-top-read'
+        # scope=settings.SPOTIFY_SCOPES,
     )
-
-    # If no code is provided, return the auth URL to the frontend
     if not request.GET.get("code"):
         auth_URL = sp_oauth.get_authorize_url()
-        return JsonResponse({"auth_url": auth_URL, "error": "authentication_required"})
-
-    # Retrieve the token and fetch top artists
+        return redirect(auth_URL)
     token_info = sp_oauth.get_access_token(request.GET["code"], check_cache=False)
     sp = spotipy.Spotify(auth=token_info['access_token'])
-    top_artists = sp.current_user_top_artists(limit=5, offset=0, time_range='medium_term')
-
-    # Processing top artists and creating response
-    artists_list = []
+    top_artists = sp.current_user_top_artists(limit=5, offset=0,time_range='medium_term')
+    #printing
+    print("\n==User's Top Tracks===")
+    print("--------")
+    TopArtist.objects.filter(user = request.user).delete()
+    artists_list=[];
     for idx, artist in enumerate(top_artists['items'], 1):
-        artist_name = artist['name']
-        artists_list.append(
-            {"rank": idx, "name": artist_name, "image_url": artist['images'][0]['url'] if artist['images'] else None})
+        artist_image_url = artist['images'][0]['url'] if artist['images'] else None
 
+        # creating and saving the top artists_list
+        top_artist = TopArtist.objects.create(
+            user = request.user,
+            artist_id = artist['id'],
+            name = artist['name'],
+            popularity = artist['popularity'],
+            artist_image_url = artist_image_url,
+        )
+        artist_name = artist['name']
+        # album_cover_url = track['album']['images'][0]['url']
+        print(f"{idx}. {artist_name}")
+
+        artists_list.append(f"{idx}.{artist_name}")
+    print("--------\n")
+
+    #HI SORRY THIS IS OLIVIA, modified this to return json
+    #so angular can digest
     return JsonResponse({"top_artists": artists_list})
+    #return HttpResponse("<br>".join(artists_list))
 
 def refresh_token(request):
     if 'refresh_token' not in request.session:
