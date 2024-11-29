@@ -217,37 +217,42 @@ def dashboard(request):
         return redirect('spotify_webapp:login')
     return render(request, 'spotify_webapp/dashboard.html')
 
-
+@csrf_exempt
 def signup_view(request):
+    print("Request method:", request.method)
+    print("Content type:", request.content_type)
+
     if request.method == 'POST':
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        confirm_password = request.POST.get('confirm_password')
+        data = json.loads(request.body)
+        print("Received data:", data)
+        if request.content_type == 'application/json':
 
-        if password != confirm_password:
-            messages.error(request, 'Passwords do not match')
-            return render(request, 'spotify_webapp/signup.html')
+            data = json.loads(request.body)
+            username = data.get('username')
+            email = data.get('email')
+            password = data.get('password')
+            confirm_password = data.get('confirm_password')
+        else:
+            username = request.POST.get('username')
+            email = request.POST.get('email')
+            password = request.POST.get('password')
+            confirm_password = request.POST.get('confirm_password')
 
-        if User.objects.filter(username=username).exists():
-            messages.error(request, 'Username already exists')
-            return render(request, 'spotify_webapp/signup.html')
-
-        if User.objects.filter(email=email).exists():
-            messages.error(request, 'Email already exists')
-            return render(request, 'spotify_webapp/signup.html')
-
-        user = User.objects.create_user(
-            username=username,
-            email=email,
-            password=password
-        )
+        user = User.objects.create_user(username=username, email=email, password=password)
+        user.save()
 
         login(request, user)
-        messages.success(request, 'Account created successfully!')
-        return redirect('spotify_webapp:dashboard')
+
+        response_data = {'message': 'Account created successfully!'}
+
+        spotify_login_url = "https://accounts.spotify.com/authorize?client_id=YOUR_CLIENT_ID&response_type=code&redirect_uri=YOUR_REDIRECT_URI&scope=user-library-read"
+        response_data['spotify_redirect_url'] = spotify_login_url
+
+
+        return JsonResponse(response_data, status=200)
 
     return render(request, 'spotify_webapp/signup.html')
+
 
 @csrf_exempt #add this so you don't need to mess with cookies
 def user_login(request):
