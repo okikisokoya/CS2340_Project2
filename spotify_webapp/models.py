@@ -12,6 +12,8 @@ class User(AbstractUser):
     spotify_refresh_token = models.CharField(max_length=255, blank=True)
     expiration_time = models.IntegerField(default=0)
 
+    top_tracks = models.TextField(blank=True)
+    top_artists = models.TextField(blank=True)
     preferred_genres = models.JSONField(default=list, blank=True)
 
     def __str__(self):

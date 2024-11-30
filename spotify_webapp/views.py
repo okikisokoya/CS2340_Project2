@@ -62,6 +62,13 @@ def callback(request):
             user.spotify_access_token = token_info['access_token']
             user.spotify_refresh_token = token_info['refresh_token']
             user.expiration_time = datetime.now().timestamp() + token_info['expires_in']
+            sp = spotipy.Spotify(auth=token_info['access_token'])
+            top_tracks_data = sp.current_user_top_tracks(limit=5, offset=0, time_range='medium_term')
+            tracks = [item['name'] for item in top_tracks_data['items']]
+            user.top_tracks = tracks
+            top_artists = sp.current_user_top_artists(limit=5, offset=0, time_range='medium_term')
+            artists = [item['name'] for item in top_artists['items']]
+            user.top_artists = artists
             user.save()
             return redirect('http://localhost:4200/dashboard/')
 

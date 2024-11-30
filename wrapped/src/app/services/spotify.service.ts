@@ -19,5 +19,10 @@ export class SpotifyService {
     const url = `${this.baseUrl}/top-artists/`;
     return this.http.get(url);
   }
+
+  getTopSongs(): Observable<any> {
+    const url = `${this.baseUrl}/top-tracks/`;
+    return this.http.get(url);
+  }
 }
 
