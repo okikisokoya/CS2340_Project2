@@ -377,26 +377,21 @@ def user_logout(request):
 def delete_account(request):
     if request.method == 'POST':
         try:
-            # Parse the incoming JSON request body
             data = json.loads(request.body)
             password = data.get('password')
-
-            # Authenticate the user with the password provided
-            user = authenticate(request, username=request.user.username, password=password)
-
-            if user is not None:
-                # Delete the user account
-                user.delete()
-                user.save()
-                return JsonResponse({'message': 'Account deleted successfully.'}, status=200)
-            
-            return JsonResponse({'error': 'Invalid password.'}, status=400)
-
-        except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid JSON format.'}, status=400)
-
-    return JsonResponse({'error': 'Invalid request method. Use POST.'}, status=405)
-
+            if not (password):
+                return JsonResponse({'error': 'Invalid password or password is required.'}, status=400)
+            if not (request.user.check_password(password)):
+                return JsonResponse({'error': 'Invalid password.'}, status=400)
+            user = request.user
+            user.delete()
+            logout(request)
+            return JsonResponse({'message': 'Account deleted successfully.'}, status=200)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+    else:
+        # Handle other HTTP methods like GET
+        return JsonResponse({'error': 'Invalid request method. Use POST to delete account.'}, status=405)
 @login_required
 def profile(request):
     if request.method == 'POST':
