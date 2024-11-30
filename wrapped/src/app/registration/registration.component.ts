@@ -44,25 +44,51 @@ export class RegistrationComponent {
       console.error('Passwords do not match!');
       return;
     }
-
-    const userData = {
-      email: this.email,
-      username: this.username,
-      password: this.password,
-      confirm_password: this.confirmPassword,
-    };
-
-    console.log('Form submitted:', { email: this.email, username: this.username, password: this.password });
-    this.http.post('http://127.0.0.1:8080/api/signup/', userData, {
-      headers: { 'Content-Type': 'application/json' },
-      observe: 'response' // This will give you full response details
-    }).subscribe({
-      next: (response) => {
-        console.log('Full response:', response);
-        console.log('Response body:', response.body);
-        this.router.navigate(['/login']);
+    this.http.get(`http://127.0.0.1:8000/api/username-check/?username=${this.username}`).subscribe({
+      next: (response: any) => {
+        if (response.exists) {
+          console.error('Username already exists!');
+          alert('This username is already taken. Please choose a different one.');
+          return;
+        }
+  
+        // Proceed with form submission if username does not exist
+        const userData = {
+          username: this.username,
+          email: this.email,
+          password: this.password,
+          confirm_password: this.confirmPassword,
+        };
+  
+        console.log('Form submitted:', { email: this.email, username: this.username });
+  
+        this.http.post('http://127.0.0.1:8000/api/signup/', userData, {
+          headers: { 'Content-Type': 'application/json' },
+          observe: 'response'
+        }).subscribe({
+          next: (response) => {
+            console.log('Full response:', response);
+            console.log('Response body:', response.body);
+            this.router.navigate(['/login']);
+          },
+          error: (error) => {
+            console.error('Full error:', error);
+            console.error('Error status:', error.status);
+            console.error('Error body:', error.error);
+  
+            // Handle specific error cases
+            if (error.status === 400) {
+              alert(error.error.error || 'Invalid input');
+            } else if (error.status === 500) {
+              alert('Server error. Please try again later.');
+            }
+          }
+        });
       },
-    
+      error: (error) => {
+        console.error('Error checking username:', error);
+        alert('Unable to validate username. Please try again later.');
+      }
     });
-    }
+  }
 }

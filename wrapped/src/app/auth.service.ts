@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  backendUrl = 'http://localhost:8080'; 
+  backendUrl = 'http://localhost:8000'; 
 
   constructor(public http: HttpClient) {}
   
@@ -14,14 +14,10 @@ export class AuthService {
     return this.http.post(`${this.backendUrl}/api/login/`, { username, password });
   }
 
-
-  // Simple resetPassword method
   resetPassword(username: string, newPassword: string): Observable<any> {
-    // Replace 'your-api-endpoint' with your actual backend endpoint
-    const endpoint = 'https://your-api-endpoint/reset-password';
-    const payload = { username, password: newPassword };
-
-    // Use HTTP POST to send the reset request to your backend
+    const endpoint = 'http://127.0.0.1:8000/api/reset-password/';
+    const payload = { username_or_email: username, new_password: newPassword };
+  
     return this.http.post(endpoint, payload);
   }
 }

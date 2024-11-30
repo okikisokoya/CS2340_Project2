@@ -258,35 +258,56 @@ def signup_view(request):
     print("Content type:", request.content_type)
 
     if request.method == 'POST':
-        data = json.loads(request.body)
-        print("Received data:", data)
-        if request.content_type == 'application/json':
-
+        try:
             data = json.loads(request.body)
-            username = data.get('username')
-            email = data.get('email')
-            password = data.get('password')
-            confirm_password = data.get('confirm_password')
-        else:
-            username = request.POST.get('username')
-            email = request.POST.get('email')
-            password = request.POST.get('password')
-            confirm_password = request.POST.get('confirm_password')
+            print("Received data:", data)
+            
+            if request.content_type == 'application/json':
+                username = data.get('username')
+                email = data.get('email')
+                password = data.get('password')
+                confirm_password = data.get('confirm_password')
+            else:
+                username = request.POST.get('username')
+                email = request.POST.get('email')
+                password = request.POST.get('password')
+                confirm_password = request.POST.get('confirm_password')
 
-        user = User.objects.create_user(username=username, email=email, password=password)
-        user.save()
+            if not all([username, email, password, confirm_password]):
+                return JsonResponse({'error': 'All fields are required.'}, status=400)
 
-        login(request, user)
+            if password != confirm_password:
+                return JsonResponse({'error': 'Passwords do not match.'}, status=400)
+           
+            # Check if the username already exists
+            if User.objects.filter(username=username).exists():
+                return JsonResponse({'error': 'Username already exists.'}, status=400)
 
-        response_data = {'message': 'Account created successfully!'}
+            # Check if the email already exists
+            if User.objects.filter(email=email).exists():
+                return JsonResponse({'error': 'Email already exists.'}, status=400)
 
-        spotify_login_url = "https://accounts.spotify.com/authorize?client_id=YOUR_CLIENT_ID&response_type=code&redirect_uri=YOUR_REDIRECT_URI&scope=user-library-read"
-        response_data['spotify_redirect_url'] = spotify_login_url
+            # Create user
+            user = User.objects.create_user(username=username, email=email, password=password)
+            user.save()
 
+            login(request, user)
 
-        return JsonResponse(response_data, status=200)
+            response_data = {
+                'message': 'Account created successfully!',
+                'spotify_redirect_url': "https://accounts.spotify.com/authorize?client_id=YOUR_CLIENT_ID&response_type=code&redirect_uri=YOUR_REDIRECT_URI&scope=user-library-read"
+            }
+
+            return JsonResponse(response_data, status=200)
+
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON data.'}, status=400)
+        except Exception as e:
+            print("Unexpected error:", str(e))
+            return JsonResponse({'error': 'Something went wrong.'}, status=500)
 
     return render(request, 'spotify_webapp/signup.html')
+
 
 
 @csrf_exempt #add this so you don't need to mess with cookies
@@ -305,6 +326,44 @@ def user_login(request):
             messages.error(request, 'Invalid username or password')
 
     return render(request, 'spotify_webapp/login.html')
+
+@csrf_exempt
+def username_check(request):
+    username = request.GET.get('username', '')
+    if username and User.objects.filter(username=username).exists():
+        return JsonResponse({'exists': True})
+    return JsonResponse({'exists': False})
+
+@csrf_exempt
+def reset_password(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            username_or_email = data.get('username_or_email', '').strip()
+            new_password = data.get('new_password', '').strip()
+
+            # Validate input
+            if not username_or_email or not new_password:
+                return JsonResponse({'error': 'Username/Email and new password are required.'}, status=400)
+
+            # Retrieve the user
+            user = User.objects.filter(username=username_or_email).first() or \
+                   User.objects.filter(email=username_or_email).first()
+
+            if not user:
+                return JsonResponse({'error': 'User not found.'}, status=404)
+
+            # Update the password
+            user.set_password(new_password)
+            user.save()
+
+            return JsonResponse({'message': 'Password reset successfully.'}, status=200)
+
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON format.'}, status=400)
+
+    return JsonResponse({'error': 'Invalid request method. Use POST.'}, status=405)
+
 
 
 @login_required
