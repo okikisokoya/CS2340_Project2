@@ -1,6 +1,6 @@
 <div class="general-container">
     <h1>Spotify Wars</h1>
-    <h2>Your top three most played tracks are:</h2>
+    <h2>Your listening time is: </h2>
 
     <!-- <h2>Top Artists</h2>
         <ul>
@@ -10,9 +10,10 @@
         </ul>
     <p *ngIf="items.length === 0">No items to display.</p> -->
     
-    <div class="button-container">
+    <a routerLink="/most-surprising"><div class="button-container">
         <button class="next-button">
-          <div class="triangle"></div>
+          <div class="triangle"> Go to the most surprising discovery</div>
         </button>
       </div>
+      </a>
   </div>

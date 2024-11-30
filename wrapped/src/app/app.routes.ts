@@ -27,6 +27,8 @@ import { JediComponent } from './jedi/jedi.component';
 import { SithComponent } from './sith/sith.component';
 import { NeutralComponent } from './neutral/neutral.component';
 import { AuthorsComponent } from './authors/authors.component';
+import { OutroComponent } from './outro/outro.component';
+import { GreatTasteComponent } from './great-taste/great-taste.component';
 
 
 
@@ -43,12 +45,12 @@ export const routes: Routes = [
   { path: 'registration', component: RegistrationComponent },
   { path: 'settings', component: UsersettingsComponent },
   { path: 'intro', component: IntroComponent },
-  { path: 'topgenres', component: TopgenresComponent }, 
+  { path: 'top-genres', component: TopgenresComponent }, 
   { path: 'top-artists', component: TopArtistsComponent }, 
   { path: 'top-songs', component: TopSongsComponent }, 
   { path: 'listening-time', component: ListeningTimeComponent }, 
-  { path: 'listeningmood', component: ListeningmoodComponent }, 
-  { path: 'mostsurprising', component: MostsurprisingComponent },
+  { path: 'listening-mood', component: ListeningmoodComponent }, 
+  { path: 'most-surprising', component: MostsurprisingComponent },
   { path: 'duointro', component: DuointroComponent },
   { path: 'duotopgenres', component: DuotopgenresComponent },
   { path: 'duominigame', component: DuominigameComponent },
@@ -58,6 +60,8 @@ export const routes: Routes = [
   { path: 'jedi', component: JediComponent },
   { path: 'sith', component: SithComponent },
   { path: 'neutral', component: NeutralComponent },
-  {path: "authors", component: AuthorsComponent}
+  {path: "authors", component: AuthorsComponent},
+  {path: "outro", component: OutroComponent},
+  {path: "great-taste", component: GreatTasteComponent},
   
 ];

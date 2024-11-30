@@ -16,5 +16,20 @@ import { RouterLink } from '@angular/router';
   styleUrl: './deleteacc.component.css'
 })
 export class DeleteaccComponent {
+  username: string = '';
+  errorMessage: string = '';
 
+  constructor(private authService: AuthService) {}
+
+  onDeleteAccount() {
+    this.authService.deleteAccount(this.username).subscribe({
+      next: () => {
+        alert('Account deleted successfully!');
+      },
+      error: (error: { error: { error: string; }; }) => {
+        this.errorMessage = error.error.error || 'Error deleting account';
+        alert(this.errorMessage);
+      }
+    });
+  }
 }

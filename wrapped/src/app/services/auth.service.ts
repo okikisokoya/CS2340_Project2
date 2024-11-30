@@ -6,6 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
+  deleteAccount(username: string) {
+    throw new Error('Method not implemented.');
+  }
   private loginUrl = 'http://localhost:8000/api/login/';  // Django login API URL
   private baseUrl = 'http://127.0.0.1:8000';
   backendUrl: any;
