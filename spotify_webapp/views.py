@@ -376,15 +376,19 @@ def user_logout(request):
 @login_required
 def delete_account(request):
     if request.method == 'POST':
-        password = request.POST.get('password')
-        user = authenticate(request, username=request.user.username, password=password)
+           data = json.loads(request.body)
+           password = data.get('password')
 
-        if user is not None:
-            user.delete()
-            messages.success(request, 'Account deleted successfully')
-            return redirect('spotify_webapp:home')
-        else:
-            messages.error(request, 'Invalid password')
+        
+           user = authenticate(request, username=request.user.username, password=password)
+
+           if user is not None:
+               user.delete()
+               messages.success(request, 'Account deleted successfully')
+               return redirect('spotify_webapp:home')
+           else:
+               messages.error(request, 'Invalid password')
+               return JsonResponse({'error': 'Invalid password.'}, status=400)
 
     return render(request, 'spotify_webapp/delete_account.html')
 

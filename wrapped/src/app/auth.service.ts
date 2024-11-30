@@ -20,4 +20,12 @@ export class AuthService {
   
     return this.http.post(endpoint, payload);
   }
+
+  deleteAccount(username: string): Observable<any> {
+    const endpoint = `${this.backendUrl}/api/delete-account/`;
+    const payload = { username };
+
+    return this.http.post(endpoint, payload);
+  }
+
 }
