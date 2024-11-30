@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 export class AuthService {
   backendUrl = 'http://localhost:8000'; 
 
-  
+
   constructor(public http: HttpClient) {}
   
   login(username: string, password: string): Observable<any> {
@@ -23,11 +23,11 @@ export class AuthService {
     return this.http.post(endpoint, payload);
   }
   
-  deleteAccount(username: string): Observable<any> {
+  deleteAccount(password: string): Observable<any> {
     const endpoint = 'http://127.0.0.1:8000/api/delete-account/';
-    const payload = { username: username };
+    const payload = {  password: password };
   
-    return this.http.post<any>(endpoint, payload) as Observable<any>;
+    return this.http.post<any>(endpoint, payload);
   }
 
 }

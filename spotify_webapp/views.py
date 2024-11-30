@@ -372,7 +372,7 @@ def user_logout(request):
     messages.success(request, 'Logged out successfully!')
     return redirect('spotify_webapp:home')
 
-
+@csrf_exempt
 @login_required
 def delete_account(request):
     if request.method == 'POST':
@@ -387,6 +387,7 @@ def delete_account(request):
             if user is not None:
                 # Delete the user account
                 user.delete()
+                user.save()
                 return JsonResponse({'message': 'Account deleted successfully.'}, status=200)
             
             return JsonResponse({'error': 'Invalid password.'}, status=400)
