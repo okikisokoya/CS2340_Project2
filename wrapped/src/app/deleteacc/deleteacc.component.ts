@@ -12,7 +12,6 @@ import { Observable } from 'rxjs';
     CommonModule,
     FormsModule,
     RouterLink,
-    HttpClientModule,
   ],
   templateUrl: './deleteacc.component.html',
   styleUrl: './deleteacc.component.css'
