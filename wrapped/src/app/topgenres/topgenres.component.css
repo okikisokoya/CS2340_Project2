@@ -149,6 +149,7 @@ background-color: rgba(243, 255, 71, 0.9);
 transform: scale(1.05); 
 cursor: pointer; 
 }
+
   @font-face{
     font-family: 'Nico-Moji';
     src: url('../assets/fonts/nicomoji.ttf') format('truetype');
@@ -156,6 +157,7 @@ cursor: pointer;
     font-weight: normal;
     font-style: normal;
   }
+
   
   @font-face {
     font-family: 'Star-Jedi-Hollow';
