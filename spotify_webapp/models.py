@@ -10,6 +10,7 @@ class User(AbstractUser):
     spotify_id = models.CharField(max_length=100, blank=True)
     spotify_access_token = models.CharField(max_length=255, blank=True)
     spotify_refresh_token = models.CharField(max_length=255, blank=True)
+    expiration_time = models.IntegerField(default=0)
 
     preferred_genres = models.JSONField(default=list, blank=True)
 

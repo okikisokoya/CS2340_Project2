@@ -1,6 +1,6 @@
 # spotify_webapp/views.py
 import json
-
+from django.views.decorators.csrf import csrf_exempt
 from django.db.models.fields import return_None
 from django.shortcuts import render, redirect
 import urllib
@@ -55,14 +55,19 @@ def callback(request):
         token_info = response.json()
 
         if 'access_token' in token_info:
-            request.session['access_token'] = token_info['access_token']
-            request.session['refresh_token'] = token_info['refresh_token']
-            request.session['expires_at'] = datetime.now().timestamp() + token_info['expires_in']
-            return redirect('spotify_webapp:top-tracks')
+            # request.session['access_token'] = token_info['access_token']
+            # request.session['refresh_token'] = token_info['refresh_token']
+            # request.session['expires_at'] = datetime.now().timestamp() + token_info['expires_in']
+            user = request.user
+            user.spotify_access_token = token_info['access_token']
+            user.spotify_refresh_token = token_info['refresh_token']
+            user.expiration_time = datetime.now().timestamp() + token_info['expires_in']
+            user.save()
+            return redirect('http://localhost:4200/dashboard/')
 
     return JsonResponse({"error": "Failed Authorization"})
 
-
+@csrf_exempt
 def get_top_tracks(request):
     sp_oauth = SpotifyOAuth(
         client_id= SPOTIFY_CLIENT_ID,
@@ -148,7 +153,7 @@ def play_track_preview(request, track_id):
         })
     except Exception as e:
         return JsonResponse({"error": str(e)})
-
+@csrf_exempt
 def get_top_artists(request):
     sp_oauth = SpotifyOAuth(
         client_id= SPOTIFY_CLIENT_ID,
@@ -339,3 +344,177 @@ def submit_feedback(request):
         )
         return redirect('spotify_webapp:home')
     return render(request, 'feedback_form.html')
+
+
+# Add to views.py
+@login_required
+def test_game_stats(request):
+    """Test view to check user's diversity and popularity scores"""
+    print("\n=== Starting test_game_stats function ===")
+    try:
+        # Get user's top tracks
+        user_tracks = TopTrack.objects.filter(user=request.user)
+        print(f"Found {len(user_tracks)} tracks for user {request.user.username}")
+
+        # Calculate unique artists
+        unique_artists = set(track.artist for track in user_tracks)
+        print(f"Unique artists: {unique_artists}")
+
+        # Calculate average popularity
+        total_popularity = sum(track.popularity for track in user_tracks)
+        avg_popularity = total_popularity / len(user_tracks) if user_tracks else 0
+        print(f"Total popularity: {total_popularity}")
+        print(f"Average popularity: {avg_popularity}")
+
+        # Print individual track details
+        print("\nTrack details:")
+        for track in user_tracks:
+            print(f"Track: {track.name}")
+            print(f"Artist: {track.artist}")
+            print(f"Popularity: {track.popularity}")
+            print("---")
+
+        response_data = {
+            'username': request.user.username,
+            'tracks_data': [
+                {
+                    'name': track.name,
+                    'artist': track.artist,
+                    'popularity': track.popularity
+                } for track in user_tracks
+            ],
+            'stats': {
+                'total_tracks': len(user_tracks),
+                'unique_artists': len(unique_artists),
+                'unique_artist_names': list(unique_artists),
+                'average_popularity': avg_popularity,
+                'popularity_scores': [track.popularity for track in user_tracks]
+            }
+        }
+        print("\nFinal response data:", response_data)
+        return JsonResponse(response_data)
+
+    except Exception as e:
+        print(f"\nError occurred: {str(e)}")
+        return JsonResponse({'error': str(e)})
+
+
+# views.py
+# views.py
+@login_required
+def find_user_to_compare(request):
+    print("\n=== Finding User to Compare ===")
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        print(f"Looking for user: {username}")
+        try:
+            other_user = User.objects.get(username=username)
+            print(f"Found user: {other_user.username}")
+
+            # Check for Spotify data
+            tracks = TopTrack.objects.filter(user=other_user)
+            if not tracks.exists():
+                messages.error(request, f"{username} needs to connect Spotify first")
+                return render(request, 'spotify_webapp/find_user.html')
+
+            print(f"Found {len(tracks)} tracks for comparison")
+            return redirect('spotify_webapp:compare-with-user', user_id=other_user.id)
+
+        except User.DoesNotExist:
+            print(f"User not found: {username}")
+            messages.error(request, f"User {username} not found")
+            return render(request, 'spotify_webapp/find_user.html')
+
+    return render(request, 'spotify_webapp/find_user.html')
+
+@login_required
+def compare_with_user(request, user_id):
+    print("\n=== Comparing Users ===")
+    try:
+        other_user = User.objects.get(id=user_id)
+        print(f"Comparing {request.user.username} with {other_user.username}")
+
+        # Get tracks for both users
+        user_tracks = TopTrack.objects.filter(user=request.user)
+        other_tracks = TopTrack.objects.filter(user=other_user)
+
+        if not user_tracks:
+            print("Current user has no Spotify data")
+            return JsonResponse({
+                'error': 'Please connect your Spotify account first'
+            })
+
+        if not other_tracks:
+            print(f"User {other_user.username} has no Spotify data")
+            return JsonResponse({
+                'error': f'{other_user.username} needs to connect their Spotify account first'
+            })
+
+        # Calculate metrics
+        user_artists = set(track.artist for track in user_tracks)
+        other_artists = set(track.artist for track in other_tracks)
+
+        user_popularity = sum(track.popularity for track in user_tracks) / len(user_tracks)
+        other_popularity = sum(track.popularity for track in other_tracks) / len(other_tracks)
+
+        print(f"\nUser data:")
+        print(f"{request.user.username}: {len(user_artists)} artists, {user_popularity:.2f} popularity")
+        print(f"{other_user.username}: {len(other_artists)} artists, {other_popularity:.2f} popularity")
+
+        # Calculate points
+        user_points = 0
+        other_points = 0
+
+        # Artist diversity round
+        if len(user_artists) > len(other_artists):
+            user_points += 1
+            artist_winner = request.user.username
+        elif len(other_artists) > len(user_artists):
+            other_points += 1
+            artist_winner = other_user.username
+        else:
+            user_points += 1
+            other_points += 1
+            artist_winner = 'tie'
+
+        # Popularity round
+        if user_popularity > other_popularity:
+            user_points += 1
+            popularity_winner = request.user.username
+        elif other_popularity > user_popularity:
+            other_points += 1
+            popularity_winner = other_user.username
+        else:
+            user_points += 1
+            other_points += 1
+            popularity_winner = 'tie'
+
+        return JsonResponse({
+            'comparison': {
+                request.user.username: {
+                    'unique_artists': len(user_artists),
+                    'avg_popularity': user_popularity,
+                    'points': user_points
+                },
+                other_user.username: {
+                    'unique_artists': len(other_artists),
+                    'avg_popularity': other_popularity,
+                    'points': other_points
+                }
+            },
+            'rounds': {
+                'artist_diversity': {
+                    'winner': artist_winner
+                },
+                'popularity': {
+                    'winner': popularity_winner
+                }
+            }
+        })
+
+    except User.DoesNotExist:
+        print("User not found")
+        return JsonResponse({'error': 'User not found'})
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        return JsonResponse({'error': str(e)})
