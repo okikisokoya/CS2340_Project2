@@ -16,6 +16,14 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
+    
+    @property
+    def most_recent_wrap(self):
+        """
+        Returns the most recent SpotifyWrap object for the user or None if no wraps exist.
+        """
+        return SpotifyWrap.objects.filter(user=self).first()
+
 
 
 #class Track(models.Model):

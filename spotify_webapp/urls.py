@@ -15,6 +15,8 @@ urlpatterns = [
     path('api/logout/', views.user_logout, name='logout'),
     path('api/profile/', views.profile, name='profile'),
     path('api/delete-account/', views.delete_account, name='delete_account'),
+    path('api/reset-password/', views.reset_password, name = 'reset_password'),
+    path('api/username-check/', views.username_check, name='username_check'),
 
     #for spotify
     path('api/spotifyLogin/', views.spotify_login_view, name='login'),
