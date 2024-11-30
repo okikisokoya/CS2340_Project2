@@ -334,6 +334,7 @@ def username_check(request):
         return JsonResponse({'exists': True})
     return JsonResponse({'exists': False})
 
+
 @csrf_exempt
 def reset_password(request):
     if request.method == 'POST':

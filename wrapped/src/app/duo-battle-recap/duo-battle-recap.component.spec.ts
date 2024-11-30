@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DuotopgenresComponent } from './duotopgenres.component';
+import { DuoBattleRecapComponent } from './duo-battle-recap.component';
 
-describe('DuotopgenresComponent', () => {
-  let component: DuotopgenresComponent;
-  let fixture: ComponentFixture<DuotopgenresComponent>;
+describe('DuoBattleRecapComponent', () => {
+  let component: DuoBattleRecapComponent;
+  let fixture: ComponentFixture<DuoBattleRecapComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DuotopgenresComponent]
+      imports: [DuoBattleRecapComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DuotopgenresComponent);
+    fixture = TestBed.createComponent(DuoBattleRecapComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

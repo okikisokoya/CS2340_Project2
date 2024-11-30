@@ -1,13 +1,13 @@
 @font-face {
-    font-family: 'Nico-Moji';
-    src: url('../assets/fonts/nicomoji.ttf') format('truetype');
+    font-family: 'Star-Jedi-Hollow';
+    src: url('../assets/fonts/Starjhol.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
   }
   
   @font-face {
-    font-family: 'Star-Jedi-Hollow';
-    src: url('../assets/fonts/Starjhol.ttf') format('truetype');
+    font-family: 'Nico-Moji';
+    src: url('../assets/fonts/nicomoji.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
   }
@@ -32,7 +32,7 @@
     background-repeat: no-repeat;
     width: 100vw;
     min-height: 100vh;
-    padding: 40px;
+    padding: 20px;
     overflow: auto;
   }
   
@@ -53,12 +53,14 @@
     font-size: 4rem;
     color: #F3FF47;
     text-shadow: 2px 2px 4px rgba(243, 255, 71, 0.5);  
+    margin-bottom: 10px;
   }
-
   h2 {
     font-family: 'Nico-Moji', sans-serif;
-    color: white;
-    font-size: 2rem;
+    color: yellowgreen;
+    font-size: 3.3rem;
+    text-shadow: 2px 2px 4px rgba(243, 255, 71, 0.5); 
+    margin-top: 0px; 
   }
   
   .input-group {
@@ -96,15 +98,6 @@
     font-family: 'Nico-Moji', sans-serif;
   }
   
-  /* Style for the password field specifically */
-  .input-field[type="password"] {
-    border-color: lightgreen;
-  }
-  
-  .input-field[type="password"]:focus {
-    box-shadow: 0 0 10px rgba(144, 238, 144, 0.5);
-  }
-  
   /* Helper links styling */
   .helper-text {
     text-align: left;
@@ -134,17 +127,17 @@
     color: black;
   }
   
-
-.top-list {
+  
+  .top-list {
   list-style: none; 
   padding: 0;
   margin: 20px auto;
   width: 80%; 
   text-align: center;
-}
-
-
-.top-item {
+  }
+  
+  
+  .top-item {
   font-family: 'Nico-Moji', sans-serif; 
   font-size: 1.5rem; 
   color: #F3FF47; 
@@ -155,20 +148,20 @@
   border-radius: 8px; 
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); 
   transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-
-.top-item:hover {
+  }
+  
+  
+  .top-item:hover {
   background-color: rgba(243, 255, 71, 0.9); 
   transform: scale(1.05); 
   cursor: pointer; 
-}
+  }
   /* Next button */
   .button-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Full screen height */
+    height: 60vh; /* Full screen height */
   }
   
   /* Circle Button */
@@ -177,12 +170,16 @@
     height: 100px;
     border: none;
     border-radius: 50%; /* Makes it a circle */
-    background-color: #383efb; /* Button background color */
+    background-color: #24bffc; /* Button background color */
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Optional shadow */
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out forwards;
+    animation-delay: 1s;
+    transition: all 0.3s ease;
   }
   
   .next-button:active {
@@ -199,8 +196,106 @@
     transform: rotate(-90deg);
     margin-left: 6px;
   }
+
+  .slide-transition-wrapper {
+    position: relative;
+  }
+  
+  .slide {
+    position: absolute;
+    width: 100%;
+    transition: all 0.5s ease-in-out;
+  }
+  
+  .slide-enter {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  
+  .slide-enter-active {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  .slide-exit {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  .slide-exit-active {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  
+
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes textGlow {
+    0% {
+      text-shadow: 2px 2px 4px rgba(243, 255, 71, 0.5);
+    }
+    50% {
+      text-shadow: 2px 2px 15px rgba(243, 255, 71, 0.8);
+    }
+    100% {
+      text-shadow: 2px 2px 4px rgba(243, 255, 71, 0.5);
+    }
+  }
+  
+  .slide-container {
+    position: relative;
+    animation: fadeIn 1s ease-out;
+  }
+  
+  .battle-recap-title {
+    font-family: 'Star-Jedi-Hollow', sans-serif;
+    font-size: 5rem;
+    color: #F3FF47;
+    animation: textGlow 3s infinite;
+    margin-bottom: 30px;
+    transition: transform 0.3s ease;
+  }
+  
+  .battle-recap-title:hover {
+    transform: scale(1.1);
+  }
+  
+  .battle-recap-text {
+    font-family: 'Nico-Moji', sans-serif;
+    color: #F3FF47;
+    font-size: 2.5rem;
+    opacity: 0;
+    animation: fadeIn 1s ease-out forwards;
+    animation-delay: 0.5s;
+  }
+  
+  .lightsaber-divider {
+    width: 60%;
+    height: 4px;
+    background: linear-gradient(to right, transparent, #F3FF47, transparent);
+    margin: 30px auto;
+    opacity: 0;
+    animation: fadeIn 1s ease-out forwards;
+    animation-delay: 0.3s;
+  }
+  
+ 
+  
   .next-button:hover {
     background-color: #F3FF47;
-
+    transform: scale(1.1);
+  }
+  
+  .next-button:hover .triangle {
+    border-top-color: #24bffc;
   }
   
