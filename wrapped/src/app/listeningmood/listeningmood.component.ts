@@ -1,12 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+
+import { Component } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';  
 import { SpotifyService } from '../services/spotify.service';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-listeningmood',
   standalone: true,
-  imports: [],
+  imports: [CommonModule,
+    FormsModule,
+    RouterLink],
   templateUrl: './listeningmood.component.html',
   styleUrl: './listeningmood.component.css'
 })
