@@ -131,7 +131,30 @@ def get_top_tracks(request):
         'total-tracks': len(tracks_list),
         'tracks': tracks_list,
     })
+def user_top_tracks(request):
+    user_tracks= []
+    try:
+        if request.user.toptrack_set:
+            queryset = request.user.toptrack_set.all()
+            user_tracks = list(queryset)
 
+        return JsonResponse({
+            'tracks': user_tracks,
+        })
+    except Exception as e:
+        return JsonResponse({"error": str(e)})
+
+def user_top_artists(request):
+    user_artists = []
+    try:
+        if request.user.topartist_set:
+            queryset = request.user.topartist_set.all()
+            user_artists = list(queryset)
+        return JsonResponse({
+            'artists': user_artists,
+        })
+    except Exception as e:
+        return JsonResponse({"error": str(e)})
 def play_track_preview(request, track_id):
     if not request.GET.get("code"):
         return JsonResponse({"error": "Not authenticated"})
