@@ -55,10 +55,15 @@ def callback(request):
         token_info = response.json()
 
         if 'access_token' in token_info:
-            request.session['access_token'] = token_info['access_token']
-            request.session['refresh_token'] = token_info['refresh_token']
-            request.session['expires_at'] = datetime.now().timestamp() + token_info['expires_in']
-            return redirect('spotify_webapp:top-tracks')
+            # request.session['access_token'] = token_info['access_token']
+            # request.session['refresh_token'] = token_info['refresh_token']
+            # request.session['expires_at'] = datetime.now().timestamp() + token_info['expires_in']
+            user = request.user
+            user.spotify_access_token = token_info['access_token']
+            user.spotify_refresh_token = token_info['refresh_token']
+            user.expiration_time = datetime.now().timestamp() + token_info['expires_in']
+            user.save()
+            return redirect('http://localhost:4200/dashboard/')
 
     return JsonResponse({"error": "Failed Authorization"})
 
