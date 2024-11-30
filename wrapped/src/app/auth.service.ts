@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   backendUrl = 'http://localhost:8000'; 
+
 
   constructor(public http: HttpClient) {}
   
@@ -20,12 +22,12 @@ export class AuthService {
   
     return this.http.post(endpoint, payload);
   }
-
-  deleteAccount(username: string): Observable<any> {
-    const endpoint = `${this.backendUrl}/api/delete-account/`;
-    const payload = { username };
-
-    return this.http.post(endpoint, payload);
+  
+  deleteAccount(password: string): Observable<any> {
+    const endpoint = 'http://127.0.0.1:8000/api/delete-account/';
+    const payload = {  password: password };
+  
+    return this.http.post<any>(endpoint, payload);
   }
 
 }

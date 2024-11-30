@@ -372,26 +372,30 @@ def user_logout(request):
     messages.success(request, 'Logged out successfully!')
     return redirect('spotify_webapp:home')
 
-
+@csrf_exempt
 @login_required
 def delete_account(request):
     if request.method == 'POST':
-           data = json.loads(request.body)
-           password = data.get('password')
+        try:
+            # Parse the incoming JSON request body
+            data = json.loads(request.body)
+            password = data.get('password')
 
-        
-           user = authenticate(request, username=request.user.username, password=password)
+            # Authenticate the user with the password provided
+            user = authenticate(request, username=request.user.username, password=password)
 
-           if user is not None:
-               user.delete()
-               messages.success(request, 'Account deleted successfully')
-               return redirect('spotify_webapp:home')
-           else:
-               messages.error(request, 'Invalid password')
-               return JsonResponse({'error': 'Invalid password.'}, status=400)
+            if user is not None:
+                # Delete the user account
+                user.delete()
+                user.save()
+                return JsonResponse({'message': 'Account deleted successfully.'}, status=200)
+            
+            return JsonResponse({'error': 'Invalid password.'}, status=400)
 
-    return render(request, 'spotify_webapp/delete_account.html')
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON format.'}, status=400)
 
+    return JsonResponse({'error': 'Invalid request method. Use POST.'}, status=405)
 
 @login_required
 def profile(request):

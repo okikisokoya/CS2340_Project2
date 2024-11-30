@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-deleteacc',
@@ -10,25 +11,31 @@ import { RouterLink } from '@angular/router';
   imports: [
     CommonModule,
     FormsModule,
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './deleteacc.component.html',
   styleUrl: './deleteacc.component.css'
 })
 export class DeleteaccComponent {
-  username: string = '';
+  password: string = ''; 
   errorMessage: string = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
+ 
+  deleteAccount() {
+    if (!this.password) {
+      this.errorMessage = 'Please enter your password';
+      return;
+    }
 
-  onDeleteAccount() {
-    this.authService.deleteAccount(this.username).subscribe({
+    this.authService.deleteAccount(this.password).subscribe({
       next: () => {
         alert('Account deleted successfully!');
+        this.router.navigate(['/accdeleted']);
       },
-      error: (error: { error: { error: string; }; }) => {
-        this.errorMessage = error.error.error || 'Error deleting account';
-        alert(this.errorMessage);
+      error: (error) => {
+        console.error('Delete account error:', error);
+        this.errorMessage = error.error?.error || 'Error deleting account';
       }
     });
   }
