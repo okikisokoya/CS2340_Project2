@@ -1,29 +1,69 @@
-
-    <div class="registration-container">
-      <h1>Create an account to see where Robby goes!</h1>
-      <sub>Register to begin the journey!</sub>
-      <div class="input-group">
-          <label class="input-label">Username</label>
-          <input type="text" class="input-field" placeholder="Enter username">
-      </div>
-
-      <div class="input-group">
-        <label class="input-label">Email</label>
-        <input type="text" class="input-field" placeholder="Enter email">
-    </div>
+<div class="registration-container">
+  <h1>Create an account to see where Robby goes!</h1>
+  <sub>Register to begin the journey!</sub>
   
-      <div class="input-group">
-          <label class="input-label">Password</label>
-          <input type="password" class="input-field" placeholder="Enter password">
-      </div>
-
-      <div class="input-group">
-        <label class="input-label">Confirm Password</label>
-        <input type="password" class="input-field" placeholder="Confirm password">
+  <!-- Username Input -->
+  <div class="input-group">
+    <label class="input-label">Username</label>
+    <input 
+      type="text" 
+      class="input-field" 
+      [(ngModel)]="username" 
+      placeholder="Enter username">
+    <div *ngIf="username.length &lt; 10 || username.length &gt; 15" class="error-message">
+      Username must be between 10 and 15 characters!
     </div>
-  
-      <a routerLink="/login"><button class="submit-button">Board my spaceship!</button></a>
-      <a routerLink="/"><button class="submit-button">Return to landing!</button></a>
-    </div>
+  </div>
 
-  
+  <!-- Email Input -->
+  <div class="input-group">
+    <label class="input-label">Email</label>
+    <input 
+      type="text" 
+      class="input-field" 
+      [(ngModel)]="email" 
+      placeholder="Enter email">
+    <div *ngIf="!email.includes('@')" class="error-message">
+      Invalid email format!
+    </div>
+  </div>
+
+  <!-- Password Input -->
+  <div class="input-group">
+    <label class="input-label">Password</label>
+    <input 
+      type="password" 
+      class="input-field" 
+      [(ngModel)]="password" 
+      placeholder="Enter password">
+    <div *ngIf="password.length &lt; 10 || password.length &gt; 15" class="error-message">
+      Password must be between 10 and 15 characters!
+    </div>
+  </div>
+
+  <!-- Confirm Password Input -->
+  <div class="input-group">
+    <label class="input-label">Confirm Password</label>
+    <input 
+      type="password" 
+      class="input-field" 
+      [(ngModel)]="confirmPassword" 
+      placeholder="Confirm password">
+    <div *ngIf="password !== confirmPassword" class="error-message">
+      Passwords do not match!
+    </div>
+  </div>
+
+  <!-- Submit Button -->
+  <button (click)="onSubmit()" class="submit-button">Board my spaceship!</button>
+  <a routerLink="/"><button class="submit-button">Return to landing!</button></a>
+</div>
+
+<!-- Error Message Styling -->
+<style>
+  .error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 4px;
+  }
+</style>
