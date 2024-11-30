@@ -26,4 +26,7 @@ urlpatterns = [
     path('track/<str:track_id>/preview/', views.play_track_preview, name='track-preview'),
     path('meet-the-jedis/', views.authors, name = 'meet-the-jedis'),
 
+    path('test-stats/', views.test_game_stats, name='test-stats'),
+    path('api/find-user/', views.find_user_to_compare, name='find-user'),
+    path('api/compare/<int:user_id>/', views.compare_with_user, name='compare-with-user'),
 ]
