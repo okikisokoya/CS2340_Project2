@@ -18,11 +18,11 @@ import { LocalstorageService } from '../localstorage.service';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private localStorageService: LocalstorageService) {}
 
   ngOnInit() {
-    const username = localStorage.getItem('username');
-    const password = localStorage.getItem('password');
+    const username = this.localStorageService.getItem('username');
+    const password = this.localStorageService.getItem('password');
   
     if (username && password) {
       this.authService.setSession(username, password).subscribe((response) => {
