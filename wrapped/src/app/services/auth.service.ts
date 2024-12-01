@@ -6,10 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  deleteAccount(username: string) {
-    throw new Error('Method not implemented.');
-  }
-  private loginUrl = 'http://localhost:8000/api/login/';  // Django login API URL
+  private loginUrl = 'http://127.0.0.1:8000/api/login/';  // Django login API URL
   private baseUrl = 'http://127.0.0.1:8000';
   backendUrl: any;
 
@@ -20,9 +17,17 @@ export class AuthService {
     return this.http.post(this.loginUrl, { username, password });
   }
 
+  spotifyLogin(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/api/spotifyLogin/`, { withCredentials: true });
+  }
+
   getTopSongs(): Observable<any> {
     const url = `${this.baseUrl}/top-tracks/`;
     return this.http.get(url);
   }
 
+  setSession(username: string, password: string): Observable<any> {
+    const url = `${this.baseUrl}/set-session/`;
+    return this.http.post(url, { username, password });
+  }
 }

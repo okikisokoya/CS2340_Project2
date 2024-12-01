@@ -1,11 +1,12 @@
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';  
 import { SpotifyService } from '../services/spotify.service';
 import { NgModule } from '@angular/core';
+import { LocalstorageService } from '../localstorage.service';
 
 
 @Component({
@@ -15,7 +16,21 @@ import { NgModule } from '@angular/core';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
+
+  constructor(private authService: AuthService) {}
+
+  ngOnInit() {
+    const username = localStorage.getItem('username');
+    const password = localStorage.getItem('password');
+  
+    if (username && password) {
+      this.authService.setSession(username, password).subscribe((response) => {
+        
+      }); // Reinitialize session
+    } 
+  }
+
   username: string = '<user>'; // Replace or set dynamically based on logged-in user
 
   generateWrapped(): void {

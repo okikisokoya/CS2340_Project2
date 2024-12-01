@@ -12,6 +12,7 @@ urlpatterns = [
     path('api', views.home, name='home'),
     path('api/signup/', views.signup_view, name='signup'),
     path('api/login/', views.user_login, name='login'),
+    path('set-session/', views.set_session, name='set_session'),
     path('api/logout/', views.user_logout, name='logout'),
     path('api/profile/', views.profile, name='profile'),
     path('api/delete-account/', views.delete_account, name='delete_account'),
