@@ -43,7 +43,7 @@ def user_login(request):
         else:
             messages.error(request, 'Invalid username or password')
 
-    return JsonResponse({"error": "Failed Authorization"})
+    return JsonResponse({"error": "Failed Authorization"}, status=500)
 
 def spotify_login_view(request):
     scope = 'user-read-private user-top-read'
