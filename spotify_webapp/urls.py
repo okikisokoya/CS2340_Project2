@@ -36,4 +36,7 @@ urlpatterns = [
     path('generate-wrapped/', views.generate_wrapped, name="generate_wrapped"),
     path('get-wrapped/', views.get_wrapped, name="get_wrapped"),
     path('set-user-params/', views.set_user_params, name="set_user_params"),
+    path('generate-duo-wrapped/', views.generate_duo_wrapped, name="generate_duo_wrapped"),
+    path('guest-top-tracks/', views.guest_top_tracks, name='guest-top-tracks'),
+    path('guest-top-artists/', views.guest_top_artists, name='guest-top-artists'),
 ]

@@ -3,13 +3,22 @@
   <sub>Your previous battles</sub>
   <div class="input-group">
     <!-- Dynamically generate buttons for each wrap -->
-    <button
-      *ngFor="let timestamp of formattedTimestamps; let i = index"
-      class="battle-button"
-      (click)="handleWrapClick(i)"
-    >
-      Battle: {{ timestamp }}
-    </button>
+    <div *ngFor="let timestamp of formattedTimestamps; let i = index" class="wrap-container">
+      <button
+        class="battle-button"
+        (click)="handleWrapClick(i)"
+      >
+        Battle: {{ timestamp }}
+      </button>
+
+      <!-- Add delete button next to each wrap button -->
+      <button
+        class="delete-button"
+        (click)="deleteWrap(i)"
+      >
+        Delete
+      </button>
+    </div>
   </div>
 
   <a routerLink="/dashboard">

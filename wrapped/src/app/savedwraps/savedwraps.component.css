@@ -130,7 +130,6 @@
   }
 
   .battle-button {
-    width: 50%;
     padding: 12px;
     margin-top: 20px;
     background-color: #47ffe3;
@@ -157,3 +156,29 @@
     align-items: center;    /* Center the items horizontally */
     gap: 5px;              /* Add some space between the buttons */
   }
+  .delete-button {
+    padding: 12px;
+    margin-top: 20px;
+    background-color: #ff4747;
+    border: 2px solid #ff4747;
+    color: black;
+    font-family: 'Nico-Moji', sans-serif;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .delete-button:hover {
+    background-color: transparent;
+    color: #ff4747;
+  }
+  
+  .wrap-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  

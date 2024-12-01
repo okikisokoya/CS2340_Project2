@@ -18,7 +18,7 @@ from django.contrib import messages
 from spotipy import SpotifyOAuth, Spotify
 
 from wrapped.src.loginrequest import auth_URL
-from .models import User, Authors, Feedback, TopArtist, TopTrack, AccessToken, SpotifyWrap
+from .models import User, Authors, Feedback, TopArtist, TopTrack, AccessToken, SpotifyWrap, DuoWrap
 from django.http import JsonResponse
 
 import spotipy
@@ -178,21 +178,42 @@ def get_wrapped(request):
 
         if user is not None:
             login(request, user)
-            wraps = SpotifyWrap.objects.filter(user=user)
 
+            # Fetch both SpotifyWrap and DuoWrap
+            wraps = SpotifyWrap.objects.filter(user=user)
+            duowraps = DuoWrap.objects.filter(user=user)
+
+            # Format wraps data
             wraps_data = [
                 {
                     'top_tracks': wrap.top_tracks,
                     'top_artists': wrap.top_artists,
-                    'created_at': wrap.created_at.isoformat()
+                    'created_at': wrap.created_at.isoformat(),
+                    'type': 'spotify_wrap'  # Mark the type as 'spotify_wrap'
                 } for wrap in wraps
             ]
 
-            return JsonResponse({'wraps': wraps_data}, status=200)
+            # Format duowraps data
+            duowraps_data = [
+                {
+                    'user_top_tracks': duowrap.user_top_tracks,
+                    'user_top_artists': duowrap.user_top_artists,
+                    'guest_top_tracks': duowrap.guest_top_tracks,
+                    'guest_top_artists': duowrap.guest_top_artists,
+                    'created_at': duowrap.created_at.isoformat(),
+                    'type': 'duo_wrap'  # Mark the type as 'duo_wrap'
+                } for duowrap in duowraps
+            ]
+
+            # Combine both wraps and duowraps data
+            all_wraps = wraps_data + duowraps_data
+
+            return JsonResponse({'wraps': all_wraps}, status=200)
         else:
             messages.error(request, 'Invalid username or password')
 
     return JsonResponse({"error": "Failed Authorization"})
+
 
 @csrf_exempt
 def set_user_params(request):
@@ -207,9 +228,16 @@ def set_user_params(request):
 
             tracks = data.get('tracks')
             artists = data.get('artists')
+            guest_tracks = data.get('guestTracks', None)  # Default to None if not provided
+            guest_artists = data.get('guestArtists', None)  # Default to None if not provided
 
+            # Set user parameters
             user.top_tracks = tracks
             user.top_artists = artists
+            user.guest_top_tracks = guest_tracks if guest_tracks is not None else ''
+            user.guest_top_artists = guest_artists if guest_artists is not None else ''
+
+            user.save()  # Save user data
 
             return JsonResponse({}, status=200)
         else:
@@ -218,8 +246,86 @@ def set_user_params(request):
     return JsonResponse({"error": "Failed Authorization"})
 
 
+@csrf_exempt
+def generate_duo_wrapped(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = data.get('username')
+        password = data.get('password')
+        guestusername = data.get('guestuser')
+        guestpassword = data.get('guestpass')
+        user = authenticate(request, username=username, password=password)
+        guestuser = authenticate(request, username=guestusername, password=guestpassword)
 
+        if user and guestuser is not None:
 
+            login(request, guestuser)
+            sp = spotipy.Spotify(user.spotify_access_token)
+            top_tracks_data = sp.current_user_top_tracks(limit=5, offset=0, time_range='medium_term')
+            guesttracks = [item['name'] for item in top_tracks_data['items']]
+            top_artists = sp.current_user_top_artists(limit=5, offset=0, time_range='medium_term')
+            guestartists = [item['name'] for item in top_artists['items']]
+
+            login(request, user)
+            sp = spotipy.Spotify(user.spotify_access_token)
+            top_tracks_data = sp.current_user_top_tracks(limit=5, offset=0, time_range='medium_term')
+            tracks = [item['name'] for item in top_tracks_data['items']]
+            top_artists = sp.current_user_top_artists(limit=5, offset=0, time_range='medium_term')
+            artists = [item['name'] for item in top_artists['items']]
+
+            DuoWrap.objects.create(
+                user=user,
+                user_top_tracks=', '.join(tracks),
+                user_top_artists=', '.join(artists),
+                guest_top_tracks=', '.join(guesttracks),
+                guest_top_artists=', '.join(guestartists),
+            )
+
+            user.top_tracks = DuoWrap.objects.last().user_top_tracks
+            user.top_artists = DuoWrap.objects.last().user_top_artists
+            user.guest_top_tracks = DuoWrap.objects.last().guest_top_tracks
+            user.guest_top_artists = DuoWrap.objects.last().guest_top_artists
+
+            user.save()
+            return JsonResponse({}, status=200)
+        else:
+            messages.error(request, 'Invalid username or password')
+
+    return JsonResponse({"error": "Failed Authorization"})
+
+@csrf_exempt
+def guest_top_tracks(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = data.get('username')
+        password = data.get('password')
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+    try:
+        return JsonResponse({
+            'tracks': request.user.guest_top_tracks,
+        })
+    except Exception as e:
+        return JsonResponse({"error": str(e)})
+
+@csrf_exempt
+def guest_top_artists(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = data.get('username')
+        password = data.get('password')
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+    try:
+        return JsonResponse({
+            'artists': request.user.guest_top_artists,
+        })
+    except Exception as e:
+        return JsonResponse({"error": str(e)})
 
 
 

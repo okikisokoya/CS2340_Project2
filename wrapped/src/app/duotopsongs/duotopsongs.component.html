@@ -1,32 +1,30 @@
-<body><div class="general-container">
-    <h1>Spotify Wars</h1>
-    <h2>DUO</h2>
-    <!-- <h3>User 1 top genres</h3>
-    <h3>User 2 top genres</h3> -->
+<div class="general-container">
+  <h1>Spotify Wars</h1>
+  <h2>DUO</h2>
 
-    <div class="container">
+  <div class="container">
+    <!-- User 1 Top Tracks -->
     <div class="header">
-        <h3>User 1 top songs</h3>
-        <ul>
-          <li></li>
-          <li></li>
-          <li></li>
-        </ul>
-      </div>
-      <div class="header">
-        <h3>User 2 top songs</h3>
-        <ul>
-          <li></li>
-          <li></li>
-          <li></li>
-        </ul>
-      </div>
+      <h3>User 1 Top Songs</h3>
+      <ul>
+        <li *ngFor="let track of tracks">{{ track }}</li>
+      </ul>
     </div>
 
-    <a routerLink="/duoaudio"> 
-        <div class="button-container">
-            <button class="next-button">
-                <div class="triangle">
-    </div></button></div> </a>
+    <!-- User 2 Top Tracks -->
+    <div class="header">
+      <h3>User 2 Top Songs</h3>
+      <ul>
+        <li *ngFor="let track of guesttracks">{{ track }}</li>
+      </ul>
+    </div>
+  </div>
+
+  <a routerLink="/duoaudio">
+    <div class="button-container">
+      <button class="next-button">
+        <div class="triangle"></div>
+      </button>
+    </div>
+  </a>
 </div>
-</body>   

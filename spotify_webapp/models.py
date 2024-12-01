@@ -7,6 +7,8 @@ class User(AbstractUser):
 
     top_tracks = models.TextField(blank=True)   #will act as the info currently being displayed
     top_artists = models.TextField(blank=True)
+    guest_top_tracks = models.TextField(blank=True)  # will act as the info currently being displayed
+    guest_top_artists = models.TextField(blank=True)
 
     def __str__(self):
         return self.username
@@ -25,6 +27,17 @@ class SpotifyWrap(models.Model):
 
     def __str__(self):
         return f"Spotify Wrap ({self.created_at}) for {self.user.username}"
+
+class DuoWrap(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='duo_wraps')
+    user_top_tracks = models.TextField(blank=True)
+    user_top_artists = models.TextField(blank=True)
+    guest_top_tracks = models.TextField(blank=True)
+    guest_top_artists = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Duo Wrap ({self.created_at}) for {self.user.username}"
 
 # BUFFER FIELD FOR JANK ASS CODE USED IN SET_SESSION
 class TopTrack(models.Model):

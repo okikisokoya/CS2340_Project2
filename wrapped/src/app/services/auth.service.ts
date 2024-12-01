@@ -50,8 +50,28 @@ export class AuthService {
     return this.http.post(url, { username, password });
   }
 
-  setUserParams(username: string, password: string, tracks: string, artists: string): Observable<any> {
+  setUserParams(username: string, password: string, tracks: string, artists: string, guestTracks: string, guestArtists: string): Observable<any> {
     const url = `${this.baseUrl}/set-user-params/`;
-    return this.http.post(url, { username, password, tracks, artists});
+    return this.http.post(url, { username, password, tracks, artists, guestTracks, guestArtists});
+  }
+
+  generateDuoWrap(username: string, password: string, guestuser: string, guestpass: string) {
+    const url = `${this.baseUrl}/generate-duo-wrapped/`;
+    return this.http.post(url, { username, password, guestuser, guestpass});
+  }
+
+  getGuestTopSongs(username: string, password: string): Observable<any> {
+    const url = `${this.baseUrl}/guest-top-tracks/`;
+    return this.http.post(url, { username, password });
+  }
+
+  getGuestTopArtists(username: string, password: string): Observable<any> {
+    const url = `${this.baseUrl}/guest-top-artists/`;
+    return this.http.post(url, { username, password });
+  }
+
+  deleteWrap(username: string, password: string, wrapId: number): Observable<any> {
+    const url = `${this.baseUrl}/guest-top-artists/`;
+    return this.http.post(url, { username, password, wrapId });
   }
 }

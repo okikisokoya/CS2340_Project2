@@ -2,12 +2,19 @@
   <div class="forgotpass-container">
       <h1>Spotify Wars</h1>
       <div class="input-group">
-          <sub>Enter your friend's email address!</sub>
-          <input type="text" class="input-field" placeholder="">
+          <sub>Login to your friend's account</sub>
+          <div class="input-group">
+            <label class="input-label">Username</label>
+            <input type="text" class="input-field" placeholder="Enter username" [(ngModel)]="guestusername">
+          </div>
+    
+          <div class="input-group">
+            <label class="input-label">Password</label>
+            <input type="password" class="input-field" placeholder="Enter password" [(ngModel)]="guestpassword">
+          </div>
       </div>
 
-
-      <a routerLink="/duointro"><button class="submit-button">Enter!</button></a>
+      <button (click)="generateDuoWrapped()" class="submit-button">Enter!</button>
       <a routerLink="/dashboard"><button class="submit-button" style="margin-left: 5px">Return to my dash </button></a>
     </div>
 
