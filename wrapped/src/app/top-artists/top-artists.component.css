@@ -17,7 +17,6 @@
     width: 100vw;
     overflow: auto;
   }
-  
   .general-container {
     text-align: center;
     background-image: url('../assets/background.jpg');
@@ -26,164 +25,103 @@
     background-repeat: no-repeat;
     width: 100vw;
     min-height: 100vh;
-    padding: 40px;
+    padding: 20px;
     overflow: auto;
-  }
-  
-   p {
-    font-family: 'Nico-Moji', sans-serif;
-    color: #F3FF47;
-  }
-  
-  sub {
-    font-family: 'Nico-Moji', sans-serif;
-    color: white;
-    font-weight: bolder;
-    font-size: 1.5rem;
+    position: relative;
   }
   
   h1 {
     font-family: 'Star-Jedi-Hollow', sans-serif;
-    font-size: 4rem;
+    font-size: 4.5rem;
     color: #F3FF47;
-    text-shadow: 2px 2px 4px rgba(243, 255, 71, 0.5);  
-  }
-  h2 {
-    font-family: 'Nico-Moji', sans-serif;
-    color: white;
-    font-size: 2rem;
+    text-shadow: 0 0 10px #F3FF47, 0 0 20px #F3FF47;
+    margin-bottom: 40px;
+    animation: glow 2s ease-in-out infinite;
   }
   
-  .input-group {
-    margin-bottom: 20px;
+  .list-container {
+    background: linear-gradient(135deg, rgba(0, 55, 55, 0.7), rgba(0, 35, 55, 0.7));
+    border-radius: 15px;
+    padding: 30px;
+    margin: 20px auto;
+    max-width: 800px;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 0 20px rgba(243, 255, 71, 0.2);
   }
   
-  .input-field {
+  .top-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px auto;
     width: 100%;
-    padding: 12px;
-    margin: 8px 0;
-    border: 2px solid #F3FF47;
-    border-radius: 5px;
+  }
+  
+  .top-item {
+    font-family: 'Nico-Moji', sans-serif;
+    font-size: 2rem;
+    color: #F3FF47;
+    margin: 15px 0;
+    padding: 15px;
     background-color: rgba(0, 0, 0, 0.5);
-    color: #F3FF47;
-    font-family: 'Nico-Moji', sans-serif;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-  }
-  
-  .input-field::placeholder {
-    color: rgba(243, 255, 71, 0.5);
-  }
-  
-  .input-field:focus {
-    outline: none;
-    box-shadow: 0 0 10px rgba(243, 255, 71, 0.5);
-    background-color: rgba(0, 0, 0, 0.7);
-  }
-  
-  .input-label {
-    display: block;
-    text-align: left;
-    margin-bottom: 5px;
-    color: #F3FF47;
-    font-family: 'Nico-Moji', sans-serif;
-  }
-
-  /* Helper links styling */
-  .helper-text {
-    text-align: left;
-    margin-top: 5px;
-    font-size: 0.9rem;
-    color: #F3FF47;
-    cursor: pointer;
-  }
-  
-  /* Submit button styling */
-  .submit-button {
-    width: 30%;
-    padding: 12px;
-    margin-top: 20px;
-    background-color: yellow;
     border: 2px solid #F3FF47;
-    color: black;
-    font-family: 'Nico-Moji', sans-serif;
-    font-size: 1.1rem;
-    border-radius: 5px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: slideIn 0.5s ease forwards;
+  }
+  
+  .top-item:nth-child(1) { animation-delay: 0.2s; }
+  .top-item:nth-child(2) { animation-delay: 0.4s; }
+  .top-item:nth-child(3) { animation-delay: 0.6s; }
+  .top-item:nth-child(4) { animation-delay: 0.8s; }
+  .top-item:nth-child(5) { animation-delay: 1s; }
+  
+  .top-item:hover {
+    transform: scale(1.02);
+    background-color: rgba(243, 255, 71, 0.2);
+    box-shadow: 0 0 15px rgba(243, 255, 71, 0.3);
+  }
+  
+  .button-container {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .next-button {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #24bffc;
+    border: none;
     cursor: pointer;
     transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(36, 191, 252, 0.5);
   }
   
-  .submit-button:hover {
-    background-color: #F3FF47;
-    color: black;
-  }
-  
-
-.top-list {
-  list-style: none; 
-  padding: 0;
-  margin: 20px auto;
-  width: 80%; 
-  text-align: center;
-}
-
-
-.top-item {
-  font-family: 'Nico-Moji', sans-serif; 
-  font-size: 1.5rem; 
-  color: #F3FF47; 
-  margin: 10px 0; 
-  padding: 10px; 
-  background-color: rgba(0, 0, 0, 0.7); 
-  border: 2px solid #F3FF47; 
-  border-radius: 8px; 
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); 
-  transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-
-.top-item:hover {
-  background-color: rgba(243, 255, 71, 0.9); 
-  transform: scale(1.05); 
-  cursor: pointer; 
-}
-  /* Next button */
-  .button-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Full screen height */
-  }
-  
-  /* Circle Button */
-  .next-button {
-    width: 100px;
-    height: 100px;
-    border: none;
-    border-radius: 50%; /* Makes it a circle */
-    background-color: #24bffc; /* Button background color */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Optional shadow */
-  }
-  
-  .next-button:active {
-    transform: scale(0.95); /* Button click effect */
-  }
-  
-  /* Triangle Inside Button */
-  .triangle {
-    width: 0;
-    height: 0;
-    border-left: 20px solid transparent;
-    border-right: 20px solid transparent;
-    border-top: 36px solid white; /* Triangle color */
-    transform: rotate(-90deg);
-    margin-left: 6px;
-  }
   .next-button:hover {
+    transform: scale(1.1);
     background-color: #F3FF47;
+    box-shadow: 0 0 30px rgba(243, 255, 71, 0.5);
   }
   
+  @keyframes glow {
+    0%, 100% {
+      text-shadow: 0 0 10px #F3FF47, 0 0 20px #F3FF47;
+    }
+    50% {
+      text-shadow: 0 0 20px #F3FF47, 0 0 30px #F3FF47;
+    }
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }

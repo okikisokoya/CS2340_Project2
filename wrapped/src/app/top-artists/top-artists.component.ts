@@ -25,10 +25,16 @@ export class TopArtistsComponent implements OnInit{
   ngOnInit() {
     const username = this.localStorageService.getItem('username');
     const password = this.localStorageService.getItem('password');
-    
+
+    console.log('Username from storage:', username); 
+    console.log('Password from storage:', password);
+
     if (username && password) {
+      
+
       this.authService.getTopArtists(username, password).subscribe(
         (data) => {
+          console.log('API Response:', data); 
           this.artists = data.artists.split(',').map((song: string) => song.trim()); // Assuming the API returns an array of artists
         },
         (error) => {

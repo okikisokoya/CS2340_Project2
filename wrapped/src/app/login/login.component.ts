@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
     console.log('calling onLogin()');
     this.authService.login(this.username, this.password).subscribe(
       (response) => {
+
         // moving local storage here to only store upon successful login
         this.localStorageService.setItem('username', this.username);
         this.localStorageService.setItem('password', this.password);

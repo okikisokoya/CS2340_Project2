@@ -1,15 +1,13 @@
-<div class="general-container">
-    <h1>Spotify Wars</h1>
-    <h2>Your top songs are:</h2>
-  
-    <!-- Display the list of top songs -->
-    <ul>
-      <li *ngFor="let song of songs">
-        {{ song }}
-      </li>
-    </ul>
-  
-    <!-- Navigation button -->
+
+  <div class="general-container">
+    <h1>Top Weapons Used</h1>
+    <div class="list-container">
+      <ul class="top-list">
+        <li class="top-item" *ngFor="let song of songs; let i = index">
+          {{i + 1}}. {{song}}
+        </li>
+      </ul>
+    </div>
     <a routerLink="/audio-intro">
       <div class="button-container">
         <button class="next-button">
