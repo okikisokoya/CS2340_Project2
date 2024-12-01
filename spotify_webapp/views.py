@@ -328,13 +328,55 @@ def guest_top_artists(request):
         return JsonResponse({"error": str(e)})
 
 
+from django.http import JsonResponse
+from django.contrib.auth import authenticate, login
+from .models import SpotifyWrap, DuoWrap
+import json
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.dateparse import parse_datetime
 
+@csrf_exempt
+def delete_wrapped(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            username = data.get('username')
+            password = data.get('password')
+            wrap_type = data.get('type')  # Should be either 'spotify_wrap' or 'duo_wrap'
+            created_at = data.get('created_at')  # Timestamp of the wrap to delete
 
+            # Authenticate user
+            user = authenticate(request, username=username, password=password)
+            if user is None:
+                return JsonResponse({"error": "Authentication failed"}, status=401)
 
+            login(request, user)
 
+            # Parse the creation time into a Python datetime object
+            created_at_dt = parse_datetime(created_at)
+            if created_at_dt is None:
+                return JsonResponse({"error": "Invalid created_at format"}, status=400)
 
+            # Delete the wrap based on its type
+            if wrap_type == 'spotify_wrap':
+                wrap = SpotifyWrap.objects.filter(user=user, created_at=created_at_dt).first()
+            elif wrap_type == 'duo_wrap':
+                wrap = DuoWrap.objects.filter(user=user, created_at=created_at_dt).first()
+            else:
+                return JsonResponse({"error": "Invalid wrap type"}, status=400)
 
+            if wrap:
+                wrap.delete()
+                return JsonResponse({"message": "Wrap deleted successfully"}, status=200)
+            else:
+                return JsonResponse({"error": "Wrap not found"}, status=404)
 
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON"}, status=400)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+    return JsonResponse({"error": "Invalid request method"}, status=405)
 
 
 def get_top_tracks(request):

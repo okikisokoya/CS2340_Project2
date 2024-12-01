@@ -70,8 +70,8 @@ export class AuthService {
     return this.http.post(url, { username, password });
   }
 
-  deleteWrap(username: string, password: string, wrapId: number): Observable<any> {
-    const url = `${this.baseUrl}/guest-top-artists/`;
-    return this.http.post(url, { username, password, wrapId });
+  deleteWrap(payload: any): Observable<any> {
+    const url = `${this.baseUrl}/delete-wrapped/`;
+    return this.http.post(url, payload);
   }
 }

@@ -39,4 +39,5 @@ urlpatterns = [
     path('generate-duo-wrapped/', views.generate_duo_wrapped, name="generate_duo_wrapped"),
     path('guest-top-tracks/', views.guest_top_tracks, name='guest-top-tracks'),
     path('guest-top-artists/', views.guest_top_artists, name='guest-top-artists'),
+    path('delete-wrapped/', views.delete_wrapped, name='delete-wrapped'),
 ]

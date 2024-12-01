@@ -74,16 +74,22 @@ export class SavedwrapsComponent implements OnInit {
   }
 
   deleteWrap(index: number) {
-    //todo implement api on backend
-    const wrapId = this.wraps[index].id; // Assuming the wrap has an 'id' field for deletion
+    const wrap = this.wraps[index]; // Get the wrap object
     const username = this.localStorageService.getItem('username');
     const password = this.localStorageService.getItem('password');
-
-    if (username && password && wrapId) {
-      this.authService.deleteWrap(username, password, wrapId).subscribe(
+  
+    if (username && password && wrap) {
+      const payload = {
+        username: username,
+        password: password,
+        type: wrap.type, // 'spotify_wrap' or 'duo_wrap'
+        created_at: wrap.created_at // The creation time of the wrap
+      };
+  
+      this.authService.deleteWrap(payload).subscribe(
         () => {
           // After successful deletion, update the list by removing the deleted wrap
-          this.wraps = this.wraps.filter((wrap: any) => wrap.id !== wrapId);
+          this.wraps = this.wraps.filter((_, i) => i !== index);
           this.formattedTimestamps = this.formattedTimestamps.filter((_, i) => i !== index); // Remove corresponding timestamp
         },
         (error) => {
@@ -92,5 +98,6 @@ export class SavedwrapsComponent implements OnInit {
       );
     }
   }
+  
 
 }
