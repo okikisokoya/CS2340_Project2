@@ -63,6 +63,7 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = True
 CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:4200/',
+    'http://localhost:4200/'
 ]
 SESSION_COOKIE_SAMESITE = None
 
