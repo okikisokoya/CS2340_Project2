@@ -59,13 +59,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = True
-CSRF_TRUSTED_ORIGINS = [
-    'http://127.0.0.1:4200/',
-    'http://localhost:4200/'
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:4200',
 ]
-SESSION_COOKIE_SAMESITE = None
 
 CORS_ALLOW_METHODS = [
     'DELETE',
@@ -86,6 +86,10 @@ CORS_ALLOW_HEADERS = [
     'user-agent',
     'x-csrftoken',
     'x-requested-with',
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:4200',
 ]
 
 APPEND_SLASH = False

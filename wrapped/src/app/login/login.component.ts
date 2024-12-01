@@ -30,7 +30,6 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(this.username, this.password).subscribe(
       (response) => {
-        // Redirect to Spotify authorization
         this.authService.spotifyLogin().subscribe((response) => {
         window.open(response.auth_url, "_blank");
         });

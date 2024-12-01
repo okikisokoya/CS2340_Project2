@@ -1,14 +1,17 @@
 <div class="general-container">
-    <h1>Spotify Wars</h1>
-    <sub>Your Top Artists!</sub>
-    <ul class="top-artists-list">
-        <li *ngFor="let artist of artists">
-          {{ artist }}
-        </li>
-      </ul>
-    <!-- <p *ngIf="items.length === 0">No items to display.</p> -->
-
-    <a routerLink="/songs-intro"> <div class="button-container"><button class="next-button"><div class="triangle">
-      </div></button></div> </a>
- </div>
-
+  <h1>Top Battle Generals</h1>
+  <div class="list-container">
+    <ul class="top-list">
+      <li class="top-item" *ngFor="let artist of artists; let i = index">
+        {{i + 1}}. {{artist}}
+      </li>
+    </ul>
+  </div>
+  <a routerLink="/songs-intro">
+    <div class="button-container">
+      <button class="next-button">
+        <div class="triangle"></div>
+      </button>
+    </div>
+  </a>
+</div>
