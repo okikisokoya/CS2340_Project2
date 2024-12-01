@@ -30,7 +30,7 @@ export class DuotopartistsComponent implements OnInit{
       this.authService.getTopArtists(username, password).subscribe(
         (data) => {
           console.log('API Response:', data); 
-          this.artists = data.artists.split(',').map((song: string) => song.trim()); // Assuming the API returns an array of artists
+          this.artists = data.artists.split(',').map((song: string) => song.trim()).slice(0, 5);; // Assuming the API returns an array of artists
         },
         (error) => {
           console.error('Error fetching top artists:', error);
@@ -39,7 +39,7 @@ export class DuotopartistsComponent implements OnInit{
       this.authService.getGuestTopArtists(username, password).subscribe(
         (data) => {
           console.log('API Response:', data); 
-          this.guestartists = data.artists.split(',').map((song: string) => song.trim()); // Assuming the API returns an array of artists
+          this.guestartists = data.artists.split(',').map((song: string) => song.trim()).slice(0, 5);; // Assuming the API returns an array of artists
         },
         (error) => {
           console.error('Error fetching top artists:', error);

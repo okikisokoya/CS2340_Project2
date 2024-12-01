@@ -25,7 +25,7 @@ export class TopSongsComponent implements OnInit {
     if (username && password) {
       this.authService.getTopSongs(username, password).subscribe(
         (data) => {
-          this.songs = data.tracks.split(',').map((song: string) => song.trim()); // Assuming the API returns an array of artists
+          this.songs = data.tracks.split(',').map((song: string) => song.trim()).slice(0, 5);; // Assuming the API returns an array of artists
         },
         (error) => {
           console.error('Error fetching top artists:', error);
