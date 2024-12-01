@@ -6,13 +6,14 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';  
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 @Component({
-  selector: 'app-duominigame',
+  selector: 'app-duo-audio',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
-  templateUrl: './duominigame.component.html',
-  styleUrl: './duominigame.component.css'
+  templateUrl: './duo-audio.component.html',
+  styleUrl: './duo-audio.component.css'
 })
-export class DuominigameComponent {
+export class DuoAudioComponent {
 
 }

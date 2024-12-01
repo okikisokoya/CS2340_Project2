@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DuominigameComponent } from './duominigame.component';
+import { DuoAudioComponent } from './duo-audio.component';
 
-describe('DuominigameComponent', () => {
-  let component: DuominigameComponent;
-  let fixture: ComponentFixture<DuominigameComponent>;
+describe('DuoAudioComponent', () => {
+  let component: DuoAudioComponent;
+  let fixture: ComponentFixture<DuoAudioComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DuominigameComponent]
+      imports: [DuoAudioComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DuominigameComponent);
+    fixture = TestBed.createComponent(DuoAudioComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
