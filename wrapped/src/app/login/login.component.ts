@@ -25,11 +25,13 @@ export class LoginComponent implements OnInit {
 
   login() {
     console.log('calling onLogin()');
-    this.localStorageService.setItem('username', this.username);
-    this.localStorageService.setItem('password', this.password);
-
     this.authService.login(this.username, this.password).subscribe(
       (response) => {
+
+        // moving local storage here to only store upon successful login
+        this.localStorageService.setItem('username', this.username);
+        this.localStorageService.setItem('password', this.password);
+        // Redirect to Spotify authorization
         this.authService.spotifyLogin().subscribe((response) => {
         window.open(response.auth_url, "_blank");
         });
