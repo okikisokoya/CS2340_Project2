@@ -29,6 +29,7 @@ import { AudioIntroComponent } from './audio-intro/audio-intro.component';
 import { AudioComponent } from './audio/audio.component';
 import { DuoBattleRecapComponent } from './duo-battle-recap/duo-battle-recap.component';
 import { DuoSongsIntroComponent } from './duo-songs-intro/duo-songs-intro.component';
+import { LoadingComponent } from './loading/loading.component';
 
 
 export const routes: Routes = [
@@ -62,5 +63,5 @@ export const routes: Routes = [
   {path: "audio", component: AudioComponent},
   {path: "duobattlerecap", component: DuoBattleRecapComponent},
   {path: "duosongsintro", component: DuoSongsIntroComponent},
-
+  {path: "loading", component: LoadingComponent},
 ];
