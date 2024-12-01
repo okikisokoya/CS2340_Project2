@@ -36,4 +36,22 @@ export class AuthService {
     const url = `${this.baseUrl}/set-session/`;
     return this.http.post(url, { username, password });
   }
+
+  generateWrapped(username: string, password: string): Observable<any> {
+    const url = `${this.baseUrl}/generate-wrapped/`;
+    return this.http.post(url, { username, password });
+  }
+
+
+  // honestly i wish i would've just passed in username and password automatically by
+  // putting the localstorageservice inside of this service. maybe something to do latr
+  getWraps(username: string, password: string): Observable<any> {
+    const url = `${this.baseUrl}/get-wrapped/`;
+    return this.http.post(url, { username, password });
+  }
+
+  setUserParams(username: string, password: string, tracks: string, artists: string): Observable<any> {
+    const url = `${this.baseUrl}/set-user-params/`;
+    return this.http.post(url, { username, password, tracks, artists});
+  }
 }

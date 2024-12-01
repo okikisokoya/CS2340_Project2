@@ -1,8 +1,10 @@
 from django.contrib import admin
-from .models import Authors, User, TopTrack, TopArtist
+from .models import Authors, User, TopTrack, TopArtist, AccessToken, SpotifyWrap
 
 # Register your models here.
 admin.site.register(User)
 admin.site.register(Authors)
 admin.site.register(TopTrack)
 admin.site.register(TopArtist)
+admin.site.register(AccessToken)
+admin.site.register(SpotifyWrap)

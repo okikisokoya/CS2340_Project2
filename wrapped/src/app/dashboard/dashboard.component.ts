@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';  
+import { Router, RouterLink } from '@angular/router';  
 import { SpotifyService } from '../services/spotify.service';
 import { NgModule } from '@angular/core';
 import { LocalstorageService } from '../localstorage.service';
@@ -18,24 +18,23 @@ import { LocalstorageService } from '../localstorage.service';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private authService: AuthService, private localStorageService: LocalstorageService) {}
+  constructor(private authService: AuthService, private localStorageService: LocalstorageService, private router: Router) {}
 
   ngOnInit() {
-    const username = this.localStorageService.getItem('username');
-    const password = this.localStorageService.getItem('password');
-  
-    if (username && password) {
-      this.authService.setSession(username, password).subscribe((response) => {
-        
-      }); // Reinitialize session
-    } 
+
   }
 
   username: string = '<user>'; // Replace or set dynamically based on logged-in user
 
   generateWrapped(): void {
     console.log('Generate a new Wrapped to help Robby out!');
-    // Add logic to call backend or service to handle generation
+    const username = this.localStorageService.getItem('username');
+    const password = this.localStorageService.getItem('password');
+    if (username && password) {
+      this.authService.generateWrapped(username, password).subscribe((response) => {
+        this.router.navigate(['/intro']);
+      });
+    }
   }
 
   callAlly(): void {

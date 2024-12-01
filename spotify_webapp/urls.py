@@ -32,4 +32,8 @@ urlpatterns = [
     path('test-stats/', views.test_game_stats, name='test-stats'),
     path('api/find-user/', views.find_user_to_compare, name='find-user'),
     path('api/compare/<int:user_id>/', views.compare_with_user, name='compare-with-user'),
+
+    path('generate-wrapped/', views.generate_wrapped, name="generate_wrapped"),
+    path('get-wrapped/', views.get_wrapped, name="get_wrapped"),
+    path('set-user-params/', views.set_user_params, name="set_user_params"),
 ]

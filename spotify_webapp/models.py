@@ -3,18 +3,10 @@ from django.db import models
 
 
 class User(AbstractUser):
-    # # Additional fields for Spotify-like functionality
-    # profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
-    # bio = models.TextField(max_length=500, blank=True)
-    # # Spotify-specific fields
-    # spotify_id = models.CharField(max_length=100, blank=True)
-    # spotify_access_token = models.CharField(max_length=255, blank=True)
-    # spotify_refresh_token = models.CharField(max_length=255, blank=True)
-    # expiration_time = models.IntegerField(default=0)
+    spotify_access_token = models.CharField(max_length=255, blank=True)
 
-    top_tracks = models.TextField(blank=True) #will act as the info currently being displayed
+    top_tracks = models.TextField(blank=True)   #will act as the info currently being displayed
     top_artists = models.TextField(blank=True)
-    # preferred_genres = models.JSONField(default=list, blank=True)
 
     def __str__(self):
         return self.username
@@ -33,6 +25,18 @@ class SpotifyWrap(models.Model):
 
     def __str__(self):
         return f"Spotify Wrap ({self.created_at}) for {self.user.username}"
+
+# BUFFER FIELD FOR JANK ASS CODE USED IN SET_SESSION
+class TopTrack(models.Model):
+    top_tracks = models.TextField(blank=True)
+
+class TopArtist(models.Model):
+    top_artists = models.TextField(blank=True)
+
+class AccessToken(models.Model): # can be used to access spotipy
+    access_token = models.TextField(blank=True)
+
+# END OF JANK ASS BUFFER FIELDS
 
 class Authors(models.Model):
     first_name = models.CharField(max_length=50)
@@ -53,10 +57,6 @@ class Feedback(models.Model):
     def __str__(self):
         return f"{self.name} - {self.submitted_date}"
 
-class TopTrack(models.Model):
-    top_tracks = models.TextField(blank=True)
 
-class TopArtist(models.Model):
-    top_artists = models.TextField(blank=True)
 
 
