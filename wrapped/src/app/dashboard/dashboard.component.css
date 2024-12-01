@@ -48,9 +48,11 @@
   
   h1 {
     font-family: 'Star-Jedi-Hollow', sans-serif;
-    font-size: 2.5rem;
+    font-size: 4.5rem;
     color: #F3FF47;
-    text-shadow: 2px 2px 4px rgba(243, 255, 71, 0.5);  
+    text-shadow: 0 0 10px #F3FF47, 0 0 20px #F3FF47;
+    margin-bottom: 40px;
+    animation: glow 2s ease-in-out infinite;
   }
   
   
