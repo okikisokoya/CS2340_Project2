@@ -349,6 +349,8 @@ def username_check(request):
         return JsonResponse({'exists': True})
     return JsonResponse({'exists': False})
 
+
+@csrf_exempt
 def reset_password(request):
     if request.method == 'POST':
         try:
@@ -386,27 +388,26 @@ def user_logout(request):
     messages.success(request, 'Logged out successfully!')
     return redirect('spotify_webapp:home')
 
-
+@csrf_exempt
 @login_required
 def delete_account(request):
     if request.method == 'POST':
-           data = json.loads(request.body)
-           password = data.get('password')
-
-        
-           user = authenticate(request, username=request.user.username, password=password)
-
-           if user is not None:
-               user.delete()
-               messages.success(request, 'Account deleted successfully')
-               return redirect('spotify_webapp:home')
-           else:
-               messages.error(request, 'Invalid password')
-               return JsonResponse({'error': 'Invalid password.'}, status=400)
-
-    return render(request, 'spotify_webapp/delete_account.html')
-
-
+        try:
+            data = json.loads(request.body)
+            password = data.get('password')
+            if not (password):
+                return JsonResponse({'error': 'Invalid password or password is required.'}, status=400)
+            if not (request.user.check_password(password)):
+                return JsonResponse({'error': 'Invalid password.'}, status=400)
+            user = request.user
+            user.delete()
+            logout(request)
+            return JsonResponse({'message': 'Account deleted successfully.'}, status=200)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+    else:
+        # Handle other HTTP methods like GET
+        return JsonResponse({'error': 'Invalid request method. Use POST to delete account.'}, status=405)
 @login_required
 def profile(request):
     if request.method == 'POST':

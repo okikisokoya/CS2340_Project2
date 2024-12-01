@@ -1,0 +1,33 @@
+<div class="general-container">
+    <div class="slide-container">
+      <h1 class="battle-recap-title">Duo Battle Recap</h1>
+      
+      <div class="lightsaber-divider"></div>
+      
+      <div style="display: flex; justify-content: space-around; margin: 20px 0;">
+        <div class="battle-recap-text" style="animation-delay: 0.5s;">
+          <p style="font-size: 2rem; margin: 0;">Commander</p>
+          <p style="font-size: 3rem; margin: 10px 0;">{{user1Name}}</p>
+        </div>
+        
+        <div class="battle-recap-text" style="animation-delay: 0.7s;">
+          <p style="font-size: 2.5rem; margin: 10px 0;">VS</p>
+        </div>
+  
+        <div class="battle-recap-text" style="animation-delay: 0.9s;">
+          <p style="font-size: 2rem; margin: 0;">Commander</p>
+          <p style="font-size: 3rem; margin: 10px 0;">{{user2Name}}</p>
+        </div>
+      </div>
+  
+      <p class="battle-recap-text" style="animation-delay: 1.1s; font-size: 2rem;">
+        A Musical Duel in the Galaxy...
+      </p>
+      
+      <div class="button-container">
+        <button class="next-button" (click)="onNextClick()">
+          <div class="triangle"></div>
+        </button>
+      </div>
+    </div>
+  </div>

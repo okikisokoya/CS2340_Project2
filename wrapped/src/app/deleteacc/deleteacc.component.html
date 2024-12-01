@@ -1,12 +1,38 @@
-
-  <div class="forgotpass-container">
-    <h1>Spotify Wars</h1>
-    <div class="input-group">
-        <p>Are you sure you want to retire to Tatooine?</p>
-    </div>
-
-
-    <a routerLink="/dashboard"><button class="submit-button" style="margin-right: 5px">N0! Return to dashboard</button></a>
-    <a routerLink="/accdeleted"><button class="submit-button" style="margin-left: 5px">Yes </button></a>
+<div class="forgotpass-container">
+  <h1>Spotify Wars</h1>
+  
+  <div class="input-group">
+    <p>Are you sure you want to retire to Tatooine?</p>
+    
+    <input 
+      type="password" 
+      [(ngModel)]="password" 
+      name="password" 
+      placeholder="Confirm Password" 
+      class="input-field"
+      required
+    >
   </div>
 
+  <div class="button-group">
+    <button 
+      class="submit-button" 
+      (click)="deleteAccount()" 
+      [disabled]="!password"
+      style="margin-right: 5px"
+    >
+      Yes :C
+    </button>
+    
+    <a routerLink="/dashboard">
+      <button 
+        class="submit-button" 
+        style="margin-left: 5px"
+      >
+        N0! Return to dashboard
+      </button>
+    </a>
+  </div>
+
+  <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+</div>
