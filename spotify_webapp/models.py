@@ -76,5 +76,5 @@ class TopArtist(models.Model):
     name = models.CharField(max_length=255)
     popularity = models.IntegerField()
     artist_image_url = models.URLField(blank = True, null = True)
-
+    genre = models.CharField(max_length=255)
 
