@@ -4,18 +4,18 @@
     font-weight: normal;
     font-style: normal;
   }
-  
+
   @font-face {
     font-family: 'Star-Jedi-Hollow';
     src: url('../assets/fonts/Starjhol.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
   }
-  
+
   * {
     box-sizing: border-box;
   }
-  
+
   body {
     margin: 0;
     padding: 0;
@@ -23,7 +23,7 @@
     width: 100vw;
     overflow: auto;
   }
-  
+
   .general-container {
     text-align: center;
     background-image: url('../assets/background.jpg');
@@ -35,31 +35,31 @@
     padding: 40px;
     overflow: auto;
   }
-  
+
    p {
     font-family: 'Nico-Moji', sans-serif;
     color: #F3FF47;
   }
-  
+
   sub {
     font-family: 'Nico-Moji', sans-serif;
     color: white;
     font-weight: bolder;
     font-size: 1.5rem;
   }
-  
+
   h1 {
     font-family: 'Star-Jedi-Hollow', sans-serif;
     font-size: 4rem;
     color: #F3FF47;
-    text-shadow: 2px 2px 4px rgba(243, 255, 71, 0.5);  
+    text-shadow: 2px 2px 4px rgba(243, 255, 71, 0.5);
   }
-  
-  
+
+
   .input-group {
     margin-bottom: 20px;
   }
-  
+
   .input-field {
     width: 100%;
     padding: 12px;
@@ -72,17 +72,17 @@
     font-size: 1rem;
     transition: all 0.3s ease;
   }
-  
+
   .input-field::placeholder {
     color: rgba(243, 255, 71, 0.5);
   }
-  
+
   .input-field:focus {
     outline: none;
     box-shadow: 0 0 10px rgba(243, 255, 71, 0.5);
     background-color: rgba(0, 0, 0, 0.7);
   }
-  
+
   .input-label {
     display: block;
     text-align: left;
@@ -99,7 +99,7 @@
     color: #F3FF47;
     cursor: pointer;
   }
-  
+
   /* Submit button styling */
   .submit-button {
     width: 60%;
@@ -114,40 +114,40 @@
     cursor: pointer;
     transition: all 0.3s ease;
   }
-  
+
   .submit-button:hover {
     background-color: #F3FF47;
     color: black;
   }
-  
+
 
 .top-list {
-  list-style: none; 
+  list-style: none;
   padding: 0;
   margin: 20px auto;
-  width: 80%; 
+  width: 80%;
   text-align: center;
 }
 
 
 .top-item {
-  font-family: 'Nico-Moji', sans-serif; 
-  font-size: 1.5rem; 
-  color: #F3FF47; 
-  margin: 10px 0; 
-  padding: 10px; 
-  background-color: rgba(0, 0, 0, 0.7); 
-  border: 2px solid #F3FF47; 
-  border-radius: 8px; 
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); 
+  font-family: 'Nico-Moji', sans-serif;
+  font-size: 1.5rem;
+  color: #F3FF47;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 2px solid #F3FF47;
+  border-radius: 8px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 
 .top-item:hover {
-  background-color: rgba(243, 255, 71, 0.9); 
-  transform: scale(1.05); 
-  cursor: pointer; 
+  background-color: rgba(243, 255, 71, 0.9);
+  transform: scale(1.05);
+  cursor: pointer;
 }
 
 .author-container {
@@ -198,3 +198,14 @@
       width: 80%;
     }
   }
+
+.submit-feedback {
+  display: block;
+  padding: 20px;
+  margin: 20px auto;
+}
+
+.submit-feedback h2 {
+  font-family: 'Nico-Moji', sans-serif;
+  color: #F3FF47;
+}

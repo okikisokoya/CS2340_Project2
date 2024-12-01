@@ -42,6 +42,10 @@ export class AuthService {
     return this.http.post(url, { username, password });
   }
 
+  submitFeedback( feedbackData: {name: string, email: string, feedback: string}): Observable<any> {
+    const url = `${this.baseUrl}/meet-the-jedis/`;
+    return this.http.post(url, feedbackData)
+  }
 
   // honestly i wish i would've just passed in username and password automatically by
   // putting the localstorageservice inside of this service. maybe something to do latr

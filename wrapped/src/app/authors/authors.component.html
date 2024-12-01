@@ -7,30 +7,78 @@
         <div class="author-profile">
             <h2>Jinhee Chang</h2>
             <p><strong>Contact:</strong> jchang396&#64;gatech.edu</p>
+            <p> Major: Computer Science</p>
+            <p> Favorite Character: Luke Skywalker</p>
+            <p> Bio: Matcha Lattes >> Everything else <p>
         </div>
 
         <div class="author-profile">
             <h2>Joanne Park</h2>
             <p><strong>Contact:</strong> spark912&#64;gatech.edu</p>
+            <p> Major: Computer Science</p>
+            <p> Favorite Character: Leia Organa</p>
+            <p> Bio: Vanilla Lattes from Kaldis are nice! <p>
         </div>
 
         <div class="author-profile">
             <h2>Xander Riddle</h2>
             <p><strong>Contact:</strong> xriddle0917&#64;gmail.com</p>
+            <p> Major: Computer Science</p>
+            <p> Favorite Character: Darth Maul</p>
+            <p> Bio: Factorio and Code are my favorite things to do. (And build robots) <p>
         </div>
 
         <div class="author-profile">
-            <h2>okiki Sokoya</h2>
+            <h2>Okiki Sokoya</h2>
             <p><strong>Contact:</strong> okikisokoya&#64;gatech.edu</p>
+            <p> Major: Computer Engineering</p>
+            <p> Favorite Character: Anakin Skywalker</p>
+            <p> Bio: Pink over everything! <p>
         </div>
 
         <div class="author-profile">
             <h2>olivia Li</h2>
             <p><strong>Contact:</strong> oli34&#64;gatech.edu</p>
+            <p> Major: Computer Science</p>
+            <p> Favorite Character: Rey</p>
+            <p> Bio: Proud Miffy Enjoyer <p>
         </div>
-    </div>
-
     <a routerLink="/settings">
         <button class="submit-button">Back to Settings!</button>
     </a>
-</div>
+  </div>
+  <div class = "submit-feedback">
+    <h2>Contact the Developers Here!</h2>
+    <div *ngIf="message" class = "message">
+      {{ message }}
+    </div>
+    <form (ngSubmit)="onSubmit()">
+      <div>
+        <label for="name">Name</label>
+        <input
+          type="text"
+          id="name"
+          [(ngModel)]="name"
+          name="name"
+          required
+          placeholder="Enteryourname" />
+        <label for="email"> Email:</label>
+        <input
+          type="email"
+          id="email"
+          [(ngModel)]="email"
+          name="email"
+          required
+          placeholder="Enter your email" />
+        <label for="feedback">Feedback:</label>
+        <textarea
+          id="feedback"
+          [(ngModel)]="feedback"
+          name="feedback"
+          required
+          placeholder="Enter your feedback!"></textarea>
+        <button type="submit" class="submit-button">Submit Feedback!</button>
+      </div>
+    </form>
+    </div>
+  </div>

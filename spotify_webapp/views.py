@@ -2,6 +2,8 @@
 import json
 
 from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models.fields import return_None
@@ -573,16 +575,18 @@ def home(request):
 def authors(request):
     authors = Authors.objects.all().order_by('last_name')
     return render(request, '/meet_the_authors.html', {'authors': authors})
-
+@login_required
 def submit_feedback(request):
     if request.method == 'POST':
-        Feedback.objects.create(
-            name = request.POST.get('name'),
-            email = request.POST.get('email'),
-            feedback = request.POST.get('feedback'),
-        )
-        return redirect('spotify_webapp:home')
-    return render(request, 'feedback_form.html')
+        data = json.loads(request.body)
+        name = data.get('name'),
+        email = data.get('email'),
+        feedback = data.get('feedback'),
+        if not name or not email or not feedback:
+            return JsonResponse({'error': 'Please fill all the fields'}, status=400)
+        Feedback.objects.create(name=name, email= email, feedback=feedback)
+        return JsonResponse({'message': 'Feedback submitted successfully!'}, status=200)
+    return JsonResponse({'error': 'Invalid request'}, status=400)
 
 
 # Add to views.py

@@ -25,7 +25,7 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('top-tracks/', views.user_top_tracks, name='top-tracks'),
     path('top-artists/', views.user_top_artists, name='top-artists'),
-    path('meet-the-jedis/', views.authors, name = 'meet-the-jedis'),
+    path('meet-the-jedis/', views.submit_feedback, name = 'submit-feedback'),
 
     path('test-stats/', views.test_game_stats, name='test-stats'),
     path('api/find-user/', views.find_user_to_compare, name='find-user'),
