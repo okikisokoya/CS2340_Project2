@@ -1,29 +1,34 @@
 <div class="general-container">
   <h1>Spotify Wars</h1>
-  <h2>DUO</h2>
 
-  <div class="container">
-    <!-- User 1 Top Tracks -->
-    <div class="header">
-      <h3>User 1 Top Songs</h3>
-      <ul>
-        <li *ngFor="let track of tracks">{{ track }}</li>
+  <!-- Container for side-by-side lists -->
+  <div style="display: flex; justify-content: space-between; gap: 20px; margin: 0 auto; max-width: 1600px;">
+    <!-- User 1's List -->
+    <div class="list-container" style="flex: 1;">
+      <h2 style="color: #F3FF47; font-family: 'Star-Jedi-Hollow', sans-serif;">User 1 Top Songs</h2>
+      <ul class="top-list">
+        <li class="top-item" *ngFor="let track of tracks; let i = index">
+          {{i + 1}}. {{track}}
+        </li>
       </ul>
     </div>
 
-    <!-- User 2 Top Tracks -->
-    <div class="header">
-      <h3>User 2 Top Songs</h3>
-      <ul>
-        <li *ngFor="let track of guesttracks">{{ track }}</li>
+    <!-- User 2's List -->
+    <div class="list-container" style="flex: 1;">
+      <h2 style="color: #F3FF47; font-family: 'Star-Jedi-Hollow', sans-serif;">User 2 Top Songs</h2>
+      <ul class="top-list">
+        <li class="top-item" *ngFor="let track of guesttracks; let i = index">
+          {{i + 1}}. {{track}}
+        </li>
       </ul>
     </div>
   </div>
 
+  <!-- Navigation Button -->
   <a routerLink="/duoaudio">
     <div class="button-container">
       <button class="next-button">
-        <div class="triangle"></div>
+        <div class="triangle" style="border-left-color: white;"></div>
       </button>
     </div>
   </a>

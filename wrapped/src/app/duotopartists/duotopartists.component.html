@@ -1,30 +1,35 @@
 <div class="general-container">
   <h1>Spotify Wars</h1>
-  <h2>DUO</h2>
-
-  <div class="container">
-    <!-- User 1 Top Artists -->
-    <div class="header">
-      <h3>User 1 Top Artists</h3>
-      <ul>
-        <li *ngFor="let artist of artists">{{ artist }}</li>
+ 
+  <!-- Container for side-by-side lists -->
+  <div style="display: flex; justify-content: space-between; gap: 20px; margin: 0 auto; max-width: 1600px;">
+    <!-- User 1's List -->
+    <div class="list-container" style="flex: 1;">
+      <h2 style="color: #F3FF47; font-family: 'Star-Jedi-Hollow', sans-serif;">User 1 Top Artists</h2>
+      <ul class="top-list">
+        <li class="top-item" *ngFor="let artist of artists; let i = index">
+          {{i + 1}}. {{artist}}
+        </li>
       </ul>
     </div>
-
-    <!-- User 2 Top Artists -->
-    <div class="header">
-      <h3>User 2 Top Artists</h3>
-      <ul>
-        <li *ngFor="let artist of guestartists">{{ artist }}</li>
+ 
+    <!-- User 2's List --> 
+    <div class="list-container" style="flex: 1;">
+      <h2 style="color: #F3FF47; font-family: 'Star-Jedi-Hollow', sans-serif;">User 2 Top Artists</h2>
+      <ul class="top-list">
+        <li class="top-item" *ngFor="let artist of guestartists; let i = index">
+          {{i + 1}}. {{artist}}
+        </li>
       </ul>
     </div>
   </div>
-
+ 
+  <!-- Navigation Button -->
   <a routerLink="/duosongsintro">
     <div class="button-container">
       <button class="next-button">
-        <div class="triangle"></div>
+        <div class="triangle" style="border-left-color: white;"></div>
       </button>
     </div>
   </a>
-</div>
+ </div>
