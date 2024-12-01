@@ -147,4 +147,13 @@
     background-color: transparent;
     color: #47ffe3;
   }
+  .general-container {
+    text-align: center;
+  }
   
+  .input-group {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center;    /* Center the items horizontally */
+    gap: 5px;              /* Add some space between the buttons */
+  }

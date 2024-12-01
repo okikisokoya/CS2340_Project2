@@ -21,9 +21,7 @@
     <div class="welcome-message">Welcome to your battlefield!</div>
     <div class="actions">
        <!-- Buttons -->
-       <a routerLink="/intro">
-    <button class="menu-button blue-button">Generate a new Wrapped to help Robby out!</button>
-  </a>
+    <button (click)="generateWrapped()" class="menu-button blue-button">Generate a new Wrapped to help Robby out!</button>
 
   <a routerLink="/invitefriend">
     <button class="menu-button red-button">Call an Ally for a Wrapped!</button>

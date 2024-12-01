@@ -18,7 +18,7 @@ from django.contrib import messages
 from spotipy import SpotifyOAuth, Spotify
 
 from wrapped.src.loginrequest import auth_URL
-from .models import User, Authors, Feedback, TopArtist, TopTrack
+from .models import User, Authors, Feedback, TopArtist, TopTrack, AccessToken, SpotifyWrap
 from django.http import JsonResponse
 
 import spotipy
@@ -75,16 +75,9 @@ def callback(request):
         token_info = response.json()
 
         if 'access_token' in token_info:
-            sp = spotipy.Spotify(auth=token_info['access_token'])
-            top_tracks_data = sp.current_user_top_tracks(limit=5, offset=0, time_range='medium_term')
-            tracks = [item['name'] for item in top_tracks_data['items']]
-            top_artists = sp.current_user_top_artists(limit=5, offset=0, time_range='medium_term')
-            artists = [item['name'] for item in top_artists['items']]
-
-            TopTrack.objects.create(top_tracks=', '.join(tracks))
-            TopArtist.objects.create(top_artists=', '.join(artists))
-
-            return redirect('http://localhost:4200/dashboard/')
+            authtoken = token_info['access_token']
+            AccessToken.objects.create(access_token=authtoken)
+            return redirect('http://localhost:4200/loading/')
 
     return JsonResponse({"error": "Failed Authorization"})
 
@@ -98,13 +91,10 @@ def set_session(request):
 
         if user is not None:
             login(request, user)
-            if len(user.top_tracks) == 0:
-                user.top_tracks = TopTrack.objects.last().top_tracks
-            if len(user.top_artists) == 0:
-                user.top_artists = TopArtist.objects.last().top_artists
+            if AccessToken.objects.last():
+                user.spotify_access_token = AccessToken.objects.last().access_token
             user.save()
-            TopTrack.objects.all().delete()
-            TopArtist.objects.all().delete()
+            AccessToken.objects.all().delete()
             messages.success(request, 'Logged in successfully!')
             return JsonResponse({}, status=200)
         else:
@@ -145,6 +135,101 @@ def user_top_artists(request):
         })
     except Exception as e:
         return JsonResponse({"error": str(e)})
+
+@csrf_exempt
+def generate_wrapped(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = data.get('username')
+        password = data.get('password')
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            sp = spotipy.Spotify(user.spotify_access_token)
+            top_tracks_data = sp.current_user_top_tracks(limit=5, offset=0, time_range='medium_term')
+            tracks = [item['name'] for item in top_tracks_data['items']]
+            top_artists = sp.current_user_top_artists(limit=5, offset=0, time_range='medium_term')
+            artists = [item['name'] for item in top_artists['items']]
+
+            SpotifyWrap.objects.create(
+                user=user,
+                top_tracks=', '.join(tracks),
+                top_artists=', '.join(artists)
+            )
+
+            user.top_tracks = SpotifyWrap.objects.last().top_tracks
+            user.top_artists = SpotifyWrap.objects.last().top_artists
+
+            user.save()
+            return JsonResponse({}, status=200)
+        else:
+            messages.error(request, 'Invalid username or password')
+
+    return JsonResponse({"error": "Failed Authorization"})
+
+@csrf_exempt
+def get_wrapped(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = data.get('username')
+        password = data.get('password')
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            wraps = SpotifyWrap.objects.filter(user=user)
+
+            wraps_data = [
+                {
+                    'top_tracks': wrap.top_tracks,
+                    'top_artists': wrap.top_artists,
+                    'created_at': wrap.created_at.isoformat()
+                } for wrap in wraps
+            ]
+
+            return JsonResponse({'wraps': wraps_data}, status=200)
+        else:
+            messages.error(request, 'Invalid username or password')
+
+    return JsonResponse({"error": "Failed Authorization"})
+
+@csrf_exempt
+def set_user_params(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = data.get('username')
+        password = data.get('password')
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+
+            tracks = data.get('tracks')
+            artists = data.get('artists')
+
+            user.top_tracks = tracks
+            user.top_artists = artists
+
+            return JsonResponse({}, status=200)
+        else:
+            messages.error(request, 'Invalid username or password')
+
+    return JsonResponse({"error": "Failed Authorization"})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def get_top_tracks(request):
     sp_oauth = SpotifyOAuth(
