@@ -25,8 +25,6 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('top-tracks/', views.user_top_tracks, name='top-tracks'),
     path('top-artists/', views.user_top_artists, name='top-artists'),
-    path('refresh-token/', views.refresh_token, name='refresh-token'),
-    path('track/<str:track_id>/preview/', views.play_track_preview, name='track-preview'),
     path('meet-the-jedis/', views.authors, name = 'meet-the-jedis'),
 
     path('test-stats/', views.test_game_stats, name='test-stats'),

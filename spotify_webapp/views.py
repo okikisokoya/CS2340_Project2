@@ -15,7 +15,6 @@ from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from spotipy import SpotifyOAuth, Spotify
 
 from wrapped.src.loginrequest import auth_URL
 from .models import User, Authors, Feedback, TopArtist, TopTrack, AccessToken, SpotifyWrap, DuoWrap
@@ -146,11 +145,22 @@ def generate_wrapped(request):
 
         if user is not None:
             login(request, user)
-            sp = spotipy.Spotify(user.spotify_access_token)
-            top_tracks_data = sp.current_user_top_tracks(limit=5, offset=0, time_range='medium_term')
-            tracks = [item['name'] for item in top_tracks_data['items']]
-            top_artists = sp.current_user_top_artists(limit=5, offset=0, time_range='medium_term')
-            artists = [item['name'] for item in top_artists['items']]
+
+            headers = {
+                "Authorization": f"Bearer {user.spotify_access_token}"
+            }
+
+            # Get top tracks
+            top_tracks_url = "https://api.spotify.com/v1/me/top/tracks?limit=5&time_range=medium_term"
+            top_tracks_response = requests.get(top_tracks_url, headers=headers)
+            top_tracks_data = top_tracks_response.json()
+            tracks = [item['name'] for item in top_tracks_data.get('items', [])]
+
+            # Get top artists
+            top_artists_url = "https://api.spotify.com/v1/me/top/artists?limit=5&time_range=medium_term"
+            top_artists_response = requests.get(top_artists_url, headers=headers)
+            top_artists_data = top_artists_response.json()
+            artists = [item['name'] for item in top_artists_data.get('items', [])]
 
             SpotifyWrap.objects.create(
                 user=user,
@@ -260,18 +270,40 @@ def generate_duo_wrapped(request):
         if user and guestuser is not None:
 
             login(request, guestuser)
-            sp = spotipy.Spotify(user.spotify_access_token)
-            top_tracks_data = sp.current_user_top_tracks(limit=5, offset=0, time_range='medium_term')
-            guesttracks = [item['name'] for item in top_tracks_data['items']]
-            top_artists = sp.current_user_top_artists(limit=5, offset=0, time_range='medium_term')
-            guestartists = [item['name'] for item in top_artists['items']]
+
+            headers = {
+                "Authorization": f"Bearer {user.spotify_access_token}"
+            }
+
+            # Get top tracks
+            top_tracks_url = "https://api.spotify.com/v1/me/top/tracks?limit=5&time_range=medium_term"
+            top_tracks_response = requests.get(top_tracks_url, headers=headers)
+            top_tracks_data = top_tracks_response.json()
+            guesttracks = [item['name'] for item in top_tracks_data.get('items', [])]
+
+            # Get top artists
+            top_artists_url = "https://api.spotify.com/v1/me/top/artists?limit=5&time_range=medium_term"
+            top_artists_response = requests.get(top_artists_url, headers=headers)
+            top_artists_data = top_artists_response.json()
+            guestartists = [item['name'] for item in top_artists_data.get('items', [])]
 
             login(request, user)
-            sp = spotipy.Spotify(user.spotify_access_token)
-            top_tracks_data = sp.current_user_top_tracks(limit=5, offset=0, time_range='medium_term')
-            tracks = [item['name'] for item in top_tracks_data['items']]
-            top_artists = sp.current_user_top_artists(limit=5, offset=0, time_range='medium_term')
-            artists = [item['name'] for item in top_artists['items']]
+
+            headers = {
+                "Authorization": f"Bearer {user.spotify_access_token}"
+            }
+
+            # Get top tracks
+            top_tracks_url = "https://api.spotify.com/v1/me/top/tracks?limit=5&time_range=medium_term"
+            top_tracks_response = requests.get(top_tracks_url, headers=headers)
+            top_tracks_data = top_tracks_response.json()
+            tracks = [item['name'] for item in top_tracks_data.get('items', [])]
+
+            # Get top artists
+            top_artists_url = "https://api.spotify.com/v1/me/top/artists?limit=5&time_range=medium_term"
+            top_artists_response = requests.get(top_artists_url, headers=headers)
+            top_artists_data = top_artists_response.json()
+            artists = [item['name'] for item in top_artists_data.get('items', [])]
 
             DuoWrap.objects.create(
                 user=user,
@@ -377,156 +409,6 @@ def delete_wrapped(request):
             return JsonResponse({"error": str(e)}, status=500)
 
     return JsonResponse({"error": "Invalid request method"}, status=405)
-
-
-def get_top_tracks(request):
-    sp_oauth = SpotifyOAuth(
-        client_id= SPOTIFY_CLIENT_ID,
-        client_secret= SPOTIFY_CLIENT_SECRET,
-        redirect_uri= "http://127.0.0.1:8000/top-tracks/",
-        scope = 'user-top-read'
-        # scope=settings.SPOTIFY_SCOPES,
-    )
-    if not request.GET.get("code"):
-        auth_URL = sp_oauth.get_authorize_url()
-        return redirect(auth_URL)
-    token_info = sp_oauth.get_access_token(request.GET["code"], check_cache=False)
-    sp = spotipy.Spotify(auth=token_info['access_token'])
-    top_tracks_data = sp.current_user_top_tracks(limit=5, offset=0,time_range='medium_term')
-
-    #printing
-    print("\n==User's Top Tracks===")
-    print("--------")
-    #deleting the existing top tracks in case things need to start over
-    TopTrack.objects.filter(user = request.user).delete()
-    tracks_list=[];
-    for idx, track in enumerate(top_tracks_data['items'], 1):
-        album_cover_url = None
-        if track['album'].get('images'):
-            album_cover_url = track['album']['images'][0]['url']
-        top_track = TopTrack.objects.create(
-            user = request.user,
-            track_id = track['id'],
-            name = track['name'],
-            artist = track['artists'][0]['name'],
-            popularity = track['popularity'],
-            album_image_url = album_cover_url,
-        )
-        track_name = track['name']
-        artist_name = track['artists'][0]['name']
-        album_cover_url = track['album']['images'][0]['url']
-        print(f"{idx}.{track_name} by {artist_name}")
-        preview_url = track.get('preview_url')
-
-        track_info = f"{idx}.{track_name} by {artist_name}"
-        if preview_url:
-            track_info += f'<br><audio controls><source src="{preview_url}" type="audio/mpeg"></audio>'
-        tracks_list.append(track_info)
-        dbtrack_info = {
-            'id': track['id'],
-            'name': track['name'],
-            'artist': track['artists'][0]['name'],
-            'popularity': track['popularity'],
-            'album_image_url': album_cover_url,
-        }
-        tracks_list.append(dbtrack_info)
-    print("--------\n")
-    return JsonResponse({
-        'total-tracks': len(tracks_list),
-        'tracks': tracks_list,
-    })
-
-def play_track_preview(request, track_id):
-    if not request.GET.get("code"):
-        return JsonResponse({"error": "Not authenticated"})
-
-    sp_oauth = SpotifyOAuth(
-        client_id=SPOTIFY_CLIENT_ID,
-        client_secret=SPOTIFY_CLIENT_SECRET,
-        redirect_uri="http://127.0.0.1:8000/top-tracks/",
-        scope='user-top-read'
-    )
-
-    token_info = sp_oauth.get_access_token(request.GET["code"], check_cache=False)
-    sp = spotipy.Spotify(auth=token_info['access_token'])
-
-    try:
-        track = sp.track(track_id)
-        preview_url = track['preview_url']
-
-        if not preview_url:
-            return JsonResponse({"error": "No preview available for this track"})
-
-        return JsonResponse({
-            "preview_url": preview_url,
-            "name": track['name'],
-            "artist": track['artists'][0]['name']
-        })
-    except Exception as e:
-        return JsonResponse({"error": str(e)})
-@csrf_exempt
-def get_top_artists(request):
-    sp_oauth = SpotifyOAuth(
-        client_id= SPOTIFY_CLIENT_ID,
-        client_secret= SPOTIFY_CLIENT_SECRET,
-        redirect_uri= "http://127.0.0.1:8000/top-artists/",
-        scope = 'user-top-read'
-        # scope=settings.SPOTIFY_SCOPES,
-    )
-    if not request.GET.get("code"):
-        auth_URL = sp_oauth.get_authorize_url()
-        return redirect(auth_URL)
-    token_info = sp_oauth.get_access_token(request.GET["code"], check_cache=False)
-    sp = spotipy.Spotify(auth=token_info['access_token'])
-    top_artists = sp.current_user_top_artists(limit=5, offset=0,time_range='medium_term')
-    #printing
-    print("\n==User's Top Tracks===")
-    print("--------")
-    TopArtist.objects.filter(user = request.user).delete()
-    artists_list=[];
-    for idx, artist in enumerate(top_artists['items'], 1):
-        artist_image_url = artist['images'][0]['url'] if artist['images'] else None
-
-        # creating and saving the top artists_list
-        top_artist = TopArtist.objects.create(
-            user = request.user,
-            artist_id = artist['id'],
-            name = artist['name'],
-            popularity = artist['popularity'],
-            artist_image_url = artist_image_url,
-        )
-        artist_name = artist['name']
-        # album_cover_url = track['album']['images'][0]['url']
-        print(f"{idx}. {artist_name}")
-
-        artists_list.append(f"{idx}.{artist_name}")
-    print("--------\n")
-
-    #HI SORRY THIS IS OLIVIA, modified this to return json
-    #so angular can digest
-    return JsonResponse({"top_artists": artists_list})
-    #return HttpResponse("<br>".join(artists_list))
-
-def refresh_token(request):
-    if 'refresh_token' not in request.session:
-        return redirect('spotify_webapp:login')
-
-    req_body = {
-        'grant_type': 'refresh_token',
-        'refresh_token': request.session['refresh_token'],
-        'client_id': settings.SPOTIFY_CLIENT_ID,
-        'client_secret': settings.SPOTIFY_CLIENT_SECRET,
-    }
-
-    response = requests.post('https://accounts.spotify.com/api/token', data=req_body)
-    new_token_info = response.json()
-
-    if 'access_token' in new_token_info:
-        request.session['access_token'] = new_token_info['access_token']
-        request.session['expires_at'] = datetime.now().timestamp() + new_token_info['expires_in']
-        return redirect('spotify_webapp:top-tracks')
-
-    return JsonResponse({"error": "Failed to refresh token"})
 
 def dashboard(request):
     if 'access_token' not in request.session:
