@@ -1,5 +1,8 @@
 # spotify_webapp/views.py
 import json
+
+from django.contrib.auth.forms import UserCreationForm
+from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models.fields import return_None
 from django.shortcuts import render, redirect
@@ -24,6 +27,23 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 
 from CS2340_Project2.secret import SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET
+
+@csrf_exempt
+def user_login(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = data.get('username')
+        password = data.get('password')
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            messages.success(request, 'Logged in successfully!')
+            return JsonResponse({}, status=200)
+        else:
+            messages.error(request, 'Invalid username or password')
+
+    return JsonResponse({"error": "Failed Authorization"})
 
 def spotify_login_view(request):
     scope = 'user-read-private user-top-read'
@@ -55,26 +75,41 @@ def callback(request):
         token_info = response.json()
 
         if 'access_token' in token_info:
-            # request.session['access_token'] = token_info['access_token']
-            # request.session['refresh_token'] = token_info['refresh_token']
-            # request.session['expires_at'] = datetime.now().timestamp() + token_info['expires_in']
-            user = request.user
-            user.spotify_access_token = token_info['access_token']
-            user.spotify_refresh_token = token_info['refresh_token']
-            user.expiration_time = datetime.now().timestamp() + token_info['expires_in']
             sp = spotipy.Spotify(auth=token_info['access_token'])
             top_tracks_data = sp.current_user_top_tracks(limit=5, offset=0, time_range='medium_term')
             tracks = [item['name'] for item in top_tracks_data['items']]
-            user.top_tracks = tracks
             top_artists = sp.current_user_top_artists(limit=5, offset=0, time_range='medium_term')
             artists = [item['name'] for item in top_artists['items']]
-            user.top_artists = artists
-            user.save()
+
+            TopTrack.objects.create(top_tracks=', '.join(tracks))
+            TopArtist.objects.create(top_artists=', '.join(artists))
+
             return redirect('http://localhost:4200/dashboard/')
 
     return JsonResponse({"error": "Failed Authorization"})
 
 @csrf_exempt
+def set_session(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = data.get('username')
+        password = data.get('password')
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            user.top_tracks = TopTrack.objects.last().top_tracks
+            user.top_artists = TopArtist.objects.last().top_artists
+            user.save()
+            TopTrack.objects.all().delete()
+            TopArtist.objects.all().delete()
+            messages.success(request, 'Logged in successfully!')
+            return JsonResponse({}, status=200)
+        else:
+            messages.error(request, 'Invalid username or password')
+
+    return JsonResponse({"error": "Failed Authorization"})
+
 def get_top_tracks(request):
     sp_oauth = SpotifyOAuth(
         client_id= SPOTIFY_CLIENT_ID,
@@ -308,26 +343,6 @@ def signup_view(request):
 
     return render(request, 'spotify_webapp/signup.html')
 
-
-
-@csrf_exempt #add this so you don't need to mess with cookies
-def user_login(request):
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        username = data.get('username')
-        password = data.get('password')
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            login(request, user)
-            messages.success(request, 'Logged in successfully!')
-            return redirect('spotify_webapp:dashboard')
-        else:
-            messages.error(request, 'Invalid username or password')
-
-    return render(request, 'spotify_webapp/login.html')
-
-@csrf_exempt
 def username_check(request):
     username = request.GET.get('username', '')
     if username and User.objects.filter(username=username).exists():

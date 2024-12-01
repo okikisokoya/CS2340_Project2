@@ -63,18 +63,9 @@ class Feedback(models.Model):
         return f"{self.name} - {self.submitted_date}"
 
 class TopTrack(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    track_id = models.CharField(max_length=100)
-    name = models.CharField(max_length=255)
-    artist = models.CharField(max_length=255)
-    popularity = models.IntegerField()
-    album_image_url = models.URLField(blank = True, null = True)
+    top_tracks = models.TextField(blank=True)
 
 class TopArtist(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    artist_id = models.CharField(max_length=100)
-    name = models.CharField(max_length=255)
-    popularity = models.IntegerField()
-    artist_image_url = models.URLField(blank = True, null = True)
-    genre = models.CharField(max_length=255)
+    top_artists = models.TextField(blank=True)
+
 

@@ -3,6 +3,7 @@ import { AuthService } from '../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { LocalstorageService } from '../localstorage.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
   password = '';
   errorMessage = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private localStorageService: LocalstorageService) {}
 
   ngOnInit() {
     console.log('entering login page.');
@@ -24,11 +25,17 @@ export class LoginComponent implements OnInit {
 
   login() {
     console.log('calling onLogin()');
+    this.localStorageService.setItem('username', this.username);
+    this.localStorageService.setItem('password', this.password);
+
     this.authService.login(this.username, this.password).subscribe(
       (response) => {
-        window.location.href = response.auth_url; // Redirect to Spotify authorization
+        // Redirect to Spotify authorization
+        this.authService.spotifyLogin().subscribe((response) => {
+        window.open(response.auth_url, "_blank");
+        });
       },
-      error => {
+      (error) => {
         this.errorMessage = error.error.message || 'Login failed. Please try again.';
       }
     );
