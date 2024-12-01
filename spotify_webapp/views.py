@@ -110,6 +110,35 @@ def set_session(request):
 
     return JsonResponse({"error": "Failed Authorization"})
 
+@csrf_exempt
+def user_top_tracks(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = data.get('username')
+        password = data.get('password')
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+    try:
+        return JsonResponse({
+            'tracks': request.user.top_tracks,
+        })
+    except Exception as e:
+        return JsonResponse({"error": str(e)})
+
+def user_top_artists(request):
+    user_artists = []
+    try:
+        if request.user.topartist_set:
+            queryset = request.user.topartist_set.all()
+            user_artists = list(queryset)
+        return JsonResponse({
+            'artists': user_artists,
+        })
+    except Exception as e:
+        return JsonResponse({"error": str(e)})
+
 def get_top_tracks(request):
     sp_oauth = SpotifyOAuth(
         client_id= SPOTIFY_CLIENT_ID,
@@ -166,30 +195,7 @@ def get_top_tracks(request):
         'total-tracks': len(tracks_list),
         'tracks': tracks_list,
     })
-def user_top_tracks(request):
-    user_tracks= []
-    try:
-        if request.user.toptrack_set:
-            queryset = request.user.toptrack_set.all()
-            user_tracks = list(queryset)
 
-        return JsonResponse({
-            'tracks': user_tracks,
-        })
-    except Exception as e:
-        return JsonResponse({"error": str(e)})
-
-def user_top_artists(request):
-    user_artists = []
-    try:
-        if request.user.topartist_set:
-            queryset = request.user.topartist_set.all()
-            user_artists = list(queryset)
-        return JsonResponse({
-            'artists': user_artists,
-        })
-    except Exception as e:
-        return JsonResponse({"error": str(e)})
 def play_track_preview(request, track_id):
     if not request.GET.get("code"):
         return JsonResponse({"error": "Not authenticated"})

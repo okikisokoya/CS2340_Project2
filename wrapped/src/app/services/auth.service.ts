@@ -22,9 +22,9 @@ export class AuthService {
     return this.http.get(`${this.baseUrl}/api/spotifyLogin/`, { withCredentials: true });
   }
 
-  getTopSongs(): Observable<any> {
+  getTopSongs(username: string, password: string): Observable<any> {
     const url = `${this.baseUrl}/top-tracks/`;
-    return this.http.get(url);
+    return this.http.post(url, { username, password });
   }
 
   setSession(username: string, password: string): Observable<any> {
