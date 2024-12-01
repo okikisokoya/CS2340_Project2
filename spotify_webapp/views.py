@@ -135,6 +135,24 @@ def user_top_artists(request):
         return JsonResponse({"error": str(e)})
 
 @csrf_exempt
+def user_popularity(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = data.get('username')
+        password = data.get('password')
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+    try:
+        return JsonResponse({
+            'popularity': request.user.popularity,
+            'guest_popularity': request.user.guest_popularity,
+        })
+    except Exception as e:
+        return JsonResponse({"error": str(e)})
+
+@csrf_exempt
 def generate_wrapped(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -209,6 +227,8 @@ def get_wrapped(request):
                     'user_top_artists': duowrap.user_top_artists,
                     'guest_top_tracks': duowrap.guest_top_tracks,
                     'guest_top_artists': duowrap.guest_top_artists,
+                    'popularity': duowrap.popularity,
+                    'guest_popularity': duowrap.guest_popularity,
                     'created_at': duowrap.created_at.isoformat(),
                     'type': 'duo_wrap'  # Mark the type as 'duo_wrap'
                 } for duowrap in duowraps
@@ -237,12 +257,16 @@ def set_user_params(request):
 
             tracks = data.get('tracks')
             artists = data.get('artists')
+            popularity = data.get('popularity', None)
+            guest_popularity = data.get('guestPopularity', None)
             guest_tracks = data.get('guestTracks', None)  # Default to None if not provided
             guest_artists = data.get('guestArtists', None)  # Default to None if not provided
 
             # Set user parameters
             user.top_tracks = tracks
             user.top_artists = artists
+            user.popularity = popularity if popularity is not None else 0
+            user.guest_popularity = guest_popularity if guest_popularity is not None else 0
             user.guest_top_tracks = guest_tracks if guest_tracks is not None else ''
             user.guest_top_artists = guest_artists if guest_artists is not None else ''
 
@@ -271,7 +295,7 @@ def generate_duo_wrapped(request):
             login(request, guestuser)
 
             headers = {
-                "Authorization": f"Bearer {user.spotify_access_token}"
+                "Authorization": f"Bearer {guestuser.spotify_access_token}"
             }
 
             # Get top tracks
@@ -279,6 +303,7 @@ def generate_duo_wrapped(request):
             top_tracks_response = requests.get(top_tracks_url, headers=headers)
             top_tracks_data = top_tracks_response.json()
             guesttracks = [item['name'] for item in top_tracks_data.get('items', [])]
+            guestpopularity = sum(item['popularity'] for item in top_tracks_data.get('items', []))
 
             # Get top artists
             top_artists_url = "https://api.spotify.com/v1/me/top/artists?limit=5&time_range=medium_term"
@@ -297,6 +322,7 @@ def generate_duo_wrapped(request):
             top_tracks_response = requests.get(top_tracks_url, headers=headers)
             top_tracks_data = top_tracks_response.json()
             tracks = [item['name'] for item in top_tracks_data.get('items', [])]
+            popularity = sum(item['popularity'] for item in top_tracks_data.get('items', []))
 
             # Get top artists
             top_artists_url = "https://api.spotify.com/v1/me/top/artists?limit=5&time_range=medium_term"
@@ -310,12 +336,16 @@ def generate_duo_wrapped(request):
                 user_top_artists=', '.join(artists),
                 guest_top_tracks=', '.join(guesttracks),
                 guest_top_artists=', '.join(guestartists),
+                popularity=popularity,
+                guest_popularity=guestpopularity,
             )
 
             user.top_tracks = DuoWrap.objects.last().user_top_tracks
             user.top_artists = DuoWrap.objects.last().user_top_artists
             user.guest_top_tracks = DuoWrap.objects.last().guest_top_tracks
             user.guest_top_artists = DuoWrap.objects.last().guest_top_artists
+            user.popularity = DuoWrap.objects.last().popularity
+            user.guest_popularity = DuoWrap.objects.last().guest_popularity
 
             user.save()
             return JsonResponse({}, status=200)

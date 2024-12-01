@@ -38,4 +38,5 @@ urlpatterns = [
     path('guest-top-tracks/', views.guest_top_tracks, name='guest-top-tracks'),
     path('guest-top-artists/', views.guest_top_artists, name='guest-top-artists'),
     path('delete-wrapped/', views.delete_wrapped, name='delete-wrapped'),
+    path('user-popularity/', views.user_popularity, name='user-popularity'),
 ]

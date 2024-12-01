@@ -50,9 +50,9 @@ export class AuthService {
     return this.http.post(url, { username, password });
   }
 
-  setUserParams(username: string, password: string, tracks: string, artists: string, guestTracks: string, guestArtists: string): Observable<any> {
+  setUserParams(username: string, password: string, tracks: string, artists: string, guestTracks: string, guestArtists: string, popularity: string, guestPopularity: string): Observable<any> {
     const url = `${this.baseUrl}/set-user-params/`;
-    return this.http.post(url, { username, password, tracks, artists, guestTracks, guestArtists});
+    return this.http.post(url, { username, password, tracks, artists, guestTracks, guestArtists, popularity, guestPopularity});
   }
 
   generateDuoWrap(username: string, password: string, guestuser: string, guestpass: string) {
@@ -73,5 +73,10 @@ export class AuthService {
   deleteWrap(payload: any): Observable<any> {
     const url = `${this.baseUrl}/delete-wrapped/`;
     return this.http.post(url, payload);
+  }
+
+  getPopularity(username: string, password: string): Observable<any> {
+    const url = `${this.baseUrl}/user-popularity/`;
+    return this.http.post(url, { username, password });
   }
 }

@@ -53,6 +53,8 @@ export class SavedwrapsComponent implements OnInit {
     let artists = wrap.top_artists;
     let guestTracks = wrap.guest_top_tracks;
     let guestArtists = wrap.guest_top_artists;
+    let popularity = wrap.popularity;
+    let guest_popularity = wrap.guest_popularity;
 
     if (wrap.type === 'duo_wrap') {
       // For DuoWrap, include guest tracks and guest artists
@@ -60,10 +62,12 @@ export class SavedwrapsComponent implements OnInit {
       artists = wrap.user_top_artists;
       guestTracks = wrap.guest_top_tracks;
       guestArtists = wrap.guest_top_artists;
+      popularity = wrap.popularity;
+      guest_popularity = wrap.guest_popularity;
     }
 
     if (username && password) {
-      this.authService.setUserParams(username, password, tracks, artists, guestTracks, guestArtists).subscribe((response: any) => {
+      this.authService.setUserParams(username, password, tracks, artists, guestTracks, guestArtists, popularity, guest_popularity).subscribe((response: any) => {
         if (wrap.type === 'duo_wrap') {
           this.router.navigate(['/duointro']);
         } else {

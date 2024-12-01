@@ -1,26 +1,24 @@
-<body><div class="general-container">
+<body>
+  <div class="general-container">
     <h1>Spotify Wars</h1>
     <h2>DUO</h2>
-    <!-- <h3>User 1 top genres</h3>-->
-    <h4>GAME OVER</h4> 
+    <h4>{{ resultMessage }}</h4> <!-- Display the result -->
 
     <div class="container">
-    <div class="header">
-        <h3>User 1 total points:</h3>
-        <ul>
-        </ul>
+      <div class="header">
+        <h3>User 1 Total Points: {{ popularity }}</h3>
       </div>
       <div class="header">
-        <h3>User 2 total points:</h3>
-        <ul>
-        </ul>
+        <h3>User 2 Total Points: {{ guestPopularity }}</h3>
       </div>
     </div>
 
-    <a routerLink="/outro"> 
-        <div class="button-container">
-            <button class="next-button">
-                <div class="triangle">
-    </div></button></div> </a>
-</div>
+    <a routerLink="/outro">
+      <div class="button-container">
+        <button class="next-button">
+          <div class="triangle"></div>
+        </button>
+      </div>
+    </a>
+  </div>
 </body>
