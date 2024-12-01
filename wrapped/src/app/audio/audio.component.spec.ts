@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GreatTasteComponent } from './great-taste.component';
+import { AudioComponent } from './audio.component';
 
-describe('GreatTasteComponent', () => {
-  let component: GreatTasteComponent;
-  let fixture: ComponentFixture<GreatTasteComponent>;
+describe('AudioComponent', () => {
+  let component: AudioComponent;
+  let fixture: ComponentFixture<AudioComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GreatTasteComponent]
+      imports: [AudioComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(GreatTasteComponent);
+    fixture = TestBed.createComponent(AudioComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

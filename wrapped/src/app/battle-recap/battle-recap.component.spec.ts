@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TopgenresComponent } from './topgenres.component';
+import { BattleRecapComponent } from './battle-recap.component';
 
-describe('TopgenresComponent', () => {
-  let component: TopgenresComponent;
-  let fixture: ComponentFixture<TopgenresComponent>;
+describe('BattleRecapComponent', () => {
+  let component: BattleRecapComponent;
+  let fixture: ComponentFixture<BattleRecapComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TopgenresComponent]
+      imports: [BattleRecapComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TopgenresComponent);
+    fixture = TestBed.createComponent(BattleRecapComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
