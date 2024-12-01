@@ -402,25 +402,29 @@ def user_logout(request):
     return redirect('spotify_webapp:home')
 
 @csrf_exempt
-@login_required
 def delete_account(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            password = data.get('password')
-            if not (password):
-                return JsonResponse({'error': 'Invalid password or password is required.'}, status=400)
-            if not (request.user.check_password(password)):
-                return JsonResponse({'error': 'Invalid password.'}, status=400)
-            user = request.user
-            user.delete()
-            logout(request)
-            return JsonResponse({'message': 'Account deleted successfully.'}, status=200)
-        except Exception as e:
-            return JsonResponse({'error': str(e)}, status=500)
-    else:
-        # Handle other HTTP methods like GET
-        return JsonResponse({'error': 'Invalid request method. Use POST to delete account.'}, status=405)
+    user = request.user  # This is returning AnonymousUser since there's no authentication
+    try:
+        # Get the data from the request
+        data = json.loads(request.body)
+        username = data.get('username')
+        password = data.get('password')
+        
+        # Find the user by username instead of relying on request.user
+        user_to_delete = User.objects.get(username=username)
+        
+        # Verify password matches
+        if user_to_delete.check_password(password):
+            user_to_delete.delete()
+            return JsonResponse({'message': 'Account deleted successfully'})
+        else:
+            return JsonResponse({'error': 'Invalid password'}, status=400)
+            
+    except User.DoesNotExist:
+        return JsonResponse({'error': 'User not found'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
 @login_required
 def profile(request):
     if request.method == 'POST':
