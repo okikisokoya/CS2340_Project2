@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';  
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { LocalstorageService } from '../localstorage.service';
 
 
 @Component({
@@ -17,22 +18,23 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 
 export class TopArtistsComponent implements OnInit{
-  topArtists: any[] = [];
+  artists: string[] = [];
 
-  constructor(private spotifyService: SpotifyService) {}
+  constructor(private authService: AuthService, private localStorageService: LocalstorageService) {}
 
-  ngOnInit(): void {
-    this.fetchTopArtists();
-  }
-
-  fetchTopArtists(): void {
-    this.spotifyService.getTopArtists().subscribe(
-      (data) => {
-        this.topArtists = data; // Assuming the API returns an array of artists
-      },
-      (error) => {
-        console.error('Error fetching top artists:', error);
-      }
-    );
+  ngOnInit() {
+    const username = this.localStorageService.getItem('username');
+    const password = this.localStorageService.getItem('password');
+    
+    if (username && password) {
+      this.authService.getTopArtists(username, password).subscribe(
+        (data) => {
+          this.artists = data.artists.split(',').map((song: string) => song.trim()); // Assuming the API returns an array of artists
+        },
+        (error) => {
+          console.error('Error fetching top artists:', error);
+        }
+      );
+    }
   }
 }
