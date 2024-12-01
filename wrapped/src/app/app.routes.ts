@@ -11,14 +11,9 @@ import { AccdeletedComponent } from './accdeleted/accdeleted.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { UsersettingsComponent } from './usersettings/usersettings.component';
 import { IntroComponent } from './intro/intro.component';
-import { TopgenresComponent } from './topgenres/topgenres.component';
 import { TopArtistsComponent } from './top-artists/top-artists.component';
 import { TopSongsComponent } from './top-songs/top-songs.component';
-import { ListeningTimeComponent } from './listening-time/listening-time.component';
-import { ListeningmoodComponent } from './listeningmood/listeningmood.component';
-import { MostsurprisingComponent } from './mostsurprising/mostsurprising.component';
 import { DuointroComponent } from './duointro/duointro.component';
-import { DuotopgenresComponent } from './duotopgenres/duotopgenres.component';
 import { DuominigameComponent } from './duominigame/duominigame.component';
 import { DuotopartistsComponent } from './duotopartists/duotopartists.component';
 import { DuotopsongsComponent } from './duotopsongs/duotopsongs.component';
@@ -28,8 +23,12 @@ import { SithComponent } from './sith/sith.component';
 import { NeutralComponent } from './neutral/neutral.component';
 import { AuthorsComponent } from './authors/authors.component';
 import { OutroComponent } from './outro/outro.component';
-import { GreatTasteComponent } from './great-taste/great-taste.component';
-
+import { BattleRecapComponent } from './battle-recap/battle-recap.component';
+import { SongsIntroComponent } from './songs-intro/songs-intro.component';
+import { AudioIntroComponent } from './audio-intro/audio-intro.component';
+import { AudioComponent } from './audio/audio.component';
+import { DuoBattleRecapComponent } from './duo-battle-recap/duo-battle-recap.component';
+import { DuoSongsIntroComponent } from './duo-songs-intro/duo-songs-intro.component';
 
 
 export const routes: Routes = [
@@ -45,14 +44,9 @@ export const routes: Routes = [
   { path: 'registration', component: RegistrationComponent },
   { path: 'settings', component: UsersettingsComponent },
   { path: 'intro', component: IntroComponent },
-  { path: 'top-genres', component: TopgenresComponent }, 
   { path: 'top-artists', component: TopArtistsComponent }, 
   { path: 'top-songs', component: TopSongsComponent }, 
-  { path: 'listening-time', component: ListeningTimeComponent }, 
-  { path: 'listening-mood', component: ListeningmoodComponent }, 
-  { path: 'most-surprising', component: MostsurprisingComponent },
   { path: 'duointro', component: DuointroComponent },
-  { path: 'duotopgenres', component: DuotopgenresComponent },
   { path: 'duominigame', component: DuominigameComponent },
   { path: 'duotopartists', component: DuotopartistsComponent },
   { path: 'duotopsongs', component: DuotopsongsComponent },
@@ -62,6 +56,11 @@ export const routes: Routes = [
   { path: 'neutral', component: NeutralComponent },
   {path: "authors", component: AuthorsComponent},
   {path: "outro", component: OutroComponent},
-  {path: "great-taste", component: GreatTasteComponent},
-  
+  {path: "battle-recap", component: BattleRecapComponent},
+  {path: "songs-intro", component: SongsIntroComponent},
+  {path: "audio-intro", component: AudioIntroComponent},
+  {path: "audio", component: AudioComponent},
+  {path: "duobattlerecap", component: DuoBattleRecapComponent},
+  {path: "duosongsintro", component: DuoSongsIntroComponent},
+
 ];

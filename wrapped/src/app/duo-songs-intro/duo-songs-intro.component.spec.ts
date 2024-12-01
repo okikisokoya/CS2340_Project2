@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MostsurprisingComponent } from './mostsurprising.component';
+import { DuoSongsIntroComponent } from './duo-songs-intro.component';
 
-describe('MostsurprisingComponent', () => {
-  let component: MostsurprisingComponent;
-  let fixture: ComponentFixture<MostsurprisingComponent>;
+describe('DuoSongsIntroComponent', () => {
+  let component: DuoSongsIntroComponent;
+  let fixture: ComponentFixture<DuoSongsIntroComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MostsurprisingComponent]
+      imports: [DuoSongsIntroComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MostsurprisingComponent);
+    fixture = TestBed.createComponent(DuoSongsIntroComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
