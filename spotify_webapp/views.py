@@ -16,7 +16,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-from wrapped.src.loginrequest import auth_URL
 from .models import User, Authors, Feedback, TopArtist, TopTrack, AccessToken, SpotifyWrap, DuoWrap
 from django.http import JsonResponse
 
