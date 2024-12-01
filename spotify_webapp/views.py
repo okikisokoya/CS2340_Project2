@@ -98,8 +98,10 @@ def set_session(request):
 
         if user is not None:
             login(request, user)
-            user.top_tracks = TopTrack.objects.last().top_tracks
-            user.top_artists = TopArtist.objects.last().top_artists
+            if len(user.top_tracks) == 0:
+                user.top_tracks = TopTrack.objects.last().top_tracks
+            if len(user.top_artists) == 0:
+                user.top_artists = TopArtist.objects.last().top_artists
             user.save()
             TopTrack.objects.all().delete()
             TopArtist.objects.all().delete()
@@ -127,14 +129,19 @@ def user_top_tracks(request):
     except Exception as e:
         return JsonResponse({"error": str(e)})
 
+@csrf_exempt
 def user_top_artists(request):
-    user_artists = []
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = data.get('username')
+        password = data.get('password')
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
     try:
-        if request.user.topartist_set:
-            queryset = request.user.topartist_set.all()
-            user_artists = list(queryset)
         return JsonResponse({
-            'artists': user_artists,
+            'artists': request.user.top_artists,
         })
     except Exception as e:
         return JsonResponse({"error": str(e)})
