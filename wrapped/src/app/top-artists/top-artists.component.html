@@ -2,8 +2,8 @@
     <h1>Spotify Wars</h1>
     <sub>Your Top Artists!</sub>
     <ul class="top-artists-list">
-        <li class="top-artist-item" *ngFor="let artist of topArtists">
-          {{ artist.name }}
+        <li *ngFor="let artist of artists">
+          {{ artist }}
         </li>
       </ul>
     <!-- <p *ngIf="items.length === 0">No items to display.</p> -->

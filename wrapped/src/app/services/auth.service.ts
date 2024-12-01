@@ -27,6 +27,11 @@ export class AuthService {
     return this.http.post(url, { username, password });
   }
 
+  getTopArtists(username: string, password: string): Observable<any> {
+    const url = `${this.baseUrl}/top-artists/`;
+    return this.http.post(url, { username, password });
+  }
+
   setSession(username: string, password: string): Observable<any> {
     const url = `${this.baseUrl}/set-session/`;
     return this.http.post(url, { username, password });
