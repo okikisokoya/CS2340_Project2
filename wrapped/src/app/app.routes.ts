@@ -14,7 +14,6 @@ import { IntroComponent } from './intro/intro.component';
 import { TopArtistsComponent } from './top-artists/top-artists.component';
 import { TopSongsComponent } from './top-songs/top-songs.component';
 import { DuointroComponent } from './duointro/duointro.component';
-import { DuominigameComponent } from './duominigame/duominigame.component';
 import { DuotopartistsComponent } from './duotopartists/duotopartists.component';
 import { DuotopsongsComponent } from './duotopsongs/duotopsongs.component';
 import { DuototalpointsComponent } from './duototalpoints/duototalpoints.component';
@@ -29,6 +28,7 @@ import { AudioIntroComponent } from './audio-intro/audio-intro.component';
 import { AudioComponent } from './audio/audio.component';
 import { DuoBattleRecapComponent } from './duo-battle-recap/duo-battle-recap.component';
 import { DuoSongsIntroComponent } from './duo-songs-intro/duo-songs-intro.component';
+import { DuoAudioComponent } from './duo-audio/duo-audio.component';
 import { LoadingComponent } from './loading/loading.component';
 
 
@@ -48,7 +48,6 @@ export const routes: Routes = [
   { path: 'top-artists', component: TopArtistsComponent }, 
   { path: 'top-songs', component: TopSongsComponent }, 
   { path: 'duointro', component: DuointroComponent },
-  { path: 'duominigame', component: DuominigameComponent },
   { path: 'duotopartists', component: DuotopartistsComponent },
   { path: 'duotopsongs', component: DuotopsongsComponent },
   { path: 'duototalpoints', component: DuototalpointsComponent },
@@ -63,5 +62,6 @@ export const routes: Routes = [
   {path: "audio", component: AudioComponent},
   {path: "duobattlerecap", component: DuoBattleRecapComponent},
   {path: "duosongsintro", component: DuoSongsIntroComponent},
+  {path: "duoaudio", component: DuoAudioComponent},
   {path: "loading", component: LoadingComponent},
 ];
