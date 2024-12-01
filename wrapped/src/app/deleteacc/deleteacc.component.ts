@@ -17,6 +17,7 @@ import { Observable } from 'rxjs';
   styleUrl: './deleteacc.component.css'
 })
 export class DeleteaccComponent {
+  username: string = ''; 
   password: string = ''; 
   errorMessage: string = '';
 
@@ -28,7 +29,7 @@ export class DeleteaccComponent {
       return;
     }
 
-    this.authService.deleteAccount(this.password).subscribe({
+    this.authService.deleteAccount(this.username, this.password).subscribe({
       next: () => {
         alert('Account deleted successfully!');
         this.router.navigate(['/accdeleted']);
