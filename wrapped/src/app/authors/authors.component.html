@@ -5,80 +5,95 @@
 
     <div class="author-container">
         <div class="author-profile">
-            <h2>Jinhee Chang</h2>
-            <p><strong>Contact:</strong> jchang396&#64;gatech.edu</p>
-            <p> Major: Computer Science</p>
-            <p> Favorite Character: Luke Skywalker</p>
-            <p> Bio: Matcha Lattes >> Everything else <p>
+            <h2 align="center">Jinhee Chang</h2>
+            <p align="center"><small><strong>Contact:</strong> jchang396&#64;gatech.edu</small></p>
+            <p align="center"><small>Major: Computer Science</small></p>
+            <p align="center"><small>Favorite Character: Luke Skywalker</small></p>
+            <p align="center"><small>Bio: Matcha Lattes >> Everything else</small></p>
         </div>
 
         <div class="author-profile">
-            <h2>Joanne Park</h2>
-            <p><strong>Contact:</strong> spark912&#64;gatech.edu</p>
-            <p> Major: Computer Science</p>
-            <p> Favorite Character: Leia Organa</p>
-            <p> Bio: Vanilla Lattes from Kaldis are nice! <p>
+            <h2 align="center">Joanne Park</h2>
+            <p align="center"><small><strong>Contact:</strong> spark912&#64;gatech.edu</small></p>
+            <p align="center"><small>Major: Computer Science</small></p>
+            <p align="center"><small>Favorite Character: Leia Organa</small></p>
+            <p align="center"><small>Bio: Vanilla Lattes from Kaldis are nice!</small></p>
         </div>
 
         <div class="author-profile">
-            <h2>Xander Riddle</h2>
-            <p><strong>Contact:</strong> xriddle0917&#64;gmail.com</p>
-            <p> Major: Computer Science</p>
-            <p> Favorite Character: Darth Maul</p>
-            <p> Bio: Factorio and Code are my favorite things to do. (And build robots) <p>
+            <h2 align="center">Xander Riddle</h2>
+            <p align="center"><small><strong>Contact:</strong> xriddle0917&#64;gmail.com</small></p>
+            <p align="center"><small>Major: Computer Science</small></p>
+            <p align="center"><small>Favorite Character: Darth Maul</small></p>
+            <p align="center"><small>Bio: Factorio and Code are my favorite things to do. (And build robots)</small></p>
         </div>
 
         <div class="author-profile">
-            <h2>Okiki Sokoya</h2>
-            <p><strong>Contact:</strong> okikisokoya&#64;gatech.edu</p>
-            <p> Major: Computer Engineering</p>
-            <p> Favorite Character: Anakin Skywalker</p>
-            <p> Bio: Pink over everything! <p>
+            <h2 align="center">okiki Sokoya</h2>
+            <p align="center"><small><strong>Contact:</strong> okikisokoya&#64;gatech.edu</small></p>
+            <p align="center"><small>Major: Computer Engineering</small></p>
+            <p align="center"><small>Favorite Character: Anakin Skywalker</small></p>
+            <p align="center"><small>Bio: Pink over everything!</small></p>
         </div>
 
         <div class="author-profile">
-            <h2>olivia Li</h2>
-            <p><strong>Contact:</strong> oli34&#64;gatech.edu</p>
-            <p> Major: Computer Science</p>
-            <p> Favorite Character: Rey</p>
-            <p> Bio: Proud Miffy Enjoyer <p>
+            <h2 align="center">olivia Li</h2>
+            <p align="center"><small><strong>Contact:</strong> oli34&#64;gatech.edu</small></p>
+            <p align="center"><small>Major: Computer Science</small></p>
+            <p align="center"><small>Favorite Character: Rey</small></p>
+            <p align="center"><small>Bio: Proud Miffy Enjoyer</small></p>
         </div>
     <a routerLink="/settings">
         <button class="submit-button">Back to Settings!</button>
     </a>
   </div>
-  <div class = "submit-feedback">
-    <h2>Contact the Developers Here!</h2>
-    <div *ngIf="message" class = "message">
+
+
+  <div class="submit-feedback" style="max-width: 300px; margin: 0 auto; padding: 20px;">
+    <h2 style="text-align: center; margin-bottom: 20px;">Contact the Developers Here!</h2>
+    <div *ngIf="message" class="message" style="text-align: center; margin: 10px 0;">
       {{ message }}
     </div>
-    <form (ngSubmit)="onSubmit()">
-      <div>
-        <label for="name">Name:</label>
-        <input
-          type="text"
-          id="name"
-          [(ngModel)]="name"
-          name="name"
-          required
-          placeholder="Enter your name" />
-        <label for="email"> Email:</label>
-        <input
-          type="email"
-          id="email"
-          [(ngModel)]="email"
-          name="email"
-          required
-          placeholder="Enter your email" />
-        <label for="feedback">Feedback:</label>
-        <textarea
-          id="feedback"
-          [(ngModel)]="feedback"
-          name="feedback"
-          required
-          placeholder="Enter your feedback!"></textarea>
-        <button type="submit" class="submit-button">Submit Feedback!</button>
+    <form (ngSubmit)="onSubmit()" style="display: flex; flex-direction: column; gap: 15px;">
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="display: flex; flex-direction: column;">
+          <label for="name" style="margin-bottom: 5px;">Name:</label>
+          <input
+            type="text"
+            id="name"
+            [(ngModel)]="name"
+            name="name"
+            required
+            placeholder="enter name"
+            style="padding: 6px; margin-bottom: 10px; width: 250px;" />
+        </div>
+
+        <div style="display: flex; flex-direction: column;">
+          <label for="email" style="margin-bottom: 5px;">Email:</label>
+          <input
+            type="email"
+            id="email"
+            [(ngModel)]="email"
+            name="email"
+            required
+            placeholder="enter email"
+            style="padding: 6px; margin-bottom: 10px; width: 250px;" />
+        </div>
+
+        <div style="display: flex; flex-direction: column;">
+          <label for="feedback" style="margin-bottom: 5px;">Feedback:</label>
+          <textarea
+            id="feedback"
+            [(ngModel)]="feedback"
+            name="feedback"
+            required
+            placeholder="enter feedback!"
+            style="padding: 6px; height: 80px; margin-bottom: 10px; width: 250px;"></textarea>
+        </div>
+
+        <button type="submit" class="submit-button" style="padding: 8px; margin: 10px auto; width: 150px;">Submit Feedback!</button>
       </div>
     </form>
-    </div>
+</div>
+
   </div>
