@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
       },
       (error) => {
         this.errorMessage = error.error.message || 'Login failed. Please try again.';
+        alert("Incorrect username or password.");
       }
     );
   }
