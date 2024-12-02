@@ -7,8 +7,8 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthService {
-  backendUrl = 'http://localhost:8000'; 
-  deleteAccountPoint = 'http://127.0.0.1:8000/api/delete-account/';
+  backendUrl = 'http://10.91.216.40:8000'; 
+  deleteAccountPoint = 'http://10.91.216.40:8000/api/delete-account/';
 
 
   constructor(public http: HttpClient) {}
@@ -18,14 +18,14 @@ export class AuthService {
   }
 
   resetPassword(username: string, newPassword: string): Observable<any> {
-    const endpoint = 'http://127.0.0.1:8000/api/reset-password/';
+    const endpoint = 'http://10.91.216.40:8000/api/reset-password/';
     const payload = { username_or_email: username, new_password: newPassword };
   
     return this.http.post(endpoint, payload);
   }
   
   deleteAccount(username: string, password: string): Observable<any> {
-    const endpoint = 'http://127.0.0.1:8000/api/delete-account/';
+    const endpoint = 'http://10.91.216.40:8000/api/delete-account/';
     const payload = {  password: password };
   
     return this.http.post(this.deleteAccountPoint, { 

@@ -30,7 +30,9 @@ SECRET_KEY = secret.SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost',
+    '127.0.0.1',
+    '10.91.216.40']
 
 
 # Application definition
@@ -59,12 +61,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+DEBUG = True
+
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:4200',
+    'http://10.91.216.40:4200',
 ]
 
 CORS_ALLOW_METHODS = [
@@ -90,6 +95,8 @@ CORS_ALLOW_HEADERS = [
 
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:4200',
+    'http://10.91.216.40:4200',
+    
 ]
 
 APPEND_SLASH = False
@@ -177,4 +184,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Add these Spotify settings
 SPOTIFY_CLIENT_ID = secret.SPOTIFY_CLIENT_ID
 SPOTIFY_CLIENT_SECRET = secret.SPOTIFY_CLIENT_SECRET
-SPOTIFY_REDIRECT_URI = 'http://127.0.0.1:8000/callback/'
+SPOTIFY_REDIRECT_URI = 'http://10.91.216.40:8000/callback'

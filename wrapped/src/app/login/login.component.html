@@ -14,7 +14,7 @@
       <div class="helper-text"><a class="helper-text" routerLink="/forgotpass">Forgot my password!</a></div>
     </div>
 
-    <button class="submit-button" (click)="login()">Go to hyperdrive!</button>
+    <button class="submit-button" (click)="login()" (touchstart)="login()">Go to hyperdrive!</button>
     <a routerLink="/"> <button class="submit-button">Return to landing!</button> </a>
   </div>
 

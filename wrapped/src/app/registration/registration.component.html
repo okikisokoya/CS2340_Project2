@@ -55,7 +55,7 @@
   </div>
 
   <!-- Submit Button -->
-  <button (click)="onSubmit()" class="submit-button">Board my spaceship!</button>
+  <button (click)="onSubmit()" (touchstart)="onSubmit()" class="submit-button">Board my spaceship!</button>
   <a routerLink="/"><button class="submit-button">Return to landing!</button></a>
 </div>
 
