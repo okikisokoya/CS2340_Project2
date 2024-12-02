@@ -200,12 +200,42 @@
   }
 
 .submit-feedback {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 20px;
   margin: 20px auto;
+
 }
 
 .submit-feedback h2 {
   font-family: 'Nico-Moji', sans-serif;
   color: #F3FF47;
+  font-size: 2rem;
+}
+.submit-feedback form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.5rem;
+}
+.message {
+  font-family: 'Nico-Moji', sans-serif;
+  color: #F3FF47;
+}
+
+.submit-feedback label {
+  font-family: 'Nico-Moji', sans-serif;
+  color: #FF3B3B;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.submit-feedback input,
+.submit-feedback textarea {
+  font-family: 'Nico-Moji', sans-serif;
+  color: #F3FF47;;
+  background-color: black;
+  outline-color: #F3FF47;
+  font-size: 1.5rem;
 }

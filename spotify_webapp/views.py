@@ -575,13 +575,13 @@ def home(request):
 def authors(request):
     authors = Authors.objects.all().order_by('last_name')
     return render(request, '/meet_the_authors.html', {'authors': authors})
-@login_required
+@csrf_exempt
 def submit_feedback(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        name = data.get('name'),
-        email = data.get('email'),
-        feedback = data.get('feedback'),
+        name = data.get('name')
+        email = data.get('email')
+        feedback = data.get('feedback')
         if not name or not email or not feedback:
             return JsonResponse({'error': 'Please fill all the fields'}, status=400)
         Feedback.objects.create(name=name, email= email, feedback=feedback)
