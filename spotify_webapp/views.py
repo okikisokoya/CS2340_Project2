@@ -75,7 +75,7 @@ def callback(request):
         if 'access_token' in token_info:
             authtoken = token_info['access_token']
             AccessToken.objects.create(access_token=authtoken)
-            return redirect('http://localhost:4200/loading/')
+            return redirect('http://10.91.14.135:4200/loading/')
 
     return JsonResponse({"error": "Failed Authorization"})
 

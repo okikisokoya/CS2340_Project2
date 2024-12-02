@@ -44,7 +44,7 @@ export class RegistrationComponent {
       console.error('Passwords do not match!');
       return;
     }
-    this.http.get(`http://127.0.0.1:8000/api/username-check/?username=${this.username}`).subscribe({
+    this.http.get(`http://10.91.14.135:8000/api/username-check/?username=${this.username}`).subscribe({
       next: (response: any) => {
         if (response.exists) {
           console.error('Username already exists!');
@@ -62,7 +62,7 @@ export class RegistrationComponent {
   
         console.log('Form submitted:', { email: this.email, username: this.username });
   
-        this.http.post('http://127.0.0.1:8000/api/signup/', userData, {
+        this.http.post('http://10.91.14.135:8000/api/signup/', userData, {
           headers: { 'Content-Type': 'application/json' },
           observe: 'response'
         }).subscribe({

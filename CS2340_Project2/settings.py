@@ -30,7 +30,7 @@ SECRET_KEY = secret.SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['10.91.14.135']
 
 
 # Application definition
@@ -177,4 +177,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Add these Spotify settings
 SPOTIFY_CLIENT_ID = secret.SPOTIFY_CLIENT_ID
 SPOTIFY_CLIENT_SECRET = secret.SPOTIFY_CLIENT_SECRET
-SPOTIFY_REDIRECT_URI = 'http://127.0.0.1:8000/callback/'
+SPOTIFY_REDIRECT_URI = 'http://10.91.14.135:8000/callback/'
